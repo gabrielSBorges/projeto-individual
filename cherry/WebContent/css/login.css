@@ -6,7 +6,7 @@ body {
 
 .login-container {
     width: 450px;
-    height: 500px;
+    height: 420px;
     border-radius: 10px;
     background-color: white;
     box-shadow: 2px 2px 15px 2px #ececec;
@@ -33,7 +33,7 @@ body {
 
 
 .login-button:active {
-    background-color: #1b8984;
+    background-color: darkgreen;
 }
 
 .login-input, .login-button, .login-check, .login-forgot {
@@ -42,7 +42,7 @@ body {
 }
 
 .login-button {
-    background-color: lightseagreen;
+    background-color: lightgreen;
     color: white;
     font-size: 18px;
     text-transform: uppercase;
@@ -67,5 +67,5 @@ body {
 
 .login-forgot {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
 }

@@ -1,4 +1,3 @@
-/* CENTRALIZE DIV */
 .centralize {
     position: absolute;
     top: 50%;
@@ -6,7 +5,17 @@
     transform: translate(-50%, -50%)
 }
 
-/* CHECKBOX */
+.justify-left {
+	text-align: left;
+}
+
+.justify-center {
+	text-align: center;
+}
+
+.justify-right {
+	text-align: right;
+}
 
 .checkbox-container {
     float: left;
@@ -23,7 +32,6 @@
     color: gray;
 }
 
-/* Hide the browser's default checkbox */
 .checkbox-container input {
     position: absolute;
     opacity: 0;
@@ -32,7 +40,6 @@
     width: 0;
 }
 
-/* Create a custom checkbox */
 .checkbox-mark {
     position: absolute;
     top: 0;
@@ -45,24 +52,20 @@
 }
 
 
-/* When the checkbox is checked, add a blue background */
 .checkbox-container input:checked ~ .checkbox-mark {
     background-color: lightseagreen;
 }
 
-/* Create the checkbox-mark/indicator (hidden when not checked) */
 .checkbox-mark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-/* Show the checkbox-mark when checked */
 .checkbox-container input:checked ~ .checkbox-mark:after {
     display: block;
 }
 
-/* Style the checkbox-mark/indicator */
 .checkbox-container .checkbox-mark:after {
     left: 5px;
     top: 3px;
