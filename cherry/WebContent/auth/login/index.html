@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Site da Cherry">
+        <meta name="keywords" content="Padaria, Confeitaria, Comida">
+        <meta name="author" content="Gabriel da Silva Borges">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../../css/style.css">
+        <link rel="stylesheet" href="../../css/login.css">
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+        <title>Cherry</title>
+    </head>
+    <body>
+        <div class="login-container centralize">
+            <form name="loginform" method="post" action="#">
+                <div class="login-form centralize">
+                    <img src="../../imgs/logo.png" alt="Logo do sistema Cherry" class="login-logo">
+                    
+                    <input
+                        type="email"
+                        placeholder="E-mail"
+                        class="login-input"
+                        name="email"
+                    >
+
+                    <input
+                        type="password"
+                        placeholder="Senha"
+                        class="login-input"
+                        name="password"
+                    >
+
+                    <label class="checkbox-container">
+                    	<span>Mantenha-me conectadxcxco</span>
+                        <input class="checkbox-input" type="checkbox">
+                        <span class="checkbox-mark"></span>
+                    </label>
+
+                    <button class="login-button" type="submit">Entrar</button>
+
+                    <a class="login-forgot" href=""><span>Esqueceu sua senha?</span></a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
