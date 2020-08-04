@@ -15,8 +15,10 @@
         <title>Cherry</title>
     </head>
     <body>
+        <script src="../../js/login.js"></script>
+        
         <div class="login-container centralize">
-            <form name="loginform" method="post" action="#">
+            <form name="loginform">
                 <div class="login-form centralize">
                     <img src="../../imgs/logo.png" alt="Logo do sistema Cherry" class="login-logo">
                     
@@ -31,7 +33,7 @@
                         type="password"
                         placeholder="Senha"
                         class="login-input"
-                        name="password"
+                        name="senha"
                     >
 
                     <label class="checkbox-container">
@@ -40,7 +42,7 @@
                         <span class="checkbox-mark"></span>
                     </label>
 
-                    <button class="login-button" type="submit">Entrar</button>
+                    <button type="buttom" onclick="login.entrar()" class="login-button">Entrar</button>
 
 					<div class="justify-left">
                     	<a class="login-forgot" href="">Esqueceu sua senha?</a>
