@@ -1,0 +1,14 @@
+import LayoutDefault from "../layouts/LayoutDefault.js"
+import AppBlock from "../componentes/AppBlock.js"
+import telas from './telas.js'
+
+Vue.component("LayoutDefault", LayoutDefault)
+Vue.component("AppBlock", AppBlock)
+
+new Vue({
+	el: "#app",
+	vuetify: new Vuetify(),
+	data: {
+        telas
+	},
+})

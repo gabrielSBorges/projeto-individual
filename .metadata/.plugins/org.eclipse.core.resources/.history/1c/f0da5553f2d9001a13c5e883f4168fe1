@@ -1,0 +1,14 @@
+export default {
+	name: 'Home',
+	data() {
+		return {
+		}
+	},
+	methods: {
+	},
+	template: `
+		<div>
+			<h1>HOME</h1>
+		</div>
+	`
+}

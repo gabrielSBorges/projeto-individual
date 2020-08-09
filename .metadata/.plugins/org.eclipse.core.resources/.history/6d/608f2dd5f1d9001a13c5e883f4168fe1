@@ -1,0 +1,10 @@
+var route = new Vue({
+	router,
+	el: '#app',
+	data: {
+		
+	},
+	methods: {
+		
+	}
+}).$mount('#app')

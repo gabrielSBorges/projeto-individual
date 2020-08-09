@@ -1,0 +1,12 @@
+export default {
+	name: 'Home',
+	data() {
+		return {
+		}
+	},
+	template: `
+		<div>
+			<h1>HOME</h1>
+		</div>
+	`
+}
