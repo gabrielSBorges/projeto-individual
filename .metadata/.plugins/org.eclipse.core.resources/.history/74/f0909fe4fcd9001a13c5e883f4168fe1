@@ -1,0 +1,14 @@
+import AppBlock from '../componentes/AppBlock.js'
+
+Vue.component("AppBlock", AppBlock)
+
+export default {
+	name: 'Home',
+	template: `
+		<v-row align="center" justify="center" class="mt-12">
+            <v-col cols="4" v-for="(tela, i) in telas" :key="i">
+                <app-block :title="tela.title" :description="tela.description" />
+            </v-col>
+        </v-row>
+	`
+}

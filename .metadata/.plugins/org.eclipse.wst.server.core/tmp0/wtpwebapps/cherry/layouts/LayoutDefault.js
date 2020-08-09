@@ -5,27 +5,31 @@ export default {
 	data() {
 		return {
 			drawer: false,
-			home: {
-				icon: 'mdi-home',
-				title: 'Tela Inicial',
-				path: '/'
-			},
 			telas,
 		}
 	},
+	computed: {
+		navigationDrawerStyle() {
+			return `margin-top: ${this.$vuetify.application.top}px`
+		}
+	},
 	methods: {
-		goToLogin() {
-			this.$router.push('/cherry/auth/login')
+		logout() {
+			this.$router.push('/login')
+		},
+		loadPage(path) {
+			this.drawer = false
+			this.$router.push(path)
 		}
 	},
 	template: `
 		<div>
-			<v-app-bar app clipped-left>
+			<v-app-bar app clipped-left style="z-index: 10">
 				<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 				
 				<v-spacer></v-spacer>
 				
-				<v-avatar>
+				<v-avatar @click="loadPage('/')" style="cursor: pointer;">
 			      <img
 			        src="./imgs/cereja.png"
 			        alt="Logo do sistema Cherry"
@@ -34,30 +38,18 @@ export default {
 				
 				<v-spacer></v-spacer>
 				
-				<v-btn icon @click="goToLogin">
+				<v-btn icon @click="logout()">
 				  <v-icon>mdi-logout</v-icon>
 				</v-btn>
 			</v-app-bar>
 			
-			<v-navigation-drawer v-model="drawer" clipped fixed app just>
+			<v-navigation-drawer v-model="drawer" clipped app clipped :style="navigationDrawerStyle" temporary just disable-resize-watcher>
 				<v-list 
 					dense
 				    class="pa-2"
 				>
-            		<v-list-item exact>
-		              <v-list-item-icon>
-		                <v-icon>{{ home.icon }}</v-icon>
-		              </v-list-item-icon>
-	  
-		              <v-list-item-content>
-		                <v-list-item-title v-text="home.title"/>
-		              </v-list-item-content>
-		            </v-list-item>
-		  
-      		        <v-divider></v-divider>
-	  
-		            <v-list-item v-for="(item, i) in telas" :key="i" exact>
-		              <v-list-item-icon>
+		            <v-list-item v-for="(item, i) in telas" :key="i" exact v-if="item.inMenu" @click="loadPage(item.path)">
+					  <v-list-item-icon>
 		                <v-icon>{{ item.icon }}</v-icon>
 		              </v-list-item-icon>
 	  

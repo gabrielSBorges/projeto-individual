@@ -1,0 +1,12 @@
+import telas from './telas.js'
+
+var route = new Vue({
+	router,
+	el: '#app',
+	data: {
+		
+	},
+	methods: {
+		
+	}
+}).$mount('#app')
