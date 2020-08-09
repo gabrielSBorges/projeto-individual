@@ -1,0 +1,23 @@
+import Vuetify from "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"
+
+
+
+export default {
+	props: {
+		title: { type: String, default: '' },
+		description: { type: String, default: '' },
+	},
+	template: `
+		<v-card dense class="ma-2">
+			<v-row>
+				<v-col cols="12" class="ma-2">
+					{{ title }}
+				</v-col>
+
+				<v-col cols="12" class="ma-2">
+					{{ description }}
+				</v-col>
+			</v-row>
+		</v-card>
+	`
+}

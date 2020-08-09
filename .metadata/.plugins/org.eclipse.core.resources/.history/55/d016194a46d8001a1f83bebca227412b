@@ -1,0 +1,19 @@
+export default {
+	props: {
+		title: { type: String, default: '' },
+		description: { type: String, default: '' },
+	},
+	template: `
+		<v-card>
+			<v-row no-gutters class="pa-5">
+				<v-col cols="12" class="mb-4">
+					<span class="text-h6">{{ title }}</span>
+				</v-col>
+
+				<v-col cols="12">
+					<span class="text-subtitle-1">{{ description }}</span>
+				</v-col>
+			</v-row>
+		</v-card>
+	`
+}

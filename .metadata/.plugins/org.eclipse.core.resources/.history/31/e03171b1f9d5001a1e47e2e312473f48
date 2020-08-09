@@ -1,0 +1,14 @@
+function loginValidate() {
+    let email = document.loginform.email;
+    let senha = document.loginform.senha;
+
+    if((email.value).trim() == ""){
+        return false
+    }
+
+    if((email.value).trim() == ""){
+        return false
+    }
+
+    return true
+}
