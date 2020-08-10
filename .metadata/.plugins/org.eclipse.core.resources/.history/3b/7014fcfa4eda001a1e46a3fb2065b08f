@@ -1,0 +1,48 @@
+import AppBlock from '../componentes/AppBlock.js'
+import telas from '../js/telas.js'
+
+Vue.component("AppBlock", AppBlock)
+
+export default {
+	name: 'Home',
+	data() {
+		return {
+			telas
+		}
+	},
+	computed: {
+		colSize() {
+			switch (this.$vuetify.breakpoint.name) {
+				case 'xs':
+					return 12
+					break
+				case 'md':
+					return 6
+					break
+				default:
+					return 4
+					break
+			}
+		},
+		deskTop() {
+			if (this.$vuetify.breakpoint.name !== 'xs' && this.$vuetify.breakpoint.name !== 'md') {
+				
+			}
+		}
+	},
+	methods: {
+		loadPage(path) {
+			this.$router.push(path)
+		}
+	},
+	mounted(){
+		console.log(this.$vuetify.breakpoint.name)
+	},
+	template: `
+		<v-row align="center" justify="center" class="mt-12">
+            <v-col :cols="colSize" v-for="(tela, i) in telas" :key="i" v-if="tela.inHome">
+                <app-block :title="tela.title" :description="tela.description" @click.native="loadPage(tela.path)" />
+            </v-col>
+        </v-row>
+	`
+}
