@@ -12,7 +12,6 @@ const router = new VueRouter({
 	routes
 })
 
-
 import LayoutDefault from '../layouts/LayoutDefault.js'
 
 Vue.component("LayoutDefault", LayoutDefault)

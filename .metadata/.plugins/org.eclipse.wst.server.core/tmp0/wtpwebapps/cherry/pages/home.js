@@ -38,7 +38,9 @@ export default {
 	},
 	methods: {
 		loadPage(path) {
-			this.$router.push(path)
+			if (this.$route.path !== path) {
+				this.$router.push(path)				
+			}
 		}
 	},
 	template: `

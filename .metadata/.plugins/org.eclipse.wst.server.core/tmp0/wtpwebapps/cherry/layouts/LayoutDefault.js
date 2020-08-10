@@ -19,7 +19,10 @@ export default {
 		},
 		loadPage(path) {
 			this.drawer = false
-			this.$router.push(path)
+			
+			if (this.$route.path !== path) {
+				this.$router.push(path)				
+			}
 		}
 	},
 	template: `
