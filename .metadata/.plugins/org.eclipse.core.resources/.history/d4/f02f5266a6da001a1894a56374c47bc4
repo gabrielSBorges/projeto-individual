@@ -1,0 +1,72 @@
+export default {
+	name: 'Usuarios',
+	data() {
+		return {
+			// Tabela de usuários
+			loadingUsuarios: false,
+			usuarios: [],
+			filtro: {
+				like: ''
+			},	
+		}
+	},
+	methods: {
+		buscarUsuarios() {
+			this.loadingUsuarios = true
+			
+			let btns = [
+				{
+					title: 'Editar',
+					function: this.atualizarDadosUsuario
+				},
+				{
+					title: 
+				}
+			]
+			
+			this.usuarios = [
+				{
+					nome: 'Gabriel Borges',
+					email: 'gabriel@gmail.com',
+					tipo: 'Caixa'
+				},
+				{
+					nome: 'Reiner Brawn'
+				},
+				{
+					
+				},
+				{
+					
+				}
+			]
+			
+			this.loadingUsuarios = false
+		},
+		
+		cadastrarUsuario() {
+			
+		},
+		
+		atualizarDadosUsuario() {
+			
+		},
+		
+		atualizarSenhaUsuario() {
+			
+		},
+		
+		desativarUsuario() {
+			
+		}
+	},
+	mounted() {
+		this.buscaUsuarios()
+	},
+	template: `
+		<v-row>
+			<v-col>
+			</v-col>
+		</v-row>
+	`
+}

@@ -1,0 +1,23 @@
+export default {
+	props: {
+		headers: { type: Array, default: () => [] },
+		loading,
+		loadingText,
+		noDataText,
+	},
+	data() {
+		
+	},
+	computed: {
+		temSlotConteudo() {
+			return !!this.$slots.conteudo
+		},
+
+		temSlotFooter() {
+			return !!this.$slots.footer
+		},
+	},
+	template: `
+	
+	`
+}

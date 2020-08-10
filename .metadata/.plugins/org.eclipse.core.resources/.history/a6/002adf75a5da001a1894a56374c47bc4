@@ -1,0 +1,33 @@
+export default {
+	name: 'Usuarios',
+	data() {
+		return {
+			// Tabela de usuários
+			loadingUsuarios: false,
+			usuarios: [],
+			filtro: {
+				like: ''
+			},			
+		}
+	},
+	methods: {
+		buscaUsuarios() {
+			
+		},
+		
+		cadastraUsuario() {
+			
+		},
+		
+		
+	},
+	mounted() {
+		this.buscaUsuarios()
+	},
+	template: `
+		<v-row>
+			<v-col>
+			</v-col>
+		</v-row>
+	`
+}

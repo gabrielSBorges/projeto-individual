@@ -1,0 +1,11 @@
+export default {
+	props: {
+		headers: { type: Array, default: () => []} },
+		loading,
+		loadingText,
+		noDataText,
+	},
+	data() {
+		
+	}
+}

@@ -1,0 +1,76 @@
+export default {
+	name: 'Usuarios',
+	data() {
+		return {
+			// Tabela de usuários
+			loadingUsuarios: false,
+			usuarios: [],
+			filtro: {
+				like: ''
+			},	
+		}
+	},
+	methods: {
+		buscarUsuarios() {
+			this.loadingUsuarios = true
+			
+			let btns = [ // FIXME - funcões devem receber como parâmetro objeto do usuário
+				{
+					title: 'Editar',
+					function: this.atualizarDadosUsuario
+				},
+				{
+					title: 'Alterar Senha',
+					function: this.atualizarSenhaUsuario
+				},
+				{
+					title: ''
+				}
+			]
+			
+			this.usuarios = [
+				{
+					nome: 'Gabriel Borges',
+					email: 'gabriel@gmail.com',
+					tipo: 'Caixa'
+				},
+				{
+					nome: 'Reiner Brawn'
+				},
+				{
+					
+				},
+				{
+					
+				}
+			]
+			
+			this.loadingUsuarios = false
+		},
+		
+		cadastrarUsuario() {
+			
+		},
+		
+		atualizarDadosUsuario() {
+			
+		},
+		
+		atualizarSenhaUsuario() {
+			
+		},
+		
+		desativarUsuario() {
+			
+		}
+	},
+	mounted() {
+		this.buscaUsuarios()
+	},
+	template: `
+		<v-row>
+			<v-col>
+			</v-col>
+		</v-row>
+	`
+}
