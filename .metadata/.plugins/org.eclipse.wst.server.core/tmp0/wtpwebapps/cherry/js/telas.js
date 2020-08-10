@@ -7,6 +7,7 @@ import Relatorios from '../pages/relatorios.js'
 
 export default [
 	{
+		title: 'Login',
 		path: '/login',
 		component: Login,
 		inMenu: false,
