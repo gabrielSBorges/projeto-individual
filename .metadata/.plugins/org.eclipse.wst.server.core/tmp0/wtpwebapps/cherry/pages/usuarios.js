@@ -1,8 +1,27 @@
 export default {
 	name: 'Usuarios',
+	data: {
+		// Tabela de usuários
+		loadingUsuarios: false,
+		usuarios: [],
+		filtro: {
+			like: ''
+		},
+	},
+	methods: {
+		buscaUsuarios() {
+			
+		},
+		
+		cadastraUsuario() {
+			
+		},
+		
+		
+	},
 	template: `
-		<div>
-			<h1>USUARIOS</h1>
-		</div>
+		<v-row>
+			<v-col>
+		</v-row>
 	`
 }

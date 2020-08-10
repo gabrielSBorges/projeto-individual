@@ -8,20 +8,9 @@ export default {
 			like: ''
 		},
 	},
-	methods: {
-		buscaUsuarios() {
-			
-		},
-		
-		cadastraUsuario() {
-			
-		},
-		
-		
-	},
 	template: `
 		<v-row>
-			<v-col>
+			
 		</v-row>
 	`
 }
