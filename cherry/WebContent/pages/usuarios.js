@@ -1,8 +1,12 @@
+import { $bus } from '../js/eventBus.js'
+
 import AppTable from '../componentes/AppTable.js'
 import AppDropdown from '../componentes/AppDropdown.js'
+import AppModal from '../componentes/AppModal.js'
 
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)
+Vue.component("AppModal", AppModal)
 
 export default {
 	name: 'Usuarios',
@@ -19,7 +23,8 @@ export default {
 			usuarios: [],
 			filtro: {
 				like: ''
-			},	
+			},
+			usuarioSelecionado: {}
 		}
 	},
 	methods: {
@@ -85,17 +90,20 @@ export default {
 			
 		},
 		
-		atualizarDadosUsuario() {
-			
+		atualizarDadosUsuario(usuario) {
+			this.usuarioSelecionado = usuario
+			$bus.$emit('open-modal-edit')
 		},
 		
-		atualizarSenhaUsuario() {
-			
+		atualizarSenhaUsuario(usuario) {
+			this.usuarioSelecionado = usuario
+			$bus.$emit('open-modal-edit_password')
 		},
 		
-		desativarUsuario() {
-			
-		}
+		desativarUsuario(usuario) {
+			this.usuarioSelecionado = usuario
+			$bus.$emit('open-modal-disable')
+		},
 	},
 	mounted() {
 		this.buscarUsuarios()
@@ -134,6 +142,19 @@ export default {
 					</template>
 				</app-table>
 			</v-col>
+			
+			<app-modal title="CADASTRAR USUÁRIO" modal="add">
+			</app-modal>
+			
+			<app-modal title="EDITAR USUÁRIO" :subtitle="usuarioSelecionado.nome" modal="edit">
+				adasdasd
+			</app-modal>
+			
+			<app-modal title="EDITAR SENHA" :subtitle="usuarioSelecionado.nome" modal="edit_password">
+			</app-modal>
+			
+			<app-modal title="DESATIVAR USUÁRIO" :subtitle="usuarioSelecionado.nome" modal="disable">
+			</app-modal>
 		</v-row>
 	`
 }

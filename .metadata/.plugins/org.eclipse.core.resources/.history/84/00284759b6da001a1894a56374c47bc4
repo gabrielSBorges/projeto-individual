@@ -1,0 +1,68 @@
+import { $bus } from '../js/eventBus.js'
+
+export default {
+	props: {
+		title: { type: String, default: '', required: true },
+		modal: { type: String, default: '', required: true },
+		maxWidth: { type: [String, Number], default: '500' },
+		maxHeight: { type: [String, Number], default: '450' },
+	},
+	data() {
+		return {
+			showDialog: false,
+		}
+	},
+	computed: {
+		modalHeaderStyle() {
+			return `
+				border-bottom-left-radius: 0 !important;
+    			border-bottom-right-radius: 0 !important;
+				overflow: hidden;
+			`
+		},
+		
+		modalBodyStyle() {
+			return `
+				border-top-left-radius: 0 !important;
+    			border-top-right-radius: 0 !important;
+				overflow: hidden;
+			`
+		}
+	},
+	mounted() {
+		$bus.$on(`open-modal-${this.modal}`, () => {
+			this.showDialog = true
+		})
+		
+		$bus.$on(`close-modal-${this.modal}`, () => {
+			this.showDialog = false
+		})
+	},
+	beforeDestroy(){
+		$bus.$off(`open-modal-${this.modal}`)
+		$bus.$off(`close-modal-${this.modal}`)
+	},
+	template: `
+		<v-dialog v-else v-model="showDialog" :max-width="maxWidth" :max-height="maxHeight">
+		    <v-card :style="modalHeaderStyle">
+		      <v-row align="center" class="px-2">
+				<v-col cols="10">
+					<span class="text-h6">{{ title }}</span>
+				</v-col>
+				
+				<v-col cols="2" class="text-right">
+					<v-btn @click="showDialog = false">
+						<v-icon>mdi-close</v-icon>
+					</v-btn>
+				</v-col>
+			  </v-row>
+		    </v-card>
+		    
+		    <v-card class="r-modal-card" :style="modalBodyStyle">
+		      <v-container>
+		        <slot />
+		      </v-container>
+		    </v-card>
+		 </v-dialog>
+	`
+}
