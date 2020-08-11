@@ -4,7 +4,6 @@ export default {
 	props: {
 		title: { type: String, default: '', required: true },
 		subtitle: { type: String, default: '', required: false },
-		modal: { type: String, default: '', required: true },
 		maxWidth: { type: [String, Number], default: '500' },
 		maxHeight: { type: [String, Number], default: '450' },
 	},
@@ -31,17 +30,17 @@ export default {
 		}
 	},
 	mounted() {
-		$bus.$on(`open-modal-${this.modal}`, () => {
+		$bus.$on('open-modal', () => {
 			this.showDialog = true
 		})
 		
-		$bus.$on(`close-modal-${this.modal}`, () => {
+		$bus.$on('close-modal', () => {
 			this.showDialog = false
 		})
 	},
 	beforeDestroy(){
-		$bus.$off(`open-modal-${this.modal}`)
-		$bus.$off(`close-modal-${this.modal}`)
+		$bus.$off('open-modal')
+		$bus.$off('close-modal')
 	},
 	template: `
 		<v-dialog v-else v-model="showDialog" :max-width="maxWidth" :max-height="maxHeight">
@@ -60,9 +59,9 @@ export default {
 		    </v-card>
 		    
 		    <v-card class="r-modal-card" :style="modalBodyStyle">
-		      <v-container>
-		        <slot />
-		      </v-container>
+	        	<v-container>
+					<slot />
+				</v-container>
 		    </v-card>
 		 </v-dialog>
 	`

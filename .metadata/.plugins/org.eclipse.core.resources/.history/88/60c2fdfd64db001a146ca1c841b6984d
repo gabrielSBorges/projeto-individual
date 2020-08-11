@@ -1,0 +1,11 @@
+export default {
+	name: 'Disable',
+	data() {
+		return {
+			title: 'PWUEW'
+		}
+	},
+	template: `
+		{{ title }}
+	`
+}

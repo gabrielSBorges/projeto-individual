@@ -1,0 +1,13 @@
+export default {
+	name: 'Add',
+	data() {
+		return {
+			title: 'asjdkisdikd'
+		}
+	},
+	template: `
+		<v-container>
+			{{ title }}
+		</v-container>
+	`
+}

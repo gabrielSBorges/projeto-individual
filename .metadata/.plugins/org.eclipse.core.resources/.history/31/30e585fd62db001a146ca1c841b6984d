@@ -1,5 +1,6 @@
 import { $bus } from '../js/eventBus.js'
 
+// Componentes
 import AppTable from '../componentes/AppTable.js'
 import AppDropdown from '../componentes/AppDropdown.js'
 import AppModal from '../componentes/AppModal.js'
@@ -7,6 +8,12 @@ import AppModal from '../componentes/AppModal.js'
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)
 Vue.component("AppModal", AppModal)
+
+// Modais
+import ModalAdd from './add.js'
+import ModalEdit from './edit.js'
+import ModalEditPassword from './edit_password.js'
+import ModalDisable from './disable.js'
 
 export default {
 	name: 'Usuarios',
@@ -24,7 +31,16 @@ export default {
 			filtro: {
 				like: ''
 			},
-			usuarioSelecionado: {}
+			
+			// Modais
+			usuarioSelecionado: {},
+			modalAtual: null,
+			modalTitle: '',
+		}
+	},
+	watch: {
+		modalAtual(modal) {
+			this.$options.components.Modal = modal
 		}
 	},
 	methods: {
@@ -87,22 +103,34 @@ export default {
 		},
 		
 		cadastrarUsuario() {
-			
+			this.modalAtual = ModalAdd
+			this.modalTitle = "CADASTRAR USUÁRIO"
+			this.modalSubtitle = ""
+			$bus.$emit('open-modal')
 		},
 		
 		atualizarDadosUsuario(usuario) {
+			this.modalAtual = ModalEdit
 			this.usuarioSelecionado = usuario
-			$bus.$emit('open-modal-edit')
+			this.modalTitle = 'EDITAR USUÁRIO'
+			this.modalSubtitle = usuario.nome
+			$bus.$emit('open-modal')
 		},
 		
 		atualizarSenhaUsuario(usuario) {
+			this.modalAtual = ModalEditPassword
 			this.usuarioSelecionado = usuario
-			$bus.$emit('open-modal-edit_password')
+			this.modalTitle = 'EDITAR SENHA DO USUÁRIO'
+			this.modalSubtitle = usuario.nome
+			$bus.$emit('open-modal')
 		},
 		
 		desativarUsuario(usuario) {
+			this.modalAtual = ModalDisable
 			this.usuarioSelecionado = usuario
-			$bus.$emit('open-modal-disable')
+			this.modalTitle = 'DESATIVAR USUÁRIO'
+			this.modalSubtitle = usuario.nome
+			$bus.$emit('open-modal')
 		},
 	},
 	mounted() {
@@ -143,17 +171,8 @@ export default {
 				</app-table>
 			</v-col>
 			
-			<app-modal title="CADASTRAR USUÁRIO" modal="add">
-			</app-modal>
-			
-			<app-modal title="EDITAR USUÁRIO" :subtitle="usuarioSelecionado.nome" modal="edit">
-				adasdasd
-			</app-modal>
-			
-			<app-modal title="EDITAR SENHA" :subtitle="usuarioSelecionado.nome" modal="edit_password">
-			</app-modal>
-			
-			<app-modal title="DESATIVAR USUÁRIO" :subtitle="usuarioSelecionado.nome" modal="disable">
+			<app-modal title="modalTitle">
+				<modal />
 			</app-modal>
 		</v-row>
 	`

@@ -1,0 +1,10 @@
+export default {
+	name: 'Add',
+	data() {
+		return {
+			title: 'asjdkisdikd'
+		}
+	},
+	
+	
+}

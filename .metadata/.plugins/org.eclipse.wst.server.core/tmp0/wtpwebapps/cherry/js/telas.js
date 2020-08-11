@@ -1,9 +1,9 @@
-import Login from '../pages/login.js'
-import Home from '../pages/home.js'
-import Usuarios from '../pages/usuarios.js'
-import Produtos from '../pages/produtos.js'
-import Vendas from '../pages/vendas.js'
-import Relatorios from '../pages/relatorios.js'
+import Login from '../pages/login/index.js'
+import Home from '../pages/home/index.js'
+import Usuarios from '../pages/usuarios/index.js'
+import Produtos from '../pages/produtos/index.js'
+import Vendas from '../pages/vendas/index.js'
+import Relatorios from '../pages/relatorios/index.js'
 
 export default [
 	{
