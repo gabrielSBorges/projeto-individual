@@ -2,17 +2,14 @@ export default {
 	name: 'Add',
 	data() {
 		return {
-			nomeRules: [
+			emailRules: [
 		      v => !!v || 'Nome é obrigatório',
 		    ],
 			emailRules: [
 		      v => !!v || 'E-mail é obrigatório',
 		    ],
-			emailRules: [
-		      v => !!v || 'Tipo é obrigatório',
-		    ],
 		 	senhaRules: [
-		      v => !!v || 'Senha é obrigatório',
+		      v => !!v || 'E-mail é obrigatório',
 		    ],
 			items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
 		}
@@ -35,31 +32,12 @@ export default {
 		        />
 			</v-col>
 			
-			<v-col cols="6">
+			<v-col cols="12">
 				<v-select
-		          :items="items"
-		          label="tipo"
-				  :rules="tipoRules"
+		          :items=""
+		          label="Standard"
+				  :rules="emailRules"
 		        ></v-select>
-			</v-col>
-			
-			<v-col cols="6">
-		        <v-text-field
-		          label="Senha"
-		          type="password"
-		          v-model="dadosUsuario.senha"
-		          :rules="senhaRules"
-		          required
-		        />
-			</v-col>
-			
-			<v-col cols="6">
-		        <v-text-field
-		          label="Senha"
-		          type="password"
-		          v-model="dadosUsuario.senha"
-		          :rules="senhaRules"
-		        />
 			</v-col>
 		</v-row>
 	`

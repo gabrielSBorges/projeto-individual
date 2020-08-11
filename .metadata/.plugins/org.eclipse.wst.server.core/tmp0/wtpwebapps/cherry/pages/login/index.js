@@ -7,7 +7,7 @@ export default {
 		      v => !!v || 'E-mail é obrigatório',
 		    ],
 		 	senhaRules: [
-		      v => !!v || 'E-mail é obrigatório',
+		      v => !!v || 'Senha é obrigatório',
 		    ],
 		    
 		    dadosUsuario: {

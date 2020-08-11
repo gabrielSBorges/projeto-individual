@@ -8,11 +8,8 @@ export default {
 			emailRules: [
 		      v => !!v || 'E-mail é obrigatório',
 		    ],
-			emailRules: [
-		      v => !!v || 'Tipo é obrigatório',
-		    ],
 		 	senhaRules: [
-		      v => !!v || 'Senha é obrigatório',
+		      v => !!v || 'E-mail é obrigatório',
 		    ],
 			items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
 		}
