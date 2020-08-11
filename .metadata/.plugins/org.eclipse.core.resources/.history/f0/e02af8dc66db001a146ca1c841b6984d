@@ -1,0 +1,13 @@
+export default {
+	name: 'Edit',
+	data() {
+		return {
+			title: 'kmcvsmcpv'
+		}
+	},
+	template: `
+		<v-container>
+			{{ title }}
+		</v-container>
+	`
+}

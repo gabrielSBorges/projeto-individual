@@ -1,0 +1,38 @@
+export default {
+	name: 'Add',
+	data() {
+		return {
+			title: 'asjdkisdikd'
+		}
+	},
+	template: `
+		<v-row>
+			<v-col cols="6">
+				<v-text-field
+		          label="Nome"
+		          v-model="dadosUsuario.nome"
+		          :rules="nomeRules"
+		          required
+		        />
+			</v-col>
+			
+			<v-col cols="6">
+				<v-text-field
+		          label="E-mail"
+		          v-model="dadosUsuario.email"
+		          :rules="emailRules"
+		          required
+		        />
+			</v-col>
+			
+			<v-col cols="12">
+				<v-text-field
+		          label="Nome"
+		          v-model="dadosUsuario.email"
+		          :rules="emailRules"
+		          required
+		        />
+			</v-col>
+		</v-row>
+	`
+}

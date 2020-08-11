@@ -1,0 +1,11 @@
+export default {
+	name: 'Edit',
+	data() {
+		return {
+			title: 'kmcvsmcpv'
+		}
+	},
+	template: `
+		{{ title }}
+	`
+}

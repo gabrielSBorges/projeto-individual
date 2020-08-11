@@ -32,7 +32,7 @@ export default {
 				
 				<v-spacer></v-spacer>
 				
-				<v-avatar @click="loadPage('/')" style="cursor: pointer;">
+				<v-avatar @click="loadPage('/')" style="cursor: pointer; user-select: none;">
 			      <img
 			        src="./imgs/cereja.png"
 			        alt="Logo do sistema Cherry"
