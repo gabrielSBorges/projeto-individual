@@ -1,6 +1,12 @@
 const template = /*html*/`
 	
-	<div class="text-h4 grey--text text--darken-1 mt-4 mb-10">{{ pageTitle }} &nbsp; ></div>
+	<div class="mt-1 mb-10">
+		<v-container>
+			<div class="text-h5 grey--text text--darken-1">{{ pageTitle }} &nbsp; ></div>
+		</v-container>
+		
+		<v-divider />
+	</div>
 
 `
 

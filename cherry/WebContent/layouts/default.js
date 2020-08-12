@@ -35,8 +35,10 @@ const template = /*html*/`
 		</v-navigation-drawer>
 		
 		<v-main>
+			<app-page-header />
+			
 			<v-container>
-				<app-page-header />
+
 				<slot />
 			</v-container>
 		</v-main>
