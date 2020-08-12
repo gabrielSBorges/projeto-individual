@@ -9,3 +9,6 @@ html {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Divisores verticais nas tabelas */
+table td + td { border-left:1px solid #dddddd; }

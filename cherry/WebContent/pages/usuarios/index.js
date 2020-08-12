@@ -4,12 +4,20 @@ import { $bus } from '../../js/eventBus.js'
 import AppTable from '../../componentes/AppTable.js'
 import AppDropdown from '../../componentes/AppDropdown.js'
 import AppModal from '../../componentes/AppModal.js'
+import AppSearchField from '../../componentes/AppSearchField.js'
+import AppBtn from '../../componentes/AppBtn.js'
+import AppPageHeader from '../../componentes/AppPageHeader.js'
 
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)
 Vue.component("AppModal", AppModal)
+Vue.component("AppSearchField", AppSearchField)
+Vue.component("AppBtn", AppBtn)
+
+Vue.component("AppPageHeader", AppPageHeader)
 
 // Modais
+import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalEditPassword from './edit_password.js'
@@ -19,6 +27,9 @@ export default {
 	name: 'Usuarios',
 	data() {
 		return {
+			// Filtro
+			filterUsuario: '',
+			
 			// Tabela de usuários
 			loadingUsuarios: false,
 			cabecalho: [
@@ -83,6 +94,10 @@ export default {
 				
 				const btns = [
 					{
+						title: 'View',
+						function: () => this.visualizarDetalhesUsuario(usuario)
+					},
+					{
 						title: 'Editar',
 						function: () => this.atualizarDadosUsuario(usuario)
 					},
@@ -106,6 +121,13 @@ export default {
 			this.modalAtual = ModalAdd
 			this.modalTitle = "CADASTRAR USUÁRIO"
 			this.modalSubtitle = ""
+			$bus.$emit('open-modal')
+		},
+		
+		visualizarDetalhesUsuario(usuario) {
+			this.modalAtual = ModalView
+			this.modalTitle = 'DETALHES DO USUÁRIO'
+			this.modalSubtitle = usuario.nome
 			$bus.$emit('open-modal')
 		},
 		
@@ -135,10 +157,19 @@ export default {
 	},
 	template: `
 		<v-row>
-			<v-col cols="12">
+			<v-col cols="12" class="pb-0">
+				<v-row no-gutters>
+					<v-col cols="6">
+						<app-btn normal label="Novo Usuário" :on-click="cadastrarUsuario" />
+					</v-col>
+					
+					<v-col cosl="3" offset="3">
+						<app-search-field v-model="filterUsuario" placeholder="Digite para buscar um usuário..." />
+					</v-col>
+				</v-row>
 			</v-col>
 			
-			<v-col cols="12">
+			<v-col cols="12" class="pt-0">
 				<app-table 
 					:headers="cabecalho" 
 					:content="usuarios" 

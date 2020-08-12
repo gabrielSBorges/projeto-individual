@@ -1,5 +1,8 @@
-import AppBlock from '../../componentes/AppBlock.js'
 import telas from '../../js/telas.js'
+
+// Componentes
+import AppBlock from '../../componentes/AppBlock.js'
+import AppPageHeader from '../../componentes/AppPageHeader.js'
 
 Vue.component("AppBlock", AppBlock)
 
@@ -44,7 +47,7 @@ export default {
 		}
 	},
 	template: `
-		<v-row align="center" justify="center" :class="large ? 'mt-12' : 'mt-2 mx-1'">
+		<v-row align="center" justify="center">
             <v-col :cols="colSize" v-for="(tela, i) in telas" :key="i" v-if="tela.inHome">
                 <app-block :title="tela.title" :description="tela.description" @click.native="loadPage(tela.path)" />
             </v-col>

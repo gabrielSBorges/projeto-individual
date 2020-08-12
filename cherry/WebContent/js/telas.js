@@ -15,7 +15,7 @@ export default [
 	},
 	{
 		icon: 'mdi-home',
-		title: 'Tela Inicial',
+		title: 'Início',
 		path: '/',
 		component: Home,
 		inMenu: true,

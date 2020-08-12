@@ -1,0 +1,28 @@
+export default {
+	name: 'AppBtn',
+	props: {
+		label: { type: String, default: '' },
+		onClick: { type: Function, default: null },
+		normal: { type: Boolean, default: true },
+		info: { type: Boolean, default: false },
+		alert: { type: Boolean, default: false },
+	},
+	watch: {
+		info(v) {
+			
+		},
+		
+		alert(v) {
+			
+		},
+	},
+	template: `
+		<v-btn
+			color="green lighten-1"
+			@click="onClick"
+			class="white--text"
+		>
+			{{ label }}
+		</v-btn>
+	`
+}

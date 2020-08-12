@@ -1,5 +1,8 @@
 import telas from '../js/telas.js'
 
+// Componentes
+import AppPageHeader from '../componentes/AppPageHeader.js'
+
 export default {
 	name: 'LayoutDefault',
 	data() {
@@ -65,6 +68,7 @@ export default {
 			
 			<v-main>
 				<v-container>
+					<app-page-header />
 					<slot />
 				</v-container>
 			</v-main>
