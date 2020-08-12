@@ -1,4 +1,32 @@
+const template = /*html*/`
+
+	<v-card>
+		<v-data-table
+			:headers="headers"
+			:items="content"
+			:loading="loading"
+			loading-text="loadingText"
+			no-data-text="noDataText"
+			hide-default-footer
+		>
+			<template v-if="temSlotConteudo" v-slot:body>
+				<tbody>
+					<slot name="content" />
+				</tbody>
+			</template>
+			
+			<template v-if="temSlotFooter" v-slot:footer>
+				<footer>
+					<slot name="footer" />
+				</footer>
+			</template>
+		</v-data-table>
+	</v-card>
+
+`
+
 export default {
+	template,
 	props: {
 		headers: { type: Array, default: () => [] },
 		content: { type: Array, default: () => [] }, 
@@ -14,29 +42,5 @@ export default {
 		temSlotFooter() {
 			return !!this.$slots.footer
 		},
-	},
-	template: `
-		<v-card>
-			<v-data-table
-				:headers="headers"
-				:items="content"
-				:loading="loading"
-				loading-text="loadingText"
-				no-data-text="noDataText"
-				hide-default-footer
-			>
-				<template v-if="temSlotConteudo" v-slot:body>
-					<tbody>
-						<slot name="content" />
-					</tbody>
-				</template>
-				
-				<template v-if="temSlotFooter" v-slot:footer>
-					<footer>
-						<slot name="footer" />
-					</footer>
-				</template>
-			</v-data-table>
-		</v-card>
-	`
+	}
 }

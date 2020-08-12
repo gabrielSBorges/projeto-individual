@@ -21,9 +21,9 @@
 	
 	<body>
 		<v-app id="app">
-			<layout-default v-if="$route.path !== '/login'">
+			<default v-if="$route.path !== '/login'">
 				<router-view></router-view>
-			</layout-default>
+			</default>
 		
 			<template v-else>
 				<router-view></router-view>

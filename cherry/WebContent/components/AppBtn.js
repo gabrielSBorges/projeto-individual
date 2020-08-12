@@ -1,5 +1,18 @@
+const template = /*html*/`
+
+	<v-btn
+		:outlined="outlined"
+		:color="btnColor"
+		:class="btnText"
+		@click="onClick"
+	>
+		{{ label }}
+	</v-btn>
+
+`
+
 export default {
-	name: 'AppBtn',
+	template,
 	props: {
 		label: { type: String, default: '' },
 		outlined: { type: Boolean, default: false },
@@ -32,15 +45,5 @@ export default {
 				return 'grey--text text--darken-2'
 			}
 		}
-	},
-	template: `
-		<v-btn
-			:outlined="outlined"
-			:color="btnColor"
-			:class="btnText"
-			@click="onClick"
-		>
-			{{ label }}
-		</v-btn>
-	`
+	}
 }

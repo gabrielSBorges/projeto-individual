@@ -1,6 +1,33 @@
+const template = /*html*/`
+
+	<v-dialog v-else v-model="showDialog" :max-width="maxWidth" :max-height="maxHeight">
+		<v-card :style="modalHeaderStyle" color="green darken-1">
+			<v-row dense align="center" class="pl-3 pr-2 py-2">
+		<v-col cols="10">
+			<span class="text-subtitle-2 white--text">{{ subtitle ? title + ' - ' + subtitle : title }}</span>
+		</v-col>
+		
+		<v-col cols="2" class="text-right">
+			<v-btn icon small @click="showDialog = false" class="white--text">
+				<v-icon>mdi-close-circle</v-icon>
+			</v-btn>
+		</v-col>
+		</v-row>
+		</v-card>
+		
+		<v-card class="r-modal-card" :style="modalBodyStyle">
+				<v-container>
+			<slot />
+		</v-container>
+		</v-card>
+	</v-dialog>
+
+`
+
 import { $bus } from '../js/eventBus.js'
 
 export default {
+	template,
 	props: {
 		title: { type: String, default: '', required: true },
 		subtitle: { type: String, default: '', required: false },
@@ -41,28 +68,5 @@ export default {
 	beforeDestroy(){
 		$bus.$off('open-modal')
 		$bus.$off('close-modal')
-	},
-	template: `
-		<v-dialog v-else v-model="showDialog" :max-width="maxWidth" :max-height="maxHeight">
-		    <v-card :style="modalHeaderStyle" color="green darken-1">
-		      <v-row dense align="center" class="pl-3 pr-2 py-2">
-				<v-col cols="10">
-					<span class="text-subtitle-2 white--text">{{ subtitle ? title + ' - ' + subtitle : title }}</span>
-				</v-col>
-				
-				<v-col cols="2" class="text-right">
-					<v-btn icon small @click="showDialog = false" class="white--text">
-						<v-icon>mdi-close-circle</v-icon>
-					</v-btn>
-				</v-col>
-			  </v-row>
-		    </v-card>
-		    
-		    <v-card class="r-modal-card" :style="modalBodyStyle">
-	        	<v-container>
-					<slot />
-				</v-container>
-		    </v-card>
-		 </v-dialog>
-	`
+	}
 }
