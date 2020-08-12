@@ -1,7 +1,7 @@
 import telas from '../js/telas.js'
 
 // Componentes
-import AppPageHeader from '../componentes/AppPageHeader.js'
+import AppPageHeader from '../components/AppPageHeader.js'
 
 export default {
 	name: 'LayoutDefault',

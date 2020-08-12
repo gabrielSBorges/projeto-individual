@@ -1,12 +1,12 @@
 import { $bus } from '../../js/eventBus.js'
 
 // Componentes
-import AppTable from '../../componentes/AppTable.js'
-import AppDropdown from '../../componentes/AppDropdown.js'
-import AppModal from '../../componentes/AppModal.js'
-import AppSearchField from '../../componentes/AppSearchField.js'
-import AppBtn from '../../componentes/AppBtn.js'
-import AppPageHeader from '../../componentes/AppPageHeader.js'
+import AppTable from '../../components/AppTable.js'
+import AppDropdown from '../../components/AppDropdown.js'
+import AppModal from '../../components/AppModal.js'
+import AppSearchField from '../../components/AppSearchField.js'
+import AppBtn from '../../components/AppBtn.js'
+import AppPageHeader from '../../components/AppPageHeader.js'
 
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)

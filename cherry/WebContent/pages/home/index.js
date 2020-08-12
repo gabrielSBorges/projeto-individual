@@ -1,8 +1,8 @@
 import telas from '../../js/telas.js'
 
 // Componentes
-import AppBlock from '../../componentes/AppBlock.js'
-import AppPageHeader from '../../componentes/AppPageHeader.js'
+import AppBlock from '../../components/AppBlock.js'
+import AppPageHeader from '../../components/AppPageHeader.js'
 
 Vue.component("AppBlock", AppBlock)
 

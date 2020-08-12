@@ -24,7 +24,7 @@ export default {
 			this.$router.push('/')
 		}
 	},
-	template: `
+	template: /*html*/`
 		<v-card width="400" class="ma-auto">
     		<v-container class="px-6">
         		<v-img 
