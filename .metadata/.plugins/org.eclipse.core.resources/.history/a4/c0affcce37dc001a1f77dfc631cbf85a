@@ -1,0 +1,20 @@
+import telas from '../js/telas.js'
+
+export default {
+	name: "AppPageHeader",
+	props: {
+		label: { type: String, default: 'My Header' }
+	},
+	computed: {
+		setPageHeader() {
+			const currentPath = this.$route.path
+			
+			let pageTitle = telas.find(tela => tela.path == currentPath).title
+			
+			return pageTitle
+		}
+	},
+	template: `
+		<span class="text-h4 grey--text text--darken-1">{{ label }} &nbsp; ></span>
+	`
+}

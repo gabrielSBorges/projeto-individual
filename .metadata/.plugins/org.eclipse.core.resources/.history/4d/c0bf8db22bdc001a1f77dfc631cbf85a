@@ -1,0 +1,24 @@
+export default {
+	prop: {
+		placeholder: { type: String, default: 'Digite para buscar...' },
+		onClick: { type: Function, default: null }
+	},
+	data() {
+		return {
+			text: ''
+		}
+	},
+	template: `
+		<div class="d-inline">
+			<v-text-field
+			  v-model="text"
+	          :placeholder="placeholder"
+			  @input="$emit('input', text)"
+	        />
+			
+			<v-btn>
+				<v-icon>mdi-magnify</v-icon>
+			</v-btn>
+		</div>
+	`
+}
