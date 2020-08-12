@@ -28,7 +28,7 @@ export default {
 			}
 		}
 	},
-	template: `
+	template: /*html*/`
 		<div>
 			<v-app-bar app clipped-left style="z-index: 10">
 				<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -37,7 +37,7 @@ export default {
 				
 				<v-avatar @click="loadPage('/')" style="cursor: pointer; user-select: none;">
 			      <img
-			        src="./imgs/cereja.png"
+			        src="./images/cereja.png"
 			        alt="Logo do sistema Cherry"
 			      >
 			    </v-avatar>

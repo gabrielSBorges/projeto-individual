@@ -1,5 +1,28 @@
+const template = /*html*/`
+	
+	<v-row no-gutters :class="rowStyle">
+		<v-col cols="10">
+			<v-text-field
+				v-model="text"
+						:placeholder="placeholder"
+				solo
+				dense
+				@input="$emit('input', text)"
+				:style="textFieldStyle"
+					/>
+		</v-col>
+
+		<v-col cols="2">
+			<v-btn :style="buttonStyle" color="blue lighten-2" class="white--text">
+				<v-icon>mdi-magnify</v-icon>
+			</v-btn>
+		</v-col>			
+	</v-row>
+
+`
+
 export default {
-	name: 'AppSearchField',
+	template,
 	props: {
 		placeholder: { type: String, default: 'Digite para buscar...' },
 		onClick: { type: Function, default: null }
@@ -10,7 +33,6 @@ export default {
 			rowStyle: ''
 		}
 	},
-	
 	computed: {
 		textFieldStyle() {
 			return `
@@ -38,25 +60,5 @@ export default {
 					return 'mr-n2'
 			}
 		}
-	},
-	template: `
-		<v-row no-gutters :class="rowStyle">
-			<v-col cols="10">
-				<v-text-field
-				  v-model="text"
-		          :placeholder="placeholder"
-				  solo
-				  dense
-				  @input="$emit('input', text)"
-				  :style="textFieldStyle"
-		        />
-			</v-col>
-			
-			<v-col cols="2">
-				<v-btn :style="buttonStyle" color="blue lighten-2" class="white--text">
-					<v-icon>mdi-magnify</v-icon>
-				</v-btn>
-			</v-col>			
-		</v-row>
-	`
+	}
 }

@@ -1,3 +1,51 @@
+const template = /*html*/`
+	
+	<v-row>
+		<v-col cols="12" class="pb-0">
+			<v-row no-gutters>
+				<v-col cols="6">
+					<app-btn normal label="Novo Produto" :on-click="cadastrarProduto" />
+				</v-col>
+				
+				<v-col cosl="3" offset="3">
+					<app-search-field v-model="filterProduto" placeholder="Digite para buscar um produto..." />
+				</v-col>
+			</v-row>
+		</v-col>
+		
+		<v-col cols="12" class="pt-0">
+			<app-table 
+				:headers="cabecalho" 
+				:content="produtos" 
+				:loading="loadingProdutos" 
+				loading-text="Buscando produtos..." 
+				no-data-text="Nenhum produto encontrado."
+			>
+				<template v-slot:content>
+					<tr v-for="(item, i) in produtos" :key="i">
+						<td>
+							{{ item.nome }}
+						</td>
+						
+						<td class="text-right">
+							{{ item.valor }}
+						</td>
+						
+						<td class="text-right">
+							<app-dropdown :btns="item.btns" />
+						</td>
+					</tr>
+				</template>
+			</app-table>
+		</v-col>
+		
+		<app-modal :title="modalTitle" :subtitle="modalSubtitle">
+			<modal />
+		</app-modal>
+	</v-row>
+	
+`
+
 import { $bus } from '../../js/eventBus.js'
 
 // Componentes
@@ -6,14 +54,12 @@ import AppDropdown from '../../components/AppDropdown.js'
 import AppModal from '../../components/AppModal.js'
 import AppSearchField from '../../components/AppSearchField.js'
 import AppBtn from '../../components/AppBtn.js'
-import AppPageHeader from '../../components/AppPageHeader.js'
 
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)
 Vue.component("AppModal", AppModal)
 Vue.component("AppSearchField", AppSearchField)
 Vue.component("AppBtn", AppBtn)
-Vue.component("AppPageHeader", AppPageHeader)
 
 // Modais
 import ModalView from './view.js'
@@ -22,7 +68,7 @@ import ModalEdit from './edit.js'
 import ModalDelete from './delete.js'
 
 export default {
-	name: 'Produtos',
+	template,
 	data() {
 		return {
 			// Filtro
@@ -132,50 +178,5 @@ export default {
 	},
 	mounted() {
 		this.buscarProdutos()
-	},
-	template: `
-		<v-row>
-			<v-col cols="12" class="pb-0">
-				<v-row no-gutters>
-					<v-col cols="6">
-						<app-btn normal label="Novo Produto" :on-click="cadastrarProduto" />
-					</v-col>
-					
-					<v-col cosl="3" offset="3">
-						<app-search-field v-model="filterProduto" placeholder="Digite para buscar um produto..." />
-					</v-col>
-				</v-row>
-			</v-col>
-			
-			<v-col cols="12" class="pt-0">
-				<app-table 
-					:headers="cabecalho" 
-					:content="produtos" 
-					:loading="loadingProdutos" 
-					loading-text="Buscando produtos..." 
-					no-data-text="Nenhum produto encontrado."
-				>
-					<template v-slot:content>
-						<tr v-for="(item, i) in produtos" :key="i">
-							<td>
-								{{ item.nome }}
-							</td>
-							
-							<td class="text-right">
-								{{ item.valor }}
-							</td>
-							
-							<td class="text-right">
-								<app-dropdown :btns="item.btns" />
-							</td>
-						</tr>
-					</template>
-				</app-table>
-			</v-col>
-			
-			<app-modal :title="modalTitle" :subtitle="modalSubtitle">
-				<modal />
-			</app-modal>
-		</v-row>
-	`
+	}
 }
