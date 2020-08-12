@@ -1,15 +1,15 @@
 const template = /*html*/`
 	
-	<v-row no-gutters :class="rowStyle">
+	<v-row no-gutters :class="this.$vuetify.breakpoint.xl ? 'mr-n4' : 'mr-4'">
 		<v-col cols="10">
 			<v-text-field
 				v-model="text"
-						:placeholder="placeholder"
+				:placeholder="placeholder"
 				solo
 				dense
 				@input="$emit('input', text)"
 				:style="textFieldStyle"
-					/>
+			/>
 		</v-col>
 
 		<v-col cols="2">
@@ -49,16 +49,5 @@ export default {
 				margin-left: -2px;
 			`
 		},
-		
-		rowStyle() {
-			console.log(this.$vuetify.breakpoint)
-			
-			switch (this.$vuetify.breakpoint.name) {
-				case 'xl':
-					return 'mr-n4'
-				case 'lg':
-					return 'mr-n2'
-			}
-		}
 	}
 }

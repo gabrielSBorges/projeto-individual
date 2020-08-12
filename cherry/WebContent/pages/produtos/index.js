@@ -47,8 +47,6 @@ const template = /*html*/`
 `
 
 import { $bus } from '../../js/eventBus.js'
-
-// Componentes
 import AppTable from '../../components/AppTable.js'
 import AppDropdown from '../../components/AppDropdown.js'
 import AppModal from '../../components/AppModal.js'

@@ -7,11 +7,11 @@ const template = /*html*/`
 			<v-spacer></v-spacer>
 			
 			<v-avatar @click="loadPage('/')" style="cursor: pointer; user-select: none;">
-					<img
-						src="./images/cereja.png"
-						alt="Logo do sistema Cherry"
-					>
-				</v-avatar>
+				<img
+					src="./images/cereja.png"
+					alt="Logo do sistema Cherry"
+				>
+			</v-avatar>
 			
 			<v-spacer></v-spacer>
 			
@@ -21,20 +21,17 @@ const template = /*html*/`
 		</v-app-bar>
 		
 		<v-navigation-drawer v-model="drawer" clipped app clipped :style="navigationDrawerStyle" temporary just disable-resize-watcher>
-			<v-list 
-				dense
-					class="pa-2"
-			>
-							<v-list-item v-for="(item, i) in telas" :key="i" exact v-if="item.inMenu" @click="loadPage(item.path)">
+			<v-list dense class="pa-2">
+				<v-list-item v-for="(item, i) in telas" :key="i" exact v-if="item.inMenu" @click="loadPage(item.path)">
 					<v-list-item-icon>
-									<v-icon>{{ item.icon }}</v-icon>
-								</v-list-item-icon>
+						<v-icon>{{ item.icon }}</v-icon>
+					</v-list-item-icon>
 
-								<v-list-item-content>
-									<v-list-item-title v-text="item.title" />
-								</v-list-item-content>
-							</v-list-item>
-						</v-list>
+					<v-list-item-content>
+						<v-list-item-title v-text="item.title" />
+					</v-list-item-content>
+				</v-list-item>
+			</v-list>
 		</v-navigation-drawer>
 		
 		<v-main>

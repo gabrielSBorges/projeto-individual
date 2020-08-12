@@ -2,15 +2,13 @@ const template = /*html*/`
 
 	<v-row align="center" justify="center">
 		<v-col :cols="colSize" v-for="(tela, i) in telas" :key="i" v-if="tela.inHome">
-				<app-block :title="tela.title" :description="tela.description" @click.native="loadPage(tela.path)" />
+			<app-block :title="tela.title" :description="tela.description" @click.native="loadPage(tela.path)" />
 		</v-col>
 	</v-row>
 
 `
 
 import telas from '../../js/telas.js'
-
-// Componentes
 import AppBlock from '../../components/AppBlock.js'
 
 Vue.component("AppBlock", AppBlock)

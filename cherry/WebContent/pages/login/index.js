@@ -65,17 +65,17 @@ export default {
 		return {
 			valid: true,
 			emailRules: [
-		      v => !!v || 'E-mail é obrigatório',
-		    ],
+				v => !!v || 'E-mail é obrigatório',
+			],
 		 	senhaRules: [
-		      v => !!v || 'Senha é obrigatório',
-		    ],
+				v => !!v || 'Senha é obrigatório',
+			],
 		    
-		    dadosUsuario: {
-		    	email: '',
-		    	senha: '',
-		    	manter_conectado: false,
-		    }
+			dadosUsuario: {
+				email: '',
+				senha: '',
+				manter_conectado: false,
+			}
 		}
 	},
 	methods: {
