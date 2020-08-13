@@ -47,3 +47,11 @@ new Vue({
 		this.changePageTitle()
 	}
 }).$mount('#app')
+
+Vue.mixin({
+  methods: {
+		teste() {
+			console.log(1)
+		}
+	}
+})

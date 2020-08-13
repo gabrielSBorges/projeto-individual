@@ -143,10 +143,6 @@ export default {
 				const { id, nome, email, tipo, tipo_id } = usuario
 				
 				const btns = [
-					// {
-					// 	title: 'View',
-					// 	function: () => this.abrirModal('view', "DETALHES DO USUÁRIO", ModalView, id, nome)
-					// },
 					{
 						title: 'Editar',
 						function: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)

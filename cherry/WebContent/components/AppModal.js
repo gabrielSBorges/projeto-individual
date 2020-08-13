@@ -8,7 +8,7 @@ const template = /*html*/`
 				</v-col>
 				
 				<v-col cols="2" class="text-right">
-					<v-btn icon small @click="showDialog = false" class="white--text">
+					<v-btn icon small @click="fechaModal" class="white--text">
 						<v-icon>mdi-close-circle</v-icon>
 					</v-btn>
 				</v-col>
@@ -54,6 +54,15 @@ export default {
 				border-top-right-radius: 0 !important;
 				overflow: hidden;
 			`
+		},
+	},
+	methods: {
+		fechaModal() {
+			this.showDialog = false
+
+			if (Object.keys(this.$route.query).length > 0) {
+				this.$router.push({ path: '/usuarios', query: {} })
+			}
 		}
 	},
 	mounted() {
