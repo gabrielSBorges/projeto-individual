@@ -4,7 +4,7 @@ const template = /*html*/`
 		<v-col cols="12" class="pb-0">
 			<v-row no-gutters>
 				<v-col cols="6">
-					<app-btn normal label="Novo Produto" :on-click="() => abrirModal('add', 'CADASTRAR PRODUTO', ModalAdd)" />
+					<app-btn normal label="Novo Produto" :on-click="abrirModalAdd" />
 				</v-col>
 				
 				<v-col cosl="3" offset="3">
@@ -161,6 +161,10 @@ export default {
 
 			$bus.$emit('open-modal')
 		},
+
+		abrirModalAdd() {
+			this.abrirModal('add', 'CADASTRAR PRODUTO', ModalAdd)
+		}
 	},
 	mounted() {
 		this.buscarProdutos()

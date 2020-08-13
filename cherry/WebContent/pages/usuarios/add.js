@@ -19,6 +19,7 @@ const template = /*html*/`
 		
 		<v-col cols="6">
 			<v-select
+				v-model="dadosUsuario.tipo"
 				:items="items"
 				label="tipo"
 				:rules="tipoRules"
@@ -37,9 +38,9 @@ const template = /*html*/`
 		
 		<v-col cols="6">
 			<v-text-field
-				label="Senha"
+				label="Confirmar Senha"
 				type="password"
-				v-model="dadosUsuario.senha"
+				v-model="dadosUsuario.senhaConfirm"
 				:rules="senhaRules"
 			/>
 		</v-col>
@@ -64,6 +65,14 @@ export default {
 				v => !!v || 'Senha é obrigatório',
 			],
 			items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+			
+			dadosUsuario: {
+				nome: '',
+				email: '',
+				tipo: '',
+				senha: '',
+				senhaConfirm: ''
+			}
 		}
 	}
 }
