@@ -4,7 +4,7 @@ const template = /*html*/`
 		<v-col cols="12" class="pb-0">
 			<v-row no-gutters>
 				<v-col cols="6">
-					<app-btn normal label="Novo Usuário" :on-click="cadastrarUsuario" />
+					<app-btn normal label="Novo Usuário" :on-click="() => abrirModal('add', 'CADASTRAR USUÁRIO', ModalAdd)" />
 				</v-col>
 				
 				<v-col cosl="3" offset="3">
@@ -145,19 +145,19 @@ export default {
 				const btns = [
 					{
 						title: 'View',
-						function: () => this.visualizarDetalhesUsuario(usuario)
+						function: () => this.abrirModal('view', "DETALHES DO USUÁRIO", ModalView, id, nome)
 					},
 					{
 						title: 'Editar',
-						function: () => this.atualizarDadosUsuario(usuario)
+						function: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)
 					},
 					{
 						title: 'Alterar Senha',
-						function: () => this.atualizarSenhaUsuario(usuario)
+						function: () => this.abrirModal('edit_password', "EDITAR SENHA DO USUÁRIO", ModalEditPassword, id, nome)
 					},
 					{
 						title: 'Desativar',
-						function: () => this.desativarUsuario(usuario)
+						function: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
 					}
 				]
 				
@@ -166,39 +166,20 @@ export default {
 			
 			this.loadingUsuarios = false
 		},
-		
-		cadastrarUsuario() {
-			this.modalAtual = ModalAdd
-			this.modalTitle = "CADASTRAR USUÁRIO"
-			this.modalSubtitle = ""
-			$bus.$emit('open-modal')
-		},
-		
-		visualizarDetalhesUsuario(usuario) {
-			this.modalAtual = ModalView
-			this.modalTitle = 'DETALHES DO USUÁRIO'
-			this.modalSubtitle = usuario.nome
-			$bus.$emit('open-modal')
-		},
-		
-		atualizarDadosUsuario(usuario) {
-			this.modalAtual = ModalEdit
-			this.modalTitle = 'EDITAR USUÁRIO'
-			this.modalSubtitle = usuario.nome
-			$bus.$emit('open-modal')
-		},
-		
-		atualizarSenhaUsuario(usuario) {
-			this.modalAtual = ModalEditPassword
-			this.modalTitle = 'EDITAR SENHA DO USUÁRIO'
-			this.modalSubtitle = usuario.nome
-			$bus.$emit('open-modal')
-		},
-		
-		desativarUsuario(usuario) {
-			this.modalAtual = ModalDisable
-			this.modalTitle = 'DESATIVAR USUÁRIO'
-			this.modalSubtitle = usuario.nome
+
+		abrirModal(metodo, titulo, componente, usuario_id, usuario_nome) {
+			this.modalAtual = componente	
+			this.modalTitle = titulo
+
+			if (metodo == 'add') {
+				this.modalSubtitle = ""
+			}
+			else {
+				this.modalSubtitle = usuario_nome
+				
+				this.$router.push({ path: '/usuarios', query: { id: usuario_id } })
+			}
+
 			$bus.$emit('open-modal')
 		},
 	},

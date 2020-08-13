@@ -4,7 +4,7 @@ const template = /*html*/`
 		<v-col cols="12" class="pb-0">
 			<v-row no-gutters>
 				<v-col cols="6">
-					<app-btn normal label="Novo Produto" :on-click="cadastrarProduto" />
+					<app-btn normal label="Novo Produto" :on-click="() => abrirModal('add', 'CADASTRAR PRODUTO', ModalAdd)" />
 				</v-col>
 				
 				<v-col cosl="3" offset="3">
@@ -128,15 +128,15 @@ export default {
 				const btns = [
 					{
 						title: 'Detalhes',
-						function: () => this.visualizarDetalhesProduto(produto)
+						function: () => this.abrirModal('view', 'DETALHES DO PRODUTO', ModalView, id, nome)
 					},
 					{
 						title: 'Editar',
-						function: () => this.atualizarDadosProduto(produto)
+						function: () => this.abrirModal('edit', 'EDITAR PRODUTO', ModalEdit, id, nome)
 					},
 					{
 						title: 'Excluir',
-						function: () => this.excluirProduto(produto)
+						function: () => this.abrirModal('delete', 'EXCLUIR PRODUTO', ModalDelete, id, nome)
 					}
 				]
 				
@@ -145,32 +145,20 @@ export default {
 			
 			this.loadingProdutos = false
 		},
-		
-		cadastrarProduto() {
-			this.modalAtual = ModalAdd
-			this.modalTitle = "CADASTRAR PRODUTO"
-			this.modalSubtitle = ""
-			$bus.$emit('open-modal')
-		},
-		
-		visualizarDetalhesProduto(produto) {
-			this.modalAtual = ModalView
-			this.modalTitle = 'DETALHES DO PRODUTO'
-			this.modalSubtitle = produto.nome
-			$bus.$emit('open-modal')
-		},
-		
-		atualizarDadosProduto(produto) {
-			this.modalAtual = ModalEdit
-			this.modalTitle = 'EDITAR PRODUTO'
-			this.modalSubtitle = produto.nome
-			$bus.$emit('open-modal')
-		},
-		
-		excluirProduto(produto) {
-			this.modalAtual = ModalDelete
-			this.modalTitle = 'EXCLUIR PRODUTO'
-			this.modalSubtitle = produto.nome
+
+		abrirModal(metodo, titulo, componente, produto_id, produto_nome) {
+			this.modalAtual = componente	
+			this.modalTitle = titulo
+
+			if (metodo == 'add') {
+				this.modalSubtitle = ""
+			}
+			else {
+				this.modalSubtitle = produto_nome
+				
+				this.$router.push({ path: '/produtos', query: { id: produto_id } })
+			}
+
 			$bus.$emit('open-modal')
 		},
 	},
