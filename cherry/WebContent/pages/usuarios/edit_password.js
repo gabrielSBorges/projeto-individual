@@ -1,15 +1,59 @@
+const template = /*html*/`
+	
+	<v-row>
+		<v-col cols="12" class="py-0">
+			<v-form ref="form" v-model="valid">
+				<v-row>
+					<v-col cols="6" class="pt-0">
+						<v-text-field
+							label="Senha"
+							type="password"
+							v-model="dadosUsuario.senha"
+							:rules="senhaRules"
+						/>
+					</v-col>
+					
+					<v-col cols="6" class="pt-0">
+						<v-text-field
+							label="Confirmar Senha"
+							type="password"
+							v-model="dadosUsuario.senhaConfirm"
+							:rules="senhaConfirmRules"
+						/>
+					</v-col>
+			
+					<v-col cols="12" class="pb-0" align-self="center" class="text-right">
+						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="editarSenhaUsuario" class="mb-n2" />
+					</v-col>
+				</v-row>
+			</v-form>
+		</v-col>
+	</v-row>
+
+`
+
 export default {
-	name: 'EditPassword',
+	template,
 	data() {
 		return {
-			title: 'asssgrewekisdikd'
+			valid: false,
+
+		 	senhaRules: [
+				v => !!v || 'Senha é obrigatório',
+			],
+			senhaConfirmRules: [
+				v => !!v || 'Confirmar a senha é obrigatório',
+			],
+			
+			dadosUsuario: {
+				senha: '',
+				senhaConfirm: ''
+			}
 		}
 	},
-	template: `
-		<v-row>
-			<v-col cols="12">
-				{{ title }}
-			</v-col>
-		</v-row>
-	`
+	methods: {
+		editarSenhaUsuario() {
+			this.$refs.form.validate()
+		}
+	}
 }

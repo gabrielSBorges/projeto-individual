@@ -1,13 +1,20 @@
-import telas from '../../js/telas.js'
+const template = /*html*/`
 
-// Componentes
-import AppBlock from '../../componentes/AppBlock.js'
-import AppPageHeader from '../../componentes/AppPageHeader.js'
+	<v-row align="center" justify="center">
+		<v-col :cols="colSize" v-for="(tela, i) in telas" :key="i" v-if="tela.inHome">
+			<app-block :title="tela.title" :description="tela.description" @click.native="loadPage(tela.path)" />
+		</v-col>
+	</v-row>
+
+`
+
+import telas from '../../js/telas.js'
+import AppBlock from '../../components/AppBlock.js'
 
 Vue.component("AppBlock", AppBlock)
 
 export default {
-	name: 'Home',
+	template,
 	data() {
 		return {
 			telas
@@ -45,12 +52,5 @@ export default {
 				this.$router.push(path)				
 			}
 		}
-	},
-	template: /*html*/`
-		<v-row align="center" justify="center">
-				<v-col :cols="colSize" v-for="(tela, i) in telas" :key="i" v-if="tela.inHome">
-						<app-block :title="tela.title" :description="tela.description" @click.native="loadPage(tela.path)" />
-				</v-col>
-		</v-row>
-	`
+	}
 }

@@ -12,9 +12,9 @@ const router = new VueRouter({
 	routes
 })
 
-import LayoutDefault from '../layouts/LayoutDefault.js'
+import Default from '../layouts/default.js'
 
-Vue.component("LayoutDefault", LayoutDefault)
+Vue.component("Default", Default)
 
 new Vue({
 	router,

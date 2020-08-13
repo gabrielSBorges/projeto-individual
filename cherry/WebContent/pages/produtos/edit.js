@@ -1,15 +1,18 @@
+const template = /*html*/`
+	
+	<v-row>
+		<v-col cols="12">
+			{{ title }}
+		</v-col>
+	</v-row>
+
+`
+
 export default {
-	name: 'Edit',
+	template,
 	data() {
 		return {
 			title: 'asasdasdasd'
 		}
 	},
-	template: `
-		<v-row>
-			<v-col cols="12">
-				{{ title }}
-			</v-col>
-		</v-row>
-	`
 }
