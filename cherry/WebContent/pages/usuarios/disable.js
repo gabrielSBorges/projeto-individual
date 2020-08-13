@@ -1,7 +1,7 @@
 const template = /*html*/`
 
 	<v-row>
-		<v-col cols="12" class="pb-0">
+		<v-col cols="12" class="py-0">
 			<v-form ref="formConfirm" v-model="valid">
 				<v-row>
 					<v-col cols="12" class="pt-0">					
@@ -12,12 +12,12 @@ const template = /*html*/`
 						<v-checkbox
 							v-model="confirm"
 							label="Sim, tenho certeza."
-							required
+							:rules="[v => !!v || 'Confirme para dar continuidade.']"
 						></v-checkbox>
 					</v-col>
 
 					<v-col cols="12" class="py-1 text-right">					
-						<app-btn alert label="Desativar" :on-click="desativarUsuario" />
+						<app-btn alert :disabled="!valid" label="Desativar" :on-click="desativarUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -41,7 +41,7 @@ export default {
 	},
 	methods: {
 		desativarUsuario() {
-
+			this.$refs.formConfirm.validate()
 		}
 	},
 	mounted() {

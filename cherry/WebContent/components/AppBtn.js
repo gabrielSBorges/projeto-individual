@@ -1,6 +1,7 @@
 const template = /*html*/`
 
 	<v-btn
+		:disabled="disabled"
 		:outlined="outlined"
 		:color="btnColor"
 		:class="btnText"
@@ -17,6 +18,7 @@ export default {
 		label: { type: String, default: '' },
 		outlined: { type: Boolean, default: false },
 		onClick: { type: Function, default: null },
+		disabled: { type: Boolean, default: false },
 		normal: { type: Boolean, default: false },
 		info: { type: Boolean, default: false },
 		alert: { type: Boolean, default: false },
