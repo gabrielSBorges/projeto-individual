@@ -60,7 +60,7 @@ Vue.component("AppSearchField", AppSearchField)
 Vue.component("AppBtn", AppBtn)
 
 // Modais
-import ModalView from './view.js'
+// import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalDelete from './delete.js'
@@ -126,10 +126,10 @@ export default {
 				const { id, nome, valor } = produto
 				
 				const btns = [
-					{
-						title: 'Detalhes',
-						function: () => this.abrirModal('view', 'DETALHES DO PRODUTO', ModalView, id, nome)
-					},
+					// {
+					// 	title: 'Detalhes',
+					// 	function: () => this.abrirModal('view', 'DETALHES DO PRODUTO', ModalView, id, nome)
+					// },
 					{
 						title: 'Editar',
 						function: () => this.abrirModal('edit', 'EDITAR PRODUTO', ModalEdit, id, nome)

@@ -67,7 +67,7 @@ Vue.component("AppBtn", AppBtn)
 Vue.component("AppPageHeader", AppPageHeader)
 
 // Modais
-import ModalView from './view.js'
+// import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalEditPassword from './edit_password.js'
@@ -143,10 +143,10 @@ export default {
 				const { id, nome, email, tipo, tipo_id } = usuario
 				
 				const btns = [
-					{
-						title: 'View',
-						function: () => this.abrirModal('view', "DETALHES DO USUÁRIO", ModalView, id, nome)
-					},
+					// {
+					// 	title: 'View',
+					// 	function: () => this.abrirModal('view', "DETALHES DO USUÁRIO", ModalView, id, nome)
+					// },
 					{
 						title: 'Editar',
 						function: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)
