@@ -59,6 +59,8 @@ export default {
 
 			tipos: [ { id: 1, nome: 'Gestor' } , { id: 2, nome: 'Caixa' } ],
 			
+			usuario_id: this.$route.query.id,
+
 			dadosUsuario: {
 				nome: '',
 				email: '',

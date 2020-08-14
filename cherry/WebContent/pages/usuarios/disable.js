@@ -44,9 +44,4 @@ export default {
 			this.$refs.formConfirm.validate()
 		},
 	},
-	mounted() {
-		this.teste()
-
-		console.log(this.$route.query.id)
-	},
 }

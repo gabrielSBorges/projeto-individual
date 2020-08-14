@@ -56,7 +56,6 @@ import AppDropdown from '../../components/AppDropdown.js'
 import AppModal from '../../components/AppModal.js'
 import AppSearchField from '../../components/AppSearchField.js'
 import AppBtn from '../../components/AppBtn.js'
-import AppPageHeader from '../../components/AppPageHeader.js'
 
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)
@@ -64,10 +63,7 @@ Vue.component("AppModal", AppModal)
 Vue.component("AppSearchField", AppSearchField)
 Vue.component("AppBtn", AppBtn)
 
-Vue.component("AppPageHeader", AppPageHeader)
-
 // Modais
-// import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalEditPassword from './edit_password.js'

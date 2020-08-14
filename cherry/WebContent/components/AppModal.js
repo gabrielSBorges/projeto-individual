@@ -23,8 +23,8 @@ const template = /*html*/`
 	</v-dialog>
 
 `
-
 import { $bus } from '../js/eventBus.js'
+import { $gm } from '../js/globalMethods.js'
 
 export default {
 	template,
@@ -60,7 +60,7 @@ export default {
 		fechaModal() {
 			this.showDialog = false
 
-			if (Object.keys(this.$route.query).length > 0) {
+			if (!$gm.isEmpty(this.$route.query)) {
 				this.$router.push({ path: '/usuarios', query: {} })
 			}
 		}
@@ -77,5 +77,5 @@ export default {
 	beforeDestroy(){
 		$bus.$off('open-modal')
 		$bus.$off('close-modal')
-	}
+	},
 }

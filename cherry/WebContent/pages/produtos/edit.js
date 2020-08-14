@@ -12,7 +12,7 @@ export default {
 	template,
 	data() {
 		return {
-			title: 'asasdasdasd'
+			produto_id: this.$route.query.id
 		}
 	},
 }

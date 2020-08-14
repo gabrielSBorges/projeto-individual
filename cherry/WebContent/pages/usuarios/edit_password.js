@@ -1,8 +1,8 @@
 const template = /*html*/`
 	
-	<v-row>
-		<v-col cols="12" class="py-0">
-			<v-form ref="form" v-model="valid">
+	<v-row no-gutters>
+		<v-col cols="12">
+			<v-form ref="form" v-model="valid" class="pt-0">
 				<v-row>
 					<v-col cols="6" class="pt-0">
 						<v-text-field
@@ -22,8 +22,8 @@ const template = /*html*/`
 						/>
 					</v-col>
 			
-					<v-col cols="12" class="pb-0 text-right" align-self="center">
-						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="editarSenhaUsuario" class="mb-n2" />
+					<v-col cols="12" class="text-right pb-0">
+						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="editarSenhaUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -45,6 +45,8 @@ export default {
 				v => !!v || 'Confirmar a senha é obrigatório',
 			],
 			
+			usuario_id: this.$route.query.id,
+
 			dadosUsuario: {
 				senha: '',
 				senhaConfirm: ''
