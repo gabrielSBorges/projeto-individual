@@ -9,6 +9,7 @@ const template = /*html*/`
 				dense
 				@input="$emit('input', text)"
 				:style="textFieldStyle"
+				hide-details
 			/>
 		</v-col>
 
