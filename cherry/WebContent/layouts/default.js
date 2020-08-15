@@ -1,7 +1,7 @@
 const template = /*html*/`
 
 	<div>
-		<v-app-bar app clipped-left style="z-index: 10">
+		<v-app-bar app clipped-left style="z-index: 10" color="primary">
 			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 			
 			<v-spacer></v-spacer>
@@ -38,7 +38,6 @@ const template = /*html*/`
 			<app-page-header />
 			
 			<v-container>
-
 				<slot />
 			</v-container>
 		</v-main>
