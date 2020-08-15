@@ -1,14 +1,28 @@
 const template = /*html*/`
 
-	<v-btn
-		:disabled="disabled"
-		:outlined="outlined"
-		:color="btnColor"
-		:class="btnText"
-		@click="onClick"
-	>
-		{{ label }}
-	</v-btn>
+	<v-tooltip bottom :disabled="!tooltip">
+		<template v-slot:activator="{ on }">
+			<v-btn
+				:disabled="disabled"
+				:small="small"
+				:block="block"
+				:outlined="outlined"
+				:color="btnColor"
+				:class="btnText"
+				@click="onClick"
+			>
+				<template v-if="label !== ''">
+					{{ label }}
+				</template>
+
+				<template v-else-if="icon !== ''">
+					<v-icon>{{ icon }}</v-icon>
+				</template>
+			</v-btn>
+		</template>
+
+		<span>{{ tooltip }}</span>
+	</v-tooltip>
 
 `
 
@@ -16,9 +30,13 @@ export default {
 	template,
 	props: {
 		label: { type: String, default: '' },
+		icon: { type: String, default: '' },
+		tooltip: { type: String, default: '' },
 		outlined: { type: Boolean, default: false },
 		onClick: { type: Function, default: null },
 		disabled: { type: Boolean, default: false },
+		small: { type: Boolean, default: false },
+		block: { type: Boolean, default: false },
 		normal: { type: Boolean, default: false },
 		info: { type: Boolean, default: false },
 		alert: { type: Boolean, default: false },

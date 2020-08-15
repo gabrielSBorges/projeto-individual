@@ -5,8 +5,8 @@ const template = /*html*/`
 			:headers="headers"
 			:items="content"
 			:loading="loading"
-			loading-text="loadingText"
-			no-data-text="noDataText"
+			:loading-text="loadingText"
+			:no-data-text="noDataText"
 			hide-default-footer
 		>
 			<template v-if="temSlotConteudo" v-slot:body>

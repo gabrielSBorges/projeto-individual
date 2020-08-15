@@ -61,7 +61,7 @@ export default {
 			this.showDialog = false
 
 			if (!$gm.isEmpty(this.$route.query)) {
-				this.$router.push({ path: '/usuarios', query: {} })
+				this.$router.push({ path: this.$route.path, query: {} })
 			}
 		}
 	},
