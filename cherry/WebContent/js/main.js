@@ -19,7 +19,23 @@ Vue.component("Default", Default)
 new Vue({
 	router,
 	el: '#app',
-	vuetify: new Vuetify(),
+	vuetify: new Vuetify({
+		theme: {
+			themes: {
+					light: {
+							primary: '#ce93d8',
+							secondary: '#6c757d',
+							accent: '#3ea2fb',
+							error: '#dc3545',
+							petrol: '#17a499',
+							background: '#F5F5F5',
+					}
+			},
+			options: {
+					customProperties: true
+			},
+		},
+	}),
 	data() {
 		return {
 			telas			

@@ -1,7 +1,7 @@
 const template = /*html*/`
 
 	<v-dialog v-else v-model="showDialog" :max-width="maxWidth" :max-height="maxHeight">
-		<v-card :style="modalHeaderStyle" color="green darken-1">
+		<v-card :style="modalHeaderStyle" color="primary">
 			<v-row dense align="center" class="pl-3 pr-2 py-2">
 				<v-col cols="10">
 					<span class="text-subtitle-2 white--text">{{ subtitle ? title + ' - ' + subtitle : title }}</span>

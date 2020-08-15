@@ -16,11 +16,17 @@
 
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
+		<style>
+			#app {
+					background-color: var(--v-background-base);
+			}
+		</style>
+
 		<title>Cherry</title>
 	</head>
 	
 	<body>
-		<v-app id="app">
+		<v-app id="app" class="grey">
 			<default v-if="$route.path !== '/login'">
 				<router-view></router-view>
 			</default>

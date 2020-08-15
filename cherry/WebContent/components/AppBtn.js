@@ -44,7 +44,7 @@ export default {
 	computed: {
 		btnColor() {
 			if (this.normal) {
-				return 'green lighten-2'
+				return 'primary'
 			}
 			else if (this.info) {
 				return 'blue lighten-2'
