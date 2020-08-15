@@ -2,7 +2,7 @@ const template = /*html*/`
 	
 	<v-row>
 		<v-col cols="12" class="pb-0">
-			<v-row no-gutters>
+			<v-row no-gutters class="pb-5">
 				<v-col cols="6">
 					<app-btn normal label="Novo Produto" :on-click="abrirModalAdd" />
 				</v-col>

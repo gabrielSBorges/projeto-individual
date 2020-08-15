@@ -45,8 +45,11 @@ const template = /*html*/`
 	</div>
 
 `
-
 import telas from '../js/telas.js'
+
+import AppPageHeader from '../components/AppPageHeader.js'
+
+Vue.component('AppPageHeader', AppPageHeader)
 
 export default {
 	template,

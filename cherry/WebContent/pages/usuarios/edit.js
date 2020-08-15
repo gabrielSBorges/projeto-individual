@@ -31,7 +31,7 @@ const template = /*html*/`
 						></v-select>
 					</v-col>
 			
-					<v-col cols="6" class="pb-0" align-self="center" class="text-right">
+					<v-col cols="6" class="pb-0 text-right" align-self="center">
 						<app-btn normal :disabled="!valid" label="Salvar" :on-click="editarUsuario" class="mb-n2" />
 					</v-col>
 				</v-row>
@@ -59,6 +59,8 @@ export default {
 
 			tipos: [ { id: 1, nome: 'Gestor' } , { id: 2, nome: 'Caixa' } ],
 			
+			usuario_id: this.$route.query.id,
+
 			dadosUsuario: {
 				nome: '',
 				email: '',

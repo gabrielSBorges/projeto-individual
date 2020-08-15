@@ -5,7 +5,7 @@ const template = /*html*/`
 			<v-form ref="formConfirm" v-model="valid">
 				<v-row>
 					<v-col cols="12" class="pt-0">					
-						<div class="text-h6">Quer mesmo ecluir (Nome do Produto)?</div>
+						<div class="text-h6">Quer mesmo excluir (Nome do Produto)?</div>
 					</v-col>
 
 					<v-col cols="12" class="py-0">					
@@ -43,8 +43,5 @@ export default {
 		deletarProduto() {
 
 		}
-	},
-	mounted() {
-		console.log(this.$route.query.id)
 	},
 }

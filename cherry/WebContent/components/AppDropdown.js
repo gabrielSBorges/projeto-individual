@@ -7,7 +7,7 @@ const template = /*html*/`
 			</v-btn>
 		</template>
 
-		<v-list>
+		<v-list class="py-0">
 			<v-list-item v-for="(btn, b) in btns" :key="b" @click="btn.function">
 				<v-list-item-title>{{ btn.title }}</v-list-item-title>
 			</v-list-item>

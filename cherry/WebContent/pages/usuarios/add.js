@@ -49,7 +49,7 @@ const template = /*html*/`
 						/>
 					</v-col>
 			
-					<v-col cols="6" class="pb-0" align-self="center" class="text-right">
+					<v-col cols="6" class="pb-0 text-right" align-self="center">
 						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="cadastrarUsuario" class="mb-n2" />
 					</v-col>
 				</v-row>

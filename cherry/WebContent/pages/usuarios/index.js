@@ -2,7 +2,7 @@ const template = /*html*/`
 
 	<v-row>
 		<v-col cols="12" class="pb-0">
-			<v-row no-gutters>
+			<v-row no-gutters class="pb-5">
 				<v-col cols="6">
 					<app-btn normal label="Novo Usuário" :on-click="abrirModalAdd" />
 				</v-col>
@@ -56,7 +56,6 @@ import AppDropdown from '../../components/AppDropdown.js'
 import AppModal from '../../components/AppModal.js'
 import AppSearchField from '../../components/AppSearchField.js'
 import AppBtn from '../../components/AppBtn.js'
-import AppPageHeader from '../../components/AppPageHeader.js'
 
 Vue.component("AppTable", AppTable)
 Vue.component("AppDropdown", AppDropdown)
@@ -64,10 +63,7 @@ Vue.component("AppModal", AppModal)
 Vue.component("AppSearchField", AppSearchField)
 Vue.component("AppBtn", AppBtn)
 
-Vue.component("AppPageHeader", AppPageHeader)
-
 // Modais
-// import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalEditPassword from './edit_password.js'
@@ -143,10 +139,6 @@ export default {
 				const { id, nome, email, tipo, tipo_id } = usuario
 				
 				const btns = [
-					// {
-					// 	title: 'View',
-					// 	function: () => this.abrirModal('view', "DETALHES DO USUÁRIO", ModalView, id, nome)
-					// },
 					{
 						title: 'Editar',
 						function: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)

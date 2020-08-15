@@ -8,7 +8,7 @@ const template = /*html*/`
 				</v-col>
 				
 				<v-col cols="2" class="text-right">
-					<v-btn icon small @click="showDialog = false" class="white--text">
+					<v-btn icon small @click="fechaModal" class="white--text">
 						<v-icon>mdi-close-circle</v-icon>
 					</v-btn>
 				</v-col>
@@ -23,8 +23,8 @@ const template = /*html*/`
 	</v-dialog>
 
 `
-
 import { $bus } from '../js/eventBus.js'
+import { $gm } from '../js/globalMethods.js'
 
 export default {
 	template,
@@ -54,6 +54,15 @@ export default {
 				border-top-right-radius: 0 !important;
 				overflow: hidden;
 			`
+		},
+	},
+	methods: {
+		fechaModal() {
+			this.showDialog = false
+
+			if (!$gm.isEmpty(this.$route.query)) {
+				this.$router.push({ path: this.$route.path, query: {} })
+			}
 		}
 	},
 	mounted() {
@@ -68,5 +77,5 @@ export default {
 	beforeDestroy(){
 		$bus.$off('open-modal')
 		$bus.$off('close-modal')
-	}
+	},
 }
