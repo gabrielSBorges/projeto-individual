@@ -20,15 +20,19 @@ const template = /*html*/`
 			</v-btn>
 		</v-app-bar>
 		
-		<v-navigation-drawer v-model="drawer" clipped app clipped :style="navigationDrawerStyle" temporary just disable-resize-watcher>
+		<v-navigation-drawer v-model="drawer" clipped app clipped :style="navigationDrawerStyle" temporary just disable-resize-watcher>			
 			<v-list dense class="pa-2">
-				<v-list-item v-for="(item, i) in telas" :key="i" exact v-if="item.inMenu" @click="loadPage(item.path)">
+				<v-list-item v-for="(item, i) in telas" :key="i" v-if="item.inMenu"
+					exact  
+					@click="loadPage(item.path)" 
+					:style="currentPath(item.path) ? listStyle : ''"
+				>
 					<v-list-item-icon>
-						<v-icon>{{ item.icon }}</v-icon>
+						<v-icon :class="currentPath(item.path) ? 'white--text' : ''">{{ item.icon }}</v-icon>
 					</v-list-item-icon>
 
 					<v-list-item-content>
-						<v-list-item-title v-text="item.title" />
+						<v-list-item-title v-text="item.title" class="text-button pt-1" :class="currentPath(item.path) ? 'white--text' : ''" />
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
@@ -51,24 +55,41 @@ export default {
 	template,
 	data() {
 		return {
-			drawer: false,
+			drawer: true,
 			telas,
 		}
 	},
 	computed: {
 		navigationDrawerStyle() {
 			return `margin-top: ${this.$vuetify.application.top}px`
-		}
+		},
+
+		listStyle() {
+			return {
+				'background-color': 'var(--v-secondary-base)',
+				'border-radius': '5px'
+			}
+		},
 	},
 	methods: {
 		logout() {
 			this.$router.push('/login')
 		},
+
 		loadPage(path) {
 			this.drawer = false
 			
 			if (this.$route.path !== path) {
 				this.$router.push(path)				
+			}
+		},
+
+		currentPath(caminho) {
+			if (this.$route.path == caminho) {
+				return true
+			}
+			else {
+				return false
 			}
 		}
 	}

@@ -39,11 +39,13 @@ new Vue({
 			themes: {
 				light: {
 					primary: '#212121',
-					secondary: '#6c757d',
-					accent: '#3ea2fb',
-					error: '#dc3545',
-					petrol: '#17a499',
+					secondary: '#424242',
 					background: '#F5F5F5',
+
+					success: '#81C784',
+					info: '#64B5F6',
+					error: '#E57373',
+					default: '#E0E0E0',
 				}
 			},
 			options: {

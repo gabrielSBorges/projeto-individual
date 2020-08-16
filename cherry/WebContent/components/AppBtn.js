@@ -45,19 +45,19 @@ export default {
 	computed: {
 		btnColor() {
 			if (this.normal) {
-				return 'primary'
+				return 'secondary'
 			}
 			else if (this.success) {
 				return 'success'
 			}
 			else if (this.info) {
-				return 'blue lighten-2'
+				return 'info'
 			}
 			else if (this.alert) {
-				return 'red lighten-2'
+				return 'error'
 			}
 			else {
-				return 'grey lighten-2'
+				return 'default'
 			}
 		},
 		
