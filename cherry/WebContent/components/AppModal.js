@@ -60,6 +60,8 @@ export default {
 		fechaModal() {
 			this.showDialog = false
 
+			$bus.$emit('reset-form')
+
 			if (!$gm.isEmpty(this.$route.query)) {
 				this.$router.push({ path: this.$route.path, query: {} })
 			}
@@ -71,6 +73,7 @@ export default {
 		})
 		
 		$bus.$on('close-modal', () => {
+			$bus.$emit('reset-form')
 			this.showDialog = false
 		})
 	},

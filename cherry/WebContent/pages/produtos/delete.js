@@ -1,10 +1,10 @@
 const template = /*html*/`
 
-	<v-row>
-		<v-col cols="12" class="pb-0">
-			<v-form ref="formConfirm" v-model="valid">
+	<v-row no-gutters>
+		<v-col cols="12">
+			<v-form ref="form" v-model="valid">
 				<v-row>
-					<v-col cols="12" class="pt-0">					
+					<v-col cols="12" class="py-0">					
 						<div class="text-h6">Quer mesmo excluir (Nome do Produto)?</div>
 					</v-col>
 
@@ -12,12 +12,12 @@ const template = /*html*/`
 						<v-checkbox
 							v-model="confirm"
 							label="Sim, tenho certeza."
-							required
+							:rules="[v => !!v || 'Confirme para dar continuidade.']"
 						></v-checkbox>
 					</v-col>
 
-					<v-col cols="12" class="py-1 text-right">					
-						<app-btn alert label="Excluir" :on-click="deletarProduto" />
+					<v-col cols="12" class="pb-0">					
+						<app-btn alert block :disabled="!valid" label="Excluir" :on-click="deletarProduto" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -26,9 +26,7 @@ const template = /*html*/`
 
 `
 
-import AppBtn from '../../components/AppBtn.js'
-
-Vue.component("AppBtn", AppBtn)
+import { $bus } from '../../js/eventBus.js'
 
 export default {
 	template,
@@ -44,4 +42,9 @@ export default {
 
 		}
 	},
+	mounted() {
+		$bus.$on('reset-form', () => {
+			this.$refs.form.reset()	
+		})
+	}	
 }

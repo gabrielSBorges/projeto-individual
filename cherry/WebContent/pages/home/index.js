@@ -9,9 +9,6 @@ const template = /*html*/`
 `
 
 import telas from '../../js/telas.js'
-import AppBlock from '../../components/AppBlock.js'
-
-Vue.component("AppBlock", AppBlock)
 
 export default {
 	template,

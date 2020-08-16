@@ -2,7 +2,7 @@ const template = /*html*/`
 
 	<div>
 		<v-app-bar app clipped-left style="z-index: 10" color="primary">
-			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+			<v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
 			
 			<v-spacer></v-spacer>
 			
@@ -15,7 +15,7 @@ const template = /*html*/`
 			
 			<v-spacer></v-spacer>
 			
-			<v-btn icon @click="logout()">
+			<v-btn icon @click="logout()" class="white--text">
 				<v-icon>mdi-logout</v-icon>
 			</v-btn>
 		</v-app-bar>
@@ -44,11 +44,8 @@ const template = /*html*/`
 	</div>
 
 `
+
 import telas from '../js/telas.js'
-
-import AppPageHeader from '../components/AppPageHeader.js'
-
-Vue.component('AppPageHeader', AppPageHeader)
 
 export default {
 	template,

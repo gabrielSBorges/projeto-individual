@@ -47,17 +47,6 @@ const template = /*html*/`
 `
 
 import { $bus } from '../../js/eventBus.js'
-import AppTable from '../../components/AppTable.js'
-import AppDropdown from '../../components/AppDropdown.js'
-import AppModal from '../../components/AppModal.js'
-import AppSearchField from '../../components/AppSearchField.js'
-import AppBtn from '../../components/AppBtn.js'
-
-Vue.component("AppTable", AppTable)
-Vue.component("AppDropdown", AppDropdown)
-Vue.component("AppModal", AppModal)
-Vue.component("AppSearchField", AppSearchField)
-Vue.component("AppBtn", AppBtn)
 
 // Modais
 // import ModalView from './view.js'

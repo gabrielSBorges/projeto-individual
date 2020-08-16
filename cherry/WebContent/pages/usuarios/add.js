@@ -48,16 +48,18 @@ const template = /*html*/`
 							:rules="senhaConfirmRules"
 						/>
 					</v-col>
-			
-					<v-col cols="6" class="pb-0 text-right" align-self="center">
-						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="cadastrarUsuario" class="mb-n2" />
+	
+					<v-col cols="12" class="pb-0 text-right" align-self="center">
+						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarUsuario" class="mb-n2" />
 					</v-col>
-				</v-row>
+				</>
 			</v-form>
 		</v-col>
 	</v-row>
 
 `
+
+import { $bus } from '../../js/eventBus.js'
 
 export default {
 	template,
@@ -96,5 +98,10 @@ export default {
 		cadastrarUsuario() {
 			this.$refs.form.validate()
 		}
+	},
+	mounted() {
+		$bus.$on('reset-form', () => {
+			this.$refs.form.reset()	
+		})
 	}
 }

@@ -38,6 +38,7 @@ export default {
 		small: { type: Boolean, default: false },
 		block: { type: Boolean, default: false },
 		normal: { type: Boolean, default: false },
+		success: { type: Boolean, default: false },
 		info: { type: Boolean, default: false },
 		alert: { type: Boolean, default: false },
 	},
@@ -45,6 +46,9 @@ export default {
 		btnColor() {
 			if (this.normal) {
 				return 'primary'
+			}
+			else if (this.success) {
+				return 'success'
 			}
 			else if (this.info) {
 				return 'blue lighten-2'
@@ -58,7 +62,7 @@ export default {
 		},
 		
 		btnText() {
-			if (this.normal || this.info || this.alert) {
+			if (this.normal || this.info || this.alert || this.success) {
 				return 'white--text'
 			}
 			else {

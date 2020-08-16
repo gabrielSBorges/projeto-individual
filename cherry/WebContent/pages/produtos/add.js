@@ -2,7 +2,7 @@ const template = /*html*/`
 	
 	<v-row>
 		<v-col cols="12" class="py-0">
-			<v-form refs="form" v-model="valid">
+			<v-form ref="form" v-model="valid">
 				<v-row>
 					<v-col cols="6" class="pt-0">
 						<v-text-field
@@ -22,8 +22,8 @@ const template = /*html*/`
 						/>
 					</v-col>
 
-					<v-col cols="12" class="text-right pb-0">
-						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="cadastrarProduto" />
+					<v-col cols="12" class="text-right py-0">
+						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarProduto" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -31,6 +31,8 @@ const template = /*html*/`
 	</v-row>
 
 `
+
+import { $bus } from '../../js/eventBus.js'
 
 export default {
 	template,
@@ -55,6 +57,8 @@ export default {
 		}
 	},
 	mounted() {
-
+		$bus.$on('reset-form', () => {
+			this.$refs.form.reset()	
+		})
 	}
 }
