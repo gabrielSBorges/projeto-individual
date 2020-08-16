@@ -22,8 +22,8 @@ const template = /*html*/`
 						/>
 					</v-col>
 			
-					<v-col cols="12" class="text-right pb-0">
-						<app-btn normal :disabled="!valid" label="Cadastrar" :on-click="editarSenhaUsuario" />
+					<v-col cols="12" class="text-right py-0">
+						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="editarSenhaUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -31,6 +31,8 @@ const template = /*html*/`
 	</v-row>
 
 `
+
+import { $bus } from '../../js/eventBus.js'
 
 export default {
 	template,
@@ -57,5 +59,10 @@ export default {
 		editarSenhaUsuario() {
 			this.$refs.form.validate()
 		}
+	},
+	mounted() {
+		$bus.$on('reset-form', () => {
+			this.$refs.form.reset()	
+		})
 	}
 }

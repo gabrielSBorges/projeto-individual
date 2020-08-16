@@ -39,14 +39,7 @@ const template = /*html*/`
 					</v-col>
 					
 					<v-col cols="12">
-						<v-btn
-							:disabled="!valid"
-							color="success"
-							@click="validate"
-							block
-						>
-							ENTRAR
-						</v-btn>
+						<app-btn success label="Entrar" block :disabled="!valid" :on-click="validate" />	
 					</v-col>
 					
 					<v-col cols="12" class="py-2">

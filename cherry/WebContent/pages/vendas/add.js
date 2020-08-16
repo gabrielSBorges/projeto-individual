@@ -68,7 +68,7 @@ const template = /*html*/`
     </v-col>
 
     <v-col cols="12">
-      <app-btn normal block label="Lançar" :on-click="lancarVenda" />
+      <app-btn success block label="Lançar" :on-click="lancarVenda" />
     </v-col>
   </v-row>
 
@@ -164,4 +164,10 @@ export default {
 
     }
   },
+  mounted() {
+    $bus.$on('reset-form', () => {
+      this.produtosSelecionados = []
+			this.$refs.form.reset()	
+		})
+  }
 }
