@@ -42,6 +42,7 @@ const template = /*html*/`
 `
 
 import { $bus } from '../../js/eventBus.js'
+import { $gm } from '../../js/globalMethods.js'
 
 export default {
 	template,
@@ -53,7 +54,8 @@ export default {
 				v => !!v || 'Nome é obrigatório',
 			],
 			emailRules: [
-				v => !!v || 'E-mail é obrigatório',
+				v => !$gm.isEmpty(v) || 'E-mail é obrigatório.',
+				v => $gm.validEmail(v) || 'Digite um e-mail válido.',
 			],
 			tipoRules: [
 				v => !!v || 'Tipo é obrigatório',

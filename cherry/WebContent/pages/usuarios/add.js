@@ -52,7 +52,7 @@ const template = /*html*/`
 					<v-col cols="12" class="pb-0 text-right" align-self="center">
 						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarUsuario" class="mb-n2" />
 					</v-col>
-				</>
+				</v-row>
 			</v-form>
 		</v-col>
 	</v-row>
@@ -60,27 +60,30 @@ const template = /*html*/`
 `
 
 import { $bus } from '../../js/eventBus.js'
+import { $gm } from '../../js/globalMethods.js'
 
 export default {
 	template,
 	data() {
 		return {
 			valid: false,
-
 			nomeRules: [
-				v => !!v || 'Nome é obrigatório',
+				v => !$gm.isEmpty(v) || 'Nome é obrigatório.',
 			],
 			emailRules: [
-				v => !!v || 'E-mail é obrigatório',
+				v => !$gm.isEmpty(v) || 'E-mail é obrigatório.',
+				v => $gm.validEmail(v) || 'Digite um e-mail válido.',
 			],
 			tipoRules: [
-				v => !!v || 'Tipo é obrigatório',
+				v => !$gm.isEmpty(v) || 'Tipo é obrigatório.',
 			],
 		 	senhaRules: [
-				v => !!v || 'Senha é obrigatório',
+				v => !$gm.isEmpty(v) || 'Senha é obrigatório.',
+				v => $gm.validPassword(v) || 'Digite uma senha válida.',
 			],
 			senhaConfirmRules: [
-				v => !!v || 'Confirmar a senha é obrigatório',
+				v => !$gm.isEmpty(v) || 'Confirmar a senha é obrigatório',
+				v => v == this.dadosUsuario.senha || 'As senhas não coincidem.'
 			],
 
 			tipos: [ { id: 1, nome: 'Gestor' } , { id: 2, nome: 'Caixa' } ],

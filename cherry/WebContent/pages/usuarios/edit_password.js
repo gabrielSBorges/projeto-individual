@@ -33,6 +33,7 @@ const template = /*html*/`
 `
 
 import { $bus } from '../../js/eventBus.js'
+import { $bus } from '../../js/globalMethods.js'
 
 export default {
 	template,
@@ -40,11 +41,13 @@ export default {
 		return {
 			valid: false,
 
-		 	senhaRules: [
-				v => !!v || 'Senha é obrigatório',
+			senhaRules: [
+				v => !$gm.isEmpty(v) || 'Senha é obrigatório.',
+				v => $gm.validPassword(v) || 'Digite uma senha válida.',
 			],
 			senhaConfirmRules: [
-				v => !!v || 'Confirmar a senha é obrigatório',
+				v => !$gm.isEmpty(v) || 'Confirmar a senha é obrigatório',
+				v => v == this.dadosUsuario.senha || 'As senhas não coincidem.'
 			],
 			
 			usuario_id: this.$route.query.id,

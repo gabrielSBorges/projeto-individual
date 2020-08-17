@@ -52,4 +52,16 @@ export const $gm = {
 
     return type.toLowerCase()
   },
+
+  validEmail(value) {
+    const regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i
+
+    return regex.test(value)
+  },
+
+  validPassword(value) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
+    return regex.test(value)
+  },
 }
