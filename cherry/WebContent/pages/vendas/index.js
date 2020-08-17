@@ -164,7 +164,7 @@ export default {
 				this.modalSubtitle = ""
 			}
 			else {
-				this.modalSubtitle = venda_id
+				this.modalSubtitle = venda_id.toString()
 				
 				this.$router.push({ path: '/vendas', query: { id: venda_id } })
 			}

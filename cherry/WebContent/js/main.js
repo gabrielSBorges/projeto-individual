@@ -17,6 +17,7 @@ Vue.component("Default", Default)
 
 import AppBlock from '../components/AppBlock.js'
 import AppBtn from '../components/AppBtn.js'
+import AppDataInfo from '../components/AppDataInfo.js'
 import AppDropdown from '../components/AppDropdown.js'
 import AppModal from '../components/AppModal.js'
 import AppPageHeader from '../components/AppPageHeader.js'
@@ -25,6 +26,7 @@ import AppTable from '../components/AppTable.js'
 
 Vue.component("AppBlock", AppBlock)
 Vue.component("AppBtn", AppBtn)
+Vue.component("AppDataInfo", AppDataInfo)
 Vue.component("AppDropdown", AppDropdown)
 Vue.component("AppModal", AppModal)
 Vue.component("AppPageHeader", AppPageHeader)

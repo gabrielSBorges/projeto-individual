@@ -43,7 +43,7 @@ const template = /*html*/`
                   R$ {{ valorFormatado(item.valor_unit) }}
                 </td>
                 
-                <td>
+                <td class="text-right">
                   {{ item.quantidade }}
                 </td>
                 
