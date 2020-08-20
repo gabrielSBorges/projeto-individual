@@ -122,33 +122,6 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`produtos_vendidos` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `db_cherry`.`log_alteracao_vendas`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_cherry`.`log_alteracao_vendas` ;
-
-CREATE TABLE IF NOT EXISTS `db_cherry`.`log_alteracao_vendas` (
-  `id` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificação do log.',
-  `dados` VARCHAR(100) NOT NULL COMMENT 'Objeto referente a venda em formato de string.',
-  `vendas_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificação da venda.',
-  `usuarios_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificação do usuário que realizou a alteração.',
-  PRIMARY KEY (`id`),
-  INDEX `fk_log_alteracao_vendas_vendas1_idx` (`vendas_id` ASC),
-  INDEX `fk_log_alteracao_vendas_usuarios1_idx` (`usuarios_id` ASC),
-  CONSTRAINT `fk_log_alteracao_vendas_vendas1`
-    FOREIGN KEY (`vendas_id`)
-    REFERENCES `db_cherry`.`vendas` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_log_alteracao_vendas_usuarios1`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `db_cherry`.`usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
