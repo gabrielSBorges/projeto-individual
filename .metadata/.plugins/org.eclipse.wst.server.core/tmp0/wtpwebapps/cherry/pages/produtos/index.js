@@ -1,28 +1,61 @@
+const template = /*html*/`
+	
+	<v-row>
+		<v-col cols="12" class="pb-0">
+			<v-row no-gutters class="pb-5">
+				<v-col cols="6">
+					<app-btn normal label="Novo Produto" :on-click="abrirModalAdd" />
+				</v-col>
+				
+				<v-col cosl="3" offset="3">
+					<app-search-field v-model="filterProduto" placeholder="Digite para buscar um produto..." />
+				</v-col>
+			</v-row>
+		</v-col>
+		
+		<v-col cols="12" class="pt-0">
+			<app-table 
+				:headers="cabecalho" 
+				:content="produtos" 
+				:loading="loadingProdutos" 
+				loading-text="Buscando produtos..." 
+				no-data-text="Nenhum produto encontrado."
+			>
+				<template v-slot:content>
+					<tr v-for="(item, i) in produtos" :key="i">
+						<td>
+							{{ item.nome }}
+						</td>
+						
+						<td class="text-right">
+							{{ item.valor }}
+						</td>
+						
+						<td class="text-right">
+							<app-dropdown :btns="item.btns" />
+						</td>
+					</tr>
+				</template>
+			</app-table>
+		</v-col>
+		
+		<app-modal :title="modalTitle" :subtitle="modalSubtitle">
+			<modal />
+		</app-modal>
+	</v-row>
+	
+`
+
 import { $bus } from '../../js/eventBus.js'
 
-// Componentes
-import AppTable from '../../componentes/AppTable.js'
-import AppDropdown from '../../componentes/AppDropdown.js'
-import AppModal from '../../componentes/AppModal.js'
-import AppSearchField from '../../componentes/AppSearchField.js'
-import AppBtn from '../../componentes/AppBtn.js'
-import AppPageHeader from '../../componentes/AppPageHeader.js'
-
-Vue.component("AppTable", AppTable)
-Vue.component("AppDropdown", AppDropdown)
-Vue.component("AppModal", AppModal)
-Vue.component("AppSearchField", AppSearchField)
-Vue.component("AppBtn", AppBtn)
-Vue.component("AppPageHeader", AppPageHeader)
-
 // Modais
-import ModalView from './view.js'
+// import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalDelete from './delete.js'
 
 export default {
-	name: 'Produtos',
+	template,
 	data() {
 		return {
 			// Filtro
@@ -82,17 +115,17 @@ export default {
 				const { id, nome, valor } = produto
 				
 				const btns = [
-					{
-						title: 'Detalhes',
-						function: () => this.visualizarDetalhesProduto(produto)
-					},
+					// {
+					// 	title: 'Detalhes',
+					// 	function: () => this.abrirModal('view', 'DETALHES DO PRODUTO', ModalView, id, nome)
+					// },
 					{
 						title: 'Editar',
-						function: () => this.atualizarDadosProduto(produto)
+						function: () => this.abrirModal('edit', 'EDITAR PRODUTO', ModalEdit, id, nome)
 					},
 					{
 						title: 'Excluir',
-						function: () => this.excluirProduto(produto)
+						function: () => this.abrirModal('delete', 'EXCLUIR PRODUTO', ModalDelete, id, nome)
 					}
 				]
 				
@@ -101,81 +134,28 @@ export default {
 			
 			this.loadingProdutos = false
 		},
-		
-		cadastrarProduto() {
-			this.modalAtual = ModalAdd
-			this.modalTitle = "CADASTRAR PRODUTO"
-			this.modalSubtitle = ""
+
+		abrirModal(metodo, titulo, componente, produto_id, produto_nome) {
+			this.modalAtual = componente	
+			this.modalTitle = titulo
+
+			if (metodo == 'add') {
+				this.modalSubtitle = ""
+			}
+			else {
+				this.modalSubtitle = produto_nome
+				
+				this.$router.push({ path: '/produtos', query: { id: produto_id } })
+			}
+
 			$bus.$emit('open-modal')
 		},
-		
-		visualizarDetalhesProduto(produto) {
-			this.modalAtual = ModalView
-			this.modalTitle = 'DETALHES DO PRODUTO'
-			this.modalSubtitle = produto.nome
-			$bus.$emit('open-modal')
-		},
-		
-		atualizarDadosProduto(produto) {
-			this.modalAtual = ModalEdit
-			this.modalTitle = 'EDITAR PRODUTO'
-			this.modalSubtitle = produto.nome
-			$bus.$emit('open-modal')
-		},
-		
-		excluirProduto(produto) {
-			this.modalAtual = ModalDelete
-			this.modalTitle = 'EXCLUIR PRODUTO'
-			this.modalSubtitle = produto.nome
-			$bus.$emit('open-modal')
-		},
+
+		abrirModalAdd() {
+			this.abrirModal('add', 'CADASTRAR PRODUTO', ModalAdd)
+		}
 	},
 	mounted() {
 		this.buscarProdutos()
-	},
-	template: `
-		<v-row>
-			<v-col cols="12" class="pb-0">
-				<v-row no-gutters>
-					<v-col cols="6">
-						<app-btn normal label="Novo Produto" :on-click="cadastrarProduto" />
-					</v-col>
-					
-					<v-col cosl="3" offset="3">
-						<app-search-field v-model="filterProduto" placeholder="Digite para buscar um produto..." />
-					</v-col>
-				</v-row>
-			</v-col>
-			
-			<v-col cols="12" class="pt-0">
-				<app-table 
-					:headers="cabecalho" 
-					:content="produtos" 
-					:loading="loadingProdutos" 
-					loading-text="Buscando produtos..." 
-					no-data-text="Nenhum produto encontrado."
-				>
-					<template v-slot:content>
-						<tr v-for="(item, i) in produtos" :key="i">
-							<td>
-								{{ item.nome }}
-							</td>
-							
-							<td class="text-right">
-								{{ item.valor }}
-							</td>
-							
-							<td class="text-right">
-								<app-dropdown :btns="item.btns" />
-							</td>
-						</tr>
-					</template>
-				</app-table>
-			</v-col>
-			
-			<app-modal :title="modalTitle" :subtitle="modalSubtitle">
-				<modal />
-			</app-modal>
-		</v-row>
-	`
+	}
 }

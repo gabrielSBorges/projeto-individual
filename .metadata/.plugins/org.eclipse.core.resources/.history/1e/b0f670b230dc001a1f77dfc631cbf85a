@@ -1,6 +1,0 @@
-export default {
-	props: {
-		label: { type: String, default: '' },
-		onClick: { type: Function, default: null }
-	}
-}

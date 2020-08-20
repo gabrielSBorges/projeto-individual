@@ -33,7 +33,7 @@ const template = /*html*/`
 `
 
 import { $bus } from '../../js/eventBus.js'
-import { $bus } from '../../js/globalMethods.js'
+import { $gm } from '../../js/globalMethods.js'
 
 export default {
 	template,

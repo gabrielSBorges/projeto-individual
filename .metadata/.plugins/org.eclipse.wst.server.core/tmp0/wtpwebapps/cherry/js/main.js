@@ -12,14 +12,49 @@ const router = new VueRouter({
 	routes
 })
 
-import LayoutDefault from '../layouts/LayoutDefault.js'
+import Default from '../layouts/default.js'
+Vue.component("Default", Default)
 
-Vue.component("LayoutDefault", LayoutDefault)
+import AppBlock from '../components/AppBlock.js'
+import AppBtn from '../components/AppBtn.js'
+import AppDataInfo from '../components/AppDataInfo.js'
+import AppDropdown from '../components/AppDropdown.js'
+import AppModal from '../components/AppModal.js'
+import AppPageHeader from '../components/AppPageHeader.js'
+import AppSearchField from '../components/AppSearchField.js'
+import AppTable from '../components/AppTable.js'
+
+Vue.component("AppBlock", AppBlock)
+Vue.component("AppBtn", AppBtn)
+Vue.component("AppDataInfo", AppDataInfo)
+Vue.component("AppDropdown", AppDropdown)
+Vue.component("AppModal", AppModal)
+Vue.component("AppPageHeader", AppPageHeader)
+Vue.component("AppSearchField", AppSearchField)
+Vue.component("AppTable", AppTable)
 
 new Vue({
 	router,
 	el: '#app',
-	vuetify: new Vuetify(),
+	vuetify: new Vuetify({
+		theme: {
+			themes: {
+				light: {
+					primary: '#212121',
+					secondary: '#424242',
+					background: '#F5F5F5',
+
+					success: '#81C784',
+					info: '#64B5F6',
+					error: '#E57373',
+					default: '#E0E0E0',
+				}
+			},
+			options: {
+					customProperties: true
+			},
+		},
+	}),
 	data() {
 		return {
 			telas			
