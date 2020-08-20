@@ -1,3 +1,0 @@
-INDEX VERSION 1.131+C:\Users\borge\Documents\projetos\curso\projeto-individual\.metadata\.plugins\org.eclipse.jdt.core
-828797990.index
-2196199803.index
