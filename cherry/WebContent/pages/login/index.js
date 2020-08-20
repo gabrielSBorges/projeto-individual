@@ -52,16 +52,19 @@ const template = /*html*/`
 
 `
 
+import { $gm } from '../../js/globalMethods.js'
+
 export default {
 	template,
 	data() {
 		return {
 			valid: true,
 			emailRules: [
-				v => !!v || 'E-mail é obrigatório',
+				v => !$gm.isEmpty(v) || 'Digite o seu e-mail.',
+				v => $gm.validEmail(v) || 'Digite um e-mail válido.',
 			],
 		 	senhaRules: [
-				v => !!v || 'Senha é obrigatório',
+				v => !$gm.isEmpty(v) || 'Digite a sua senha.',
 			],
 		    
 			dadosUsuario: {

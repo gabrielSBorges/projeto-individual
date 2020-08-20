@@ -1,9 +1,0 @@
-export default {
-	name: "AppPageHeader",
-	props: {
-		label: { type: String, default: 'My Header' }
-	},
-	template: `
-		<span class="text-h4 grey--text text--darken-1 pb-12">{{ label }} &nbsp; ></span>
-	`
-}

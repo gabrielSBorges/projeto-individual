@@ -39,6 +39,13 @@ export default {
 			showDialog: false,
 		}
 	},
+	watch: {
+		showDialog(v) {
+			if (!v) {
+				$bus.$emit('reset-form')
+			}
+		}
+	},
 	computed: {
 		modalHeaderStyle() {
 			return `
