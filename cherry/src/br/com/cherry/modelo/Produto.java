@@ -6,12 +6,12 @@ public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private int categoria;
-	private int marcas_id;
-	private String modelo;
-	private int capacidade;
+	private String nome;
 	private float valor;
+	private int usuario_id;
 	
+	
+	// ID
 	public int getId() {
 		return this.id;
 	}
@@ -20,38 +20,16 @@ public class Produto implements Serializable {
 		this.id = id;
 	}
 	
-	public int getCategoria() {
-		return this.categoria;
+	// Nome
+	public String getNome() {
+		return this.nome;
 	}
 	
-	public void setCategoria(int categoria) {
-		this.categoria = categoria;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
-	public int getMarcaId() {
-		return this.marcas_id;
-	}
-	
-	public void setMarcaId(int marcaId) {
-		this.marcas_id = marcaId;
-	}
-	
-	public String getModelo() {
-		return this.modelo;
-	}
-	
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-	
-	public int getCapacidade() {
-		return this.capacidade;
-	}
-	
-	public void setCapacidade(int capacidade) {
-		this.capacidade = capacidade;
-	}
-	
+	// Valor
 	public float getValor() {
 		return this.valor;
 	}
@@ -60,9 +38,12 @@ public class Produto implements Serializable {
 		this.valor = valor;
 	}
 	
-	@Override
-    public String toString()
-    {
-        return "" + this.id + "";
-    }
+	// Usuario ID
+	public int getUsuarioId() {
+		return this.usuario_id;
+	}
+	
+	public void setUsuarioId(int usuario_id) {
+		this.usuario_id = usuario_id;
+	}
 }

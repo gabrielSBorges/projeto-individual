@@ -83,8 +83,6 @@ public class ProdutoRest extends UtilRest {
 	@Consumes("application/*")
 	public Response inserir(String produtoParam) {
 		try {
-			System.out.println("Testeeeee --------------------------------------------------------------------------------------------------");
-			
 			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
 			
 			Conexao con = new Conexao();
