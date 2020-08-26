@@ -24,7 +24,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
 	public Retorno buscarPorId(int prodId) {
 		Retorno retorno = new Retorno();
-		String comando = "select * from produtos where produtos.id = ?";
+		String comando = "SELECT * FROM produtos WHERE id = ?";
 		Produto produto = new Produto();
 		
 		try {
@@ -34,7 +34,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				String nome = rs.getString("modelo");
+				String nome = rs.getString("nome");
 				float valor = rs.getFloat("valor");
 				int usuario_id = rs.getInt("usuario_id");
 				
@@ -50,7 +50,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus("erro");
-			retorno.setMessage("Ocorreu um erro ao tentar listar os produtos! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Ocorreu um erro ao tentar buscar o produto! \n Erro: \n" + e.getMessage());
 		}
 		
 		return retorno;

@@ -24,7 +24,7 @@ const template = /*html*/`
 
 					<v-col cols="12" class="text-right py-0">
 						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarProduto" v-if="!cadastrando" />
-						<app-btn block disabled label="Cadastrar" :on-click="cadastrarProduto" v-else />
+						<app-btn block disabled label="Cadastrar" v-else />
 					</v-col>
 				</v-row>
 			</v-form>
