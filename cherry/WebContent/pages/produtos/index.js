@@ -28,7 +28,7 @@ const template = /*html*/`
 						</td>
 						
 						<td class="text-right">
-							{{ item.valor }}
+							{{ valorFormatado(item.valor) }}
 						</td>
 						
 						<td class="text-right">
@@ -136,6 +136,10 @@ export default {
 
 		abrirModalAdd() {
 			this.abrirModal('add', 'CADASTRAR PRODUTO', ModalAdd)
+		},
+
+		valorFormatado(valor) {
+			return `R$ ${(valor.toFixed(2)).replace(".", ",")}`
 		}
 	},
 	mounted() {

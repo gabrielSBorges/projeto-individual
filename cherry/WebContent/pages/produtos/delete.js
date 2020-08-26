@@ -5,7 +5,7 @@ const template = /*html*/`
 			<v-form ref="form" v-model="valid">
 				<v-row v-if="loadingProduto">
 					<v-col cols="12">
-						<v-alert type="info">
+						<v-alert type="info" class="ma-0">
 							Carregando...
 						</v-alert>
 					</v-col>
@@ -13,7 +13,7 @@ const template = /*html*/`
 				
 				<v-row v-else-if="error">
 					<v-col cols="12">
-						<v-alert type="error">
+						<v-alert type="error" class="ma-0">
 							{{ error }}
 						</v-alert>
 					</v-col>
