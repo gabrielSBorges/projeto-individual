@@ -8,7 +8,7 @@ const template = /*html*/`
 				</v-col>
 				
 				<v-col cosl="3" offset="3">
-					<app-search-field v-model="filterProduto" placeholder="Digite para buscar um produto..." />
+					<app-search-field v-model="filterProduto" :on-click="buscarProdutos" placeholder="Digite para buscar um produto..." />
 				</v-col>
 			</v-row>
 		</v-col>
@@ -28,7 +28,7 @@ const template = /*html*/`
 						</td>
 						
 						<td class="text-right">
-							{{ item.valor }}
+							{{ valorFormatado(item.valor) }}
 						</td>
 						
 						<td class="text-right">
@@ -49,7 +49,6 @@ const template = /*html*/`
 import { $bus } from '../../js/eventBus.js'
 
 // Modais
-// import ModalView from './view.js'
 import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalDelete from './delete.js'
@@ -85,54 +84,38 @@ export default {
 		}
 	},
 	methods: {
-		buscarProdutos() {
+		async buscarProdutos() {
 			this.loadingProdutos = true
-			
-			let produtos = [ // FIXME - susbstituir pelo get em produtos
-				{
-					id: 4,
-					nome: 'Pão Francês',
-					valor: '4.00'
-				},
-				{
-					id: 5,
-					nome: 'Rosca',
-					valor: '4.00'
-				},
-				{
-					id: 7,
-					nome: 'Bolo',
-					valor: '4.00'
-				},
-				{
-					id: 10,
-					nome: 'Sonho',
-					valor: '4.00'
-				},
-			]
-			
-			produtos.map(produto => {
-				const { id, nome, valor } = produto
-				
-				const btns = [
-					// {
-					// 	title: 'Detalhes',
-					// 	function: () => this.abrirModal('view', 'DETALHES DO PRODUTO', ModalView, id, nome)
-					// },
-					{
-						title: 'Editar',
-						function: () => this.abrirModal('edit', 'EDITAR PRODUTO', ModalEdit, id, nome)
-					},
-					{
-						title: 'Excluir',
-						function: () => this.abrirModal('delete', 'EXCLUIR PRODUTO', ModalDelete, id, nome)
-					}
-				]
-				
-				this.produtos.push({ nome, valor, btns })
+		
+			this.produtos = []
+
+			await axios.get(`/produto/buscar?nome=${this.filterProduto}`)
+			.then(retorno => {
+				const produtos = JSON.parse(retorno.data)
+
+				produtos.map(produto => {
+					const { id, nome, valor } = produto
+					
+					const btns = [
+						{
+							title: 'Editar',
+							function: () => this.abrirModal('edit', 'EDITAR PRODUTO', ModalEdit, id, nome)
+						},
+						{
+							title: 'Excluir',
+							function: () => this.abrirModal('delete', 'EXCLUIR PRODUTO', ModalDelete, id, nome)
+						}
+					]
+					
+					this.produtos.push({ nome, valor, btns })
+				})
 			})
-			
-			this.loadingProdutos = false
+			.catch(erro => {
+				console.log(erro.response)
+			})
+			.finally(() => {
+				this.loadingProdutos = false
+			})
 		},
 
 		abrirModal(metodo, titulo, componente, produto_id, produto_nome) {
@@ -153,9 +136,18 @@ export default {
 
 		abrirModalAdd() {
 			this.abrirModal('add', 'CADASTRAR PRODUTO', ModalAdd)
+		},
+
+		valorFormatado(valor) {
+			return `R$ ${(valor.toFixed(2)).replace(".", ",")}`
 		}
 	},
 	mounted() {
 		this.buscarProdutos()
+
+		$bus.$on('atualizar-tabela', () => {
+			this.filterProduto = ""
+			this.buscarProdutos()
+		})
 	}
 }

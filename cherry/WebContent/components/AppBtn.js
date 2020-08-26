@@ -33,7 +33,7 @@ export default {
 		icon: { type: String, default: '' },
 		tooltip: { type: String, default: '' },
 		outlined: { type: Boolean, default: false },
-		onClick: { type: Function, default: null },
+		onClick: { type: Function, default: () => { return null } },
 		disabled: { type: Boolean, default: false },
 		small: { type: Boolean, default: false },
 		block: { type: Boolean, default: false },

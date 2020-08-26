@@ -22,11 +22,11 @@ CREATE SCHEMA IF NOT EXISTS `db_cherry` DEFAULT CHARACTER SET utf8 COLLATE utf8_
 USE `db_cherry` ;
 
 -- -----------------------------------------------------
--- Table `db_cherry`.`tipo`
+-- Table `db_cherry`.`tipos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_cherry`.`tipo` ;
+DROP TABLE IF EXISTS `db_cherry`.`tipos` ;
 
-CREATE TABLE IF NOT EXISTS `db_cherry`.`tipo` (
+CREATE TABLE IF NOT EXISTS `db_cherry`.`tipos` (
   `id` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificação do tipo de conta.',
   `nome` VARCHAR(45) NOT NULL COMMENT 'Nome do tipo da conta do usuário referente ao cargo do mesmo.',
   PRIMARY KEY (`id`))
@@ -47,10 +47,10 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`usuarios` (
   `tipo_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'ID do registro respectivo ao tipo de conta do usuário.',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  INDEX `fk_usuarios_tipo1_idx` (`tipo_id` ASC),
-  CONSTRAINT `fk_usuarios_tipo1`
+  INDEX `fk_usuarios_tipos_idx` (`tipo_id` ASC),
+  CONSTRAINT `fk_usuarios_tipos`
     FOREIGN KEY (`tipo_id`)
-    REFERENCES `db_cherry`.`tipo` (`id`)
+    REFERENCES `db_cherry`.`tipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`produtos` (
   `valor` DECIMAL(7,2) UNSIGNED NOT NULL COMMENT 'Valor monetário do produto em reais.',
   `usuario_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificação do usuário que cadastrou o produto.',
   PRIMARY KEY (`id`),
-  INDEX `fk_produtos_usuarios1_idx` (`usuario_id` ASC),
-  CONSTRAINT `fk_produtos_usuarios1`
+  INDEX `fk_produtos_usuarios_idx` (`usuario_id` ASC),
+  CONSTRAINT `fk_produtos_usuarios`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `db_cherry`.`usuarios` (`id`)
     ON DELETE NO ACTION
@@ -87,8 +87,8 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`vendas` (
   `dt_realizado` DATETIME NOT NULL COMMENT 'Data em que a venda foi efetuada.',
   `usuario_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificação do usuário que efetuou a venda.',
   PRIMARY KEY (`id`),
-  INDEX `fk_vendas_usuarios1_idx` (`usuario_id` ASC),
-  CONSTRAINT `fk_vendas_usuarios1`
+  INDEX `fk_vendas_usuarios_idx` (`usuario_id` ASC),
+  CONSTRAINT `fk_vendas_usuarios`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `db_cherry`.`usuarios` (`id`)
     ON DELETE NO ACTION
@@ -108,14 +108,14 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`produtos_vendidos` (
   `venda_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificação da venda.',
   `produto_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificação do produto.',
   PRIMARY KEY (`id`),
-  INDEX `fk_produtos_vendidos_vendas1_idx` (`venda_id` ASC),
-  INDEX `fk_produtos_vendidos_produtos1_idx` (`produto_id` ASC),
-  CONSTRAINT `fk_produtos_vendidos_vendas1`
+  INDEX `fk_produtos_vendidos_vendas_idx` (`venda_id` ASC),
+  INDEX `fk_produtos_vendidos_produtos_idx` (`produto_id` ASC),
+  CONSTRAINT `fk_produtos_vendidos_vendas`
     FOREIGN KEY (`venda_id`)
     REFERENCES `db_cherry`.`vendas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_produtos_vendidos_produtos1`
+  CONSTRAINT `fk_produtos_vendidos_produtos`
     FOREIGN KEY (`produto_id`)
     REFERENCES `db_cherry`.`produtos` (`id`)
     ON DELETE NO ACTION
@@ -125,3 +125,9 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO tipos (nome) VALUES("Administrador");
+INSERT INTO tipos (nome) VALUES("Gestor");
+INSERT INTO tipos (nome) VALUES("Caixa");
+
+INSERT INTO usuarios (nome, email, senha, ativo, tipo_id) VALUES("Gabriel Borges", "gabriel@gmail.com", "e1b7e7803215d5488588370572d13102", 1, 1);

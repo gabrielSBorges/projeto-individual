@@ -3,7 +3,23 @@ const template = /*html*/`
 	<v-row>
 		<v-col cols="12" class="py-0">
 			<v-form ref="form" v-model="valid">
-				<v-row>
+				<v-row v-if="loadingProduto">
+					<v-col cols="12">
+						<v-alert type="info" class="ma-0">
+							Carregando...
+						</v-alert>
+					</v-col>
+				</v-row>
+				
+				<v-row v-else-if="error">
+					<v-col cols="12">
+						<v-alert type="error" class="ma-0">
+							{{ error }}
+						</v-alert>
+					</v-col>
+				</v-row>
+				
+				<v-row v-else>
 					<v-col cols="6" class="pt-0">
 						<v-text-field
 							label="Nome"
@@ -23,7 +39,8 @@ const template = /*html*/`
 					</v-col>
 
 					<v-col cols="12" class="py-0">
-						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="editarProduto" />
+						<app-btn success block :disabled="!valid" label="Salvar Alterações" :on-click="editarProduto" v-if="!editando" />
+						<app-btn block disabled label="Cadastrar" v-else />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -44,19 +61,54 @@ export default {
 				nome: [v => !!v || "Digite o nome do produto."],
 				valor: [v => !!v || "Digite o valor do produto."]
 			},
-
-			dadosProduto: {
-				nome: '',
-				valor: 0
-			}
+			
+			produto_id: this.$route.query.id,
+			dadosProduto: {},
+			
+			loadingProduto: false,
+			editando: false,
+			error: '',
 		}
 	},
 	methods: {
-		editarProduto() {
+		async buscarProduto() {
+			this.loadingProduto = true
+			
+			await axios.get(`/produto/buscarPorId?id=${this.produto_id}`)
+			.then(retorno => {
+				this.dadosProduto = retorno.data
+			})
+			.catch(() => {
+				this.error = "Ocorreu um erro ao tentar buscar informações desse produto"
+			})
+			.finally(() => {
+				this.loadingProduto = false
+			})
+		},
+		
+		async editarProduto() {
 			this.$refs.form.validate()
+			
+			if (this.valid) {
+				this.editando = true
+				
+				await axios.put('/produto/alterar', this.dadosProduto)
+				.then(() => {
+					$bus.$emit('close-modal')
+					$bus.$emit('atualizar-tabela')
+				})
+				.catch(() => {
+					this.error = "Ocorreu um erro ao tentar editar as informações desse produto"
+				})
+				.finally(() => {
+					this.editando = false
+				})
+			}
 		}
 	},
 	mounted() {
+		this.buscarProduto()
+		
 		$bus.$on('reset-form', () => {
 			this.$refs.form.reset()
 		})

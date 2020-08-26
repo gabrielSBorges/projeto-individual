@@ -14,7 +14,7 @@ const template = /*html*/`
 		</v-col>
 
 		<v-col cols="2">
-			<v-btn :style="buttonStyle" color="info" class="white--text">
+			<v-btn :style="buttonStyle" color="info" class="white--text" @click="onClick">
 				<v-icon>mdi-magnify</v-icon>
 			</v-btn>
 		</v-col>			

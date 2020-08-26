@@ -54,7 +54,7 @@ public class ProdutoRest extends UtilRest {
 	@Path("/buscar")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscaPorNome(@QueryParam("valorBusca") String nome) {
+	public Response buscaPorNome(@QueryParam("nome") String nome) {
 		try {
 			Conexao con = new Conexao();
 			Connection conexao = con.abrirConexao();
@@ -83,8 +83,6 @@ public class ProdutoRest extends UtilRest {
 	@Consumes("application/*")
 	public Response inserir(String produtoParam) {
 		try {
-			System.out.println("Testeeeee --------------------------------------------------------------------------------------------------");
-			
 			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
 			
 			Conexao con = new Conexao();

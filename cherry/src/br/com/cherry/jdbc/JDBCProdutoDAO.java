@@ -24,7 +24,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
 	public Retorno buscarPorId(int prodId) {
 		Retorno retorno = new Retorno();
-		String comando = "select * from produtos where produtos.id = ?";
+		String comando = "SELECT * FROM produtos WHERE id = ?";
 		Produto produto = new Produto();
 		
 		try {
@@ -34,18 +34,14 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				int categoria = rs.getInt("categoria");
-				String modelo = rs.getString("modelo");
-				int capacidade = rs.getInt("capacidade");
+				String nome = rs.getString("nome");
 				float valor = rs.getFloat("valor");
-				int marcaId = rs.getInt("marcas_id");
-
+				int usuario_id = rs.getInt("usuario_id");
+				
 				produto.setId(id);
-				produto.setCategoria(categoria);
-				produto.setMarcaId(marcaId);
-				produto.setModelo(modelo);
-				produto.setCapacidade(capacidade);
+				produto.setNome(nome);
 				produto.setValor(valor);
+				produto.setUsuarioId(usuario_id);
 			}
 			
 			retorno.setStatus("sucesso");
@@ -54,21 +50,21 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus("erro");
-			retorno.setMessage("Ocorreu um erro ao tentar listar os produtos! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Ocorreu um erro ao tentar buscar o produto! \n Erro: \n" + e.getMessage());
 		}
 		
 		return retorno;
 	}
 	
-	public Retorno buscarPorNome(String nome) {
+	public Retorno buscarPorNome(String nomeProduto) {
 		Retorno retorno = new Retorno();
-		String comando = "SELECT produtos.*, marcas.nome as marca FROM produtos INNER JOIN marcas ON produtos.marcas_id = marcas.id ";
+		String comando = "SELECT * FROM produtos ";
 		
-		if (!nome.contentEquals("")) {
-			comando += "WHERE modelo LIKE '%" + nome + "%' ";
+		if (!nomeProduto.contentEquals("")) {
+			comando += "WHERE nome LIKE '%" + nomeProduto + "%' ";
 		}
 		
-		comando += "ORDER BY categoria ASC, marcas.nome ASC, modelo ASC";
+		comando += "ORDER BY nome ASC";
 		
 		List<JsonObject> listaProdutos = new ArrayList<JsonObject>();
 		produto = null;
@@ -79,25 +75,14 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				String categoria = rs.getString("categoria");
-				String modelo = rs.getString("modelo");
-				int capacidade = rs.getInt("capacidade");
+				String nome = rs.getString("nome");
 				float valor = rs.getFloat("valor");
-				String marcaNome = rs.getString("marca");
 				
-				if (categoria.contentEquals("1")) {
-					categoria = "Geladeira";
-				} else if (categoria.contentEquals("2")) {
-					categoria = "Freezer";
-				}
 				
 				produto = new JsonObject();
 				produto.addProperty("id", id);
-				produto.addProperty("categoria", categoria);
-				produto.addProperty("modelo", modelo);
-				produto.addProperty("capacidade", capacidade);
+				produto.addProperty("nome", nome);
 				produto.addProperty("valor", valor);
-				produto.addProperty("marcaNome", marcaNome);
 				
 				listaProdutos.add(produto);
 				
@@ -109,47 +94,30 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus("erro");
-			retorno.setMessage("Ocorreu um erro ao tentar listar as marcas! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Ocorreu um erro ao tentar listar os produtos! \n Erro: \n" + e.getMessage());
 		}
-		
 		
 		return retorno;
 	}
 	
 	public Retorno inserir(Produto produto) {
 		Retorno retorno = new Retorno();
-		String insertProduto = "INSERT INTO produtos (categoria, modelo, capacidade, valor, marcas_id) VALUES (?, ?, ?, ?, ?)";
-		String findMarca = "SELECT id FROM marcas WHERE id = ? LIMIT 1";
+		String insertProduto = "INSERT INTO produtos (nome, valor, usuario_id) VALUES (?, ?, ?)";
 		
 		PreparedStatement p;
 		
 		try {
-			// Verificar se a marca existe
-			p = this.conexao.prepareStatement(findMarca);	
-			p.setInt(1, produto.getMarcaId());
-			ResultSet rs = p.executeQuery();
+			// Cadastrar produto
+			p = this.conexao.prepareStatement(insertProduto);
 			
-			if (rs.next() == true) {
-				// Cadastrar produto
-				p = this.conexao.prepareStatement(insertProduto);
-				
-				p.setInt(1, produto.getCategoria());
-				p.setString(2, produto.getModelo());
-				p.setInt(3, produto.getCapacidade());
-				p.setFloat(4, produto.getValor());
-				p.setInt(5, produto.getMarcaId());
-				
-				p.execute();
-				
-				retorno.setStatus("sucesso");
-				retorno.setMessage("Produto cadastrado com sucesso!");
-			}
+			p.setString(1, produto.getNome());
+			p.setFloat(2, produto.getValor());
+			p.setInt(3, produto.getUsuarioId());
 			
-			else {
-				// Retornar mensagem de erro:
-				retorno.setStatus("erro");
-				retorno.setMessage("Marca informa não existe! Por favor, atualize a página.");
-			}
+			p.execute();
+			
+			retorno.setStatus("sucesso");
+			retorno.setMessage("Produto cadastrado com sucesso!");
 		} catch(SQLException e) {
 			retorno.setStatus("erro");
 			retorno.setMessage("Ocorreu um erro ao tentar cadastrar o produto! \n Erro: \n" + e.getMessage());
@@ -160,33 +128,19 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
 	public Retorno alterar(Produto produto) {
 		Retorno retorno = new Retorno();
-		String comando = "UPDATE produtos SET categoria=?, modelo=?, capacidade=?, valor=?, marcas_id=? WHERE id=?";
-		String findMarca = "SELECT id FROM marcas WHERE id=? LIMIT 1";
+		String comando = "UPDATE produtos SET nome=?, valor=? WHERE id=?";
 		PreparedStatement p;
 		
 		try {
-			p = this.conexao.prepareStatement(findMarca);
-			
-			p.setInt(1, produto.getMarcaId());
-			ResultSet rs = p.executeQuery();
-			
-			if (rs.next() == true) {
-				p = this.conexao.prepareStatement(comando);
-				p.setInt(1, produto.getCategoria());
-				p.setString(2, produto.getModelo());
-				p.setInt(3, produto.getCapacidade());
-				p.setFloat(4, produto.getValor());
-				p.setInt(5, produto.getMarcaId());
-				p.setInt(6, produto.getId());
-				p.executeUpdate();
+			p = this.conexao.prepareStatement(comando);
+			p.setString(1, produto.getNome());
+			p.setFloat(2, produto.getValor());
+			p.setInt(3, produto.getId());
+			p.executeUpdate();
 
-				retorno.setStatus("sucesso");
-				retorno.setMessage("Produto alterado com sucesso!");
-			}
-			else {
-				retorno.setStatus("erro");
-				retorno.setMessage("Marca informada não existe!");
-			}
+			retorno.setStatus("sucesso");
+			retorno.setMessage("Produto alterado com sucesso!");
+			
 		} catch(SQLException e) {
 			e.printStackTrace();
 			
