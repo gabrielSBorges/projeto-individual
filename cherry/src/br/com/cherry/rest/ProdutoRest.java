@@ -21,6 +21,7 @@ import br.com.cherry.jdbc.JDBCProdutoDAO;
 import br.com.cherry.modelo.Produto;
 import br.com.cherry.modelo.Retorno;
 
+
 @Path("produto")
 public class ProdutoRest extends UtilRest {
 	@GET
