@@ -88,7 +88,7 @@ export default {
 			this.loadingProdutos = true
 		
 			this.produtos = []
-			
+
 			await axios.get(`/produto/buscar?nome=${this.filterProduto}`)
 			.then(retorno => {
 				const produtos = JSON.parse(retorno.data)
@@ -140,5 +140,10 @@ export default {
 	},
 	mounted() {
 		this.buscarProdutos()
+
+		$bus.$on('atualizar-tabela', () => {
+			this.filterProduto = ""
+			this.buscarProdutos()
+		})
 	}
 }

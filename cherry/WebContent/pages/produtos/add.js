@@ -23,7 +23,8 @@ const template = /*html*/`
 					</v-col>
 
 					<v-col cols="12" class="text-right py-0">
-						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarProduto" />
+						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarProduto" v-if="!cadastrando" />
+						<app-btn block disabled label="Cadastrar" :on-click="cadastrarProduto" v-else />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -44,6 +45,8 @@ export default {
 				nome: [v => !!v || "Digite o nome do produto."],
 				valor: [v => !!v || "Digite o valor do produto."]
 			},
+			
+			cadastrando: false,
 
 			dadosProduto: {
 				nome: '',
@@ -52,11 +55,32 @@ export default {
 		}
 	},
 	methods: {
-		cadastrarProduto() {
+		async cadastrarProduto() {
 			this.$refs.form.validate()
 
 			if (this.valid) {
+				this.cadastrando = true
 				
+				const { nome, valor } = this.dadosProduto
+				
+				const body = {
+					nome,
+					valor,
+					usuario_id: 1
+				}
+
+				await axios.post('/produto/inserir', body)
+				.then(() => {
+					$bus.$emit('close-modal')
+					$bus.$emit('atualizar-tabela')
+				})
+				.catch(() => {
+					//TODO - Toast
+					console.log("Erro ao cadastrar")
+				})
+				.finally(() => {
+					this.cadastrando = false
+				})
 			}
 		}
 	},
