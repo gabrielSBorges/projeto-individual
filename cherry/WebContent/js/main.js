@@ -33,6 +33,8 @@ Vue.component("AppPageHeader", AppPageHeader)
 Vue.component("AppSearchField", AppSearchField)
 Vue.component("AppTable", AppTable)
 
+axios.defaults.baseURL = 'http://localhost:8080/cherry/rest'
+
 new Vue({
 	router,
 	el: '#app',

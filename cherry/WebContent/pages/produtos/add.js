@@ -54,6 +54,10 @@ export default {
 	methods: {
 		cadastrarProduto() {
 			this.$refs.form.validate()
+
+			if (this.valid) {
+				
+			}
 		}
 	},
 	mounted() {
