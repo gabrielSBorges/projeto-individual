@@ -110,7 +110,7 @@ export default {
 		this.buscarProduto()
 		
 		$bus.$on('reset-form', () => {
-			this.$refs.form.reset()
+			//this.$refs.form.reset()
 		})
 	}
 }
