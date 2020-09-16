@@ -27,7 +27,7 @@ const template = /*html*/`
 							{{ item.nome }}
 						</td>
 						
-						<td class="text-right">
+						<td class="text-center">
 							{{ valorFormatado(item.valor) }}
 						</td>
 						
@@ -64,7 +64,7 @@ export default {
 			loadingProdutos: false,
 			cabecalho: [
 				{ text: 'Nome', sortable: false, value: 'nome' },
-				{ text: 'Valor', sortable: false, value: 'valor' },
+				{ text: 'Valor', sortable: false, value: 'valor', align: 'center' },
 				{ text: '', sortable: false, value: 'btns' },
 			],
 			produtos: [],

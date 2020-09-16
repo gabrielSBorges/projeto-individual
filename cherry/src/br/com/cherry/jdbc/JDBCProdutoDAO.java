@@ -14,7 +14,7 @@ import br.com.cherry.jdbcinterface.ProdutoDAO;
 import br.com.cherry.modelo.Produto;
 import br.com.cherry.modelo.Retorno;
 
-public class JDBCProdutoDAO implements ProdutoDAO {
+public class JDBCProdutoDAO {
 	private Connection conexao;
 	private JsonObject produto;
 	

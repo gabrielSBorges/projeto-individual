@@ -1,3 +1,5 @@
+use db_cherry;
+
 select * from tipos;
 select * from usuarios;
 select * from produtos;
