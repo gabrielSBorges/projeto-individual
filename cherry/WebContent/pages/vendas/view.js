@@ -86,10 +86,10 @@ export default {
     },
   },
   mounted() {
-		this.buscarProduto()
+		this.buscarVenda()
 		
 		$bus.$on('load-content', () => {
-			this.buscarProduto()
+			this.buscarVenda()
 		})
 		
 		$bus.$on('reset-modal', () => {

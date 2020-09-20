@@ -8,6 +8,7 @@ public class Venda {
 	private float valor;
 	private String dt_realizado;
 	private int usuario_id;
+	private String usuario_nome;
 	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	// ID
@@ -54,5 +55,14 @@ public class Venda {
 	
 	public void setUsuarioId(int usuario_id) {
 		this.usuario_id = usuario_id;
+	}
+	
+	// Usuario Nome
+	public String getUsuarioNome() {
+		return this.usuario_nome;
+	}
+	
+	public void setUsuarioNome(String usuario_nome) {
+		this.usuario_nome = usuario_nome;
 	}
 }
