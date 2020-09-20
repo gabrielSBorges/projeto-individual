@@ -62,12 +62,16 @@ export default {
 				valor: [v => !!v || "Digite o valor do produto."]
 			},
 			
-			produto_id: this.$route.query.id,
 			dadosProduto: {},
 			
 			loadingProduto: false,
 			editando: false,
 			error: '',
+		}
+	},
+	computed: {
+		produto_id() {
+			return this.$route.query.id
 		}
 	},
 	methods: {
@@ -92,6 +96,8 @@ export default {
 			if (this.valid) {
 				this.editando = true
 				
+				this.dadosProduto.valor = parseFloat(this.dadosProduto.valor) 
+				
 				await axios.put('/produto/alterar', this.dadosProduto)
 				.then(() => {
 					$bus.$emit('close-modal')
@@ -109,8 +115,18 @@ export default {
 	mounted() {
 		this.buscarProduto()
 		
-		$bus.$on('reset-form', () => {
-			//this.$refs.form.reset()
+		$bus.$on('load-content', () => {
+			this.buscarProduto()
 		})
+		
+		$bus.$on('reset-modal', () => {
+			this.dadosProduto = {}
+			this.error = ''
+			this.$refs.form.reset()
+		})
+	},
+	beforeDestroy() {
+		$bus.$off('load-content')
+		$bus.$off('reset-modal')
 	}
 }

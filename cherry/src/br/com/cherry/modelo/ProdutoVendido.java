@@ -16,6 +16,15 @@ public class ProdutoVendido {
 		this.id = id;
 	}
 	
+	// Valor unitï¿½rio
+	public float getValorUnit() {
+		return this.valor_unit;
+	}
+	
+	public void setValorUnit(float valor_unit) {
+		this.valor_unit = valor_unit;
+	}
+	
 	// Quantidade
 	public int getQuantidade() {
 		return this.quantidade;
@@ -23,15 +32,6 @@ public class ProdutoVendido {
 	
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-	}
-	
-	// Valor Unitário
-	public float getValor() {
-		return this.valor_unit;
-	}
-	
-	public void setValor(float valor_unit) {
-		this.valor_unit = valor_unit;
 	}
 	
 	// Venda ID

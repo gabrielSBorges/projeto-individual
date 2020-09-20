@@ -50,7 +50,7 @@ export default {
 
 			dadosProduto: {
 				nome: '',
-				valor: 0
+				valor: ''
 			}
 		}
 	},
@@ -65,7 +65,7 @@ export default {
 				
 				const body = {
 					nome,
-					valor,
+					valor: parseFloat(valor),
 					usuario_id: 1
 				}
 
@@ -85,8 +85,13 @@ export default {
 		}
 	},
 	mounted() {
-		$bus.$on('reset-form', () => {
-			this.$refs.form.reset()	
+		$bus.$on('reset-modal', () => {
+			this.$refs.form.reset()
+			
+			this.dadosProduto = {
+				nome: '',
+				valor: ''
+			}
 		})
 	}
 }

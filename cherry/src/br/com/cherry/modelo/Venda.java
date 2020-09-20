@@ -1,18 +1,14 @@
 package br.com.cherry.modelo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class Venda implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class Venda {
 	private int id;
-	private Date dt_realizado;
 	private float valor;
+	private String dt_realizado;
 	private int usuario_id;
-	private List<ProdutoVendido> produtos_vendidos = new ArrayList<ProdutoVendido>();
+	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	// ID
 	public int getId() {
@@ -32,13 +28,23 @@ public class Venda implements Serializable {
 		this.valor = valor;
 	}
 	
-	// Dt Realizado
-	public Date getDtRealizado() {
+	// Data Realizado
+	public String getDataRealizado() {
 		return this.dt_realizado;
 	}
 	
-	public void setDtRealizado(Date dt_realizado) {
+	public void setDataRealizado(String dt_realizado) {
 		this.dt_realizado = dt_realizado;
+	}
+	
+	
+	// Produtos	
+	public List<Produto> getListProdutos() {
+		return this.produtos;
+	}
+	
+	public void setListProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 	
 	// Usuario ID
@@ -48,14 +54,5 @@ public class Venda implements Serializable {
 	
 	public void setUsuarioId(int usuario_id) {
 		this.usuario_id = usuario_id;
-	}
-	
-	// Produtos Vendidos
-	public List<ProdutoVendido> getProdutosVendidos() {
-		return this.produtos_vendidos;
-	}
-	
-	public void setProdutosVendidos(List<ProdutoVendido> produtos_vendidos) {
-		this.produtos_vendidos = produtos_vendidos;
 	}
 }

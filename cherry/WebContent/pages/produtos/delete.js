@@ -51,11 +51,15 @@ export default {
 		return {
 			valid: false,
 			confirm: false,
-			produto_id: this.$route.query.id,
 			loadingProduto: false,
 			produto: {},
 			error: '',
 			excluindo: false,
+		}
+	},
+	computed: {
+		produto_id() {
+			return this.$route.query.id
 		}
 	},
 	methods: {
@@ -94,8 +98,14 @@ export default {
 	mounted() {
 		this.buscarProduto()
 		
-		$bus.$on('reset-form', () => {
-			this.$refs.form.reset()	
+		$bus.$on('load-content', () => {
+			this.buscarProduto()
+		})
+		
+		$bus.$on('reset-modal', () => {
+			this.dadosProduto = {}
+			this.error = ''
+			this.$refs.form.reset()
 		})
 	}	
 }

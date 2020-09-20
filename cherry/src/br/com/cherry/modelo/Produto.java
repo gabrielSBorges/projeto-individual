@@ -8,6 +8,7 @@ public class Produto implements Serializable {
 	private int id;
 	private String nome;
 	private float valor;
+	private int quantidade;
 	private int usuario_id;
 	
 	
@@ -36,6 +37,15 @@ public class Produto implements Serializable {
 	
 	public void setValor(float valor) {
 		this.valor = valor;
+	}
+	
+	// Quantidade
+	public int getQuantidade() {
+		return this.quantidade;
+	}
+	
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 	
 	// Usuario ID

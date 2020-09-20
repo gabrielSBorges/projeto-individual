@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`usuarios` (
   `id` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificação do usuário.',
   `nome` VARCHAR(45) NOT NULL COMMENT 'Nome do usuário.',
   `email` VARCHAR(45) NOT NULL COMMENT 'Endereço de e-mail do usuário.',
-  `senha` VARCHAR(25) NOT NULL COMMENT 'Senha criptografada do usuário.',
+  `senha` VARCHAR(32) NOT NULL COMMENT 'Senha criptografada do usuário.',
   `ativo` TINYINT NOT NULL COMMENT 'Informa se o usuário pode acessar o sistema ou não.',
   `tipo_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT 'ID do registro respectivo ao tipo de conta do usuário.',
   PRIMARY KEY (`id`),
