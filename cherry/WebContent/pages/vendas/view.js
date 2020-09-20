@@ -84,5 +84,22 @@ export default {
     valorFormatado(valor) {
       return ((Math.round(valor * 100) / 100).toFixed(2)).replace(".", ",")
     },
-  }
+  },
+  mounted() {
+		this.buscarProduto()
+		
+		$bus.$on('load-content', () => {
+			this.buscarProduto()
+		})
+		
+		$bus.$on('reset-modal', () => {
+			this.dadosProduto = {}
+			this.error = ''
+			this.$refs.form.reset()
+		})
+	},
+	beforeDestroy() {
+		$bus.$off('load-content')
+		$bus.$off('reset-modal')
+	}
 }
