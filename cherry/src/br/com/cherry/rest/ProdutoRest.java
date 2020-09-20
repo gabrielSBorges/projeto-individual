@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 
 import java.sql.Connection;
 
-import br.com.cherry.db.Conexao;
+import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCProdutoDAO;
 import br.com.cherry.modelo.Produto;
 import br.com.cherry.modelo.Retorno;
@@ -30,13 +30,13 @@ public class ProdutoRest extends UtilRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@QueryParam("id") int id) {
 		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			Retorno retorno = jdbcProduto.buscarPorId(id);
 			
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getProduto());
@@ -57,13 +57,13 @@ public class ProdutoRest extends UtilRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscaPorNome(@QueryParam("nome") String nome) {
 		try {
-			Conexao con = new Conexao();
-			Connection conexao = con.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			Retorno retorno = jdbcProduto.buscarPorNome(nome);
 			
-			con.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {
 				String json = new Gson().toJson(retorno.getListJson());
@@ -86,13 +86,13 @@ public class ProdutoRest extends UtilRest {
 		try {
 			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
 			
-			Conexao con = new Conexao();
-			Connection conexao = con.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			Retorno retorno = jdbcProduto.inserir(produto);
 			
-			con.fecharConexao();
+			my_sql.fecharConexao();
 	
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getMessage());
@@ -114,13 +114,13 @@ public class ProdutoRest extends UtilRest {
 		try {	
 			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
 			
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			Retorno retorno = jdbcProduto.alterar(produto);
 			
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getMessage());
@@ -140,13 +140,13 @@ public class ProdutoRest extends UtilRest {
 	@Consumes("application/*")
 	public Response excluir(@PathParam("id") int id) {
 		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			Retorno retorno = jdbcProduto.deletar(id);
 	
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {
 				return this.buildResponse(retorno.getMessage());				

@@ -12,7 +12,6 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-import br.com.cherry.jdbcinterface.UsuarioDAO;
 import br.com.cherry.modelo.Usuario;
 import br.com.cherry.modelo.Retorno;
 

@@ -2,9 +2,11 @@ package br.com.cherry.db;
 
 import java.sql.Connection;
 
-public class Conexao {
+public class MySql {
 	private Connection conexao;
 	
+	// Conexão
+	@SuppressWarnings("deprecation")
 	public Connection abrirConexao() {
 		String basepath = "localhost";
 		String database = "db_cherry";

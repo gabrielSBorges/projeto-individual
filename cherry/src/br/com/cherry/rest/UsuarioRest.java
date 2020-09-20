@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 
 import java.sql.Connection;
 
-import br.com.cherry.db.Conexao;
+import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCUsuarioDAO;
 import br.com.cherry.modelo.Usuario;
 import br.com.cherry.modelo.Retorno;
@@ -30,13 +30,13 @@ public class UsuarioRest extends UtilRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@QueryParam("id") int id) {
 		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 			Retorno retorno = jdbcUsuario.buscarPorId(id);
 			
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getUsuario());
@@ -57,13 +57,13 @@ public class UsuarioRest extends UtilRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscaPorNome(@QueryParam("nome") String nome) {
 		try {
-			Conexao con = new Conexao();
-			Connection conexao = con.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 			Retorno retorno = jdbcUsuario.buscarPorNome(nome);
 			
-			con.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {
 				String json = new Gson().toJson(retorno.getListJson());
@@ -86,13 +86,13 @@ public class UsuarioRest extends UtilRest {
 		try {
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
 			
-			Conexao con = new Conexao();
-			Connection conexao = con.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 			Retorno retorno = jdbcUsuario.inserir(usuario);
 			
-			con.fecharConexao();
+			my_sql.fecharConexao();
 	
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getMessage());
@@ -114,13 +114,13 @@ public class UsuarioRest extends UtilRest {
 		try {	
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
 			
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 			Retorno retorno = jdbcUsuario.alterar(usuario);
 			
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getMessage());
@@ -142,13 +142,13 @@ public class UsuarioRest extends UtilRest {
 		try {	
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
 			
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 			Retorno retorno = jdbcUsuario.alterarSenha(usuario);
 			
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {				
 				return this.buildResponse(retorno.getMessage());
@@ -168,13 +168,13 @@ public class UsuarioRest extends UtilRest {
 	@Consumes("application/*")
 	public Response excluir(@PathParam("id") int id) {
 		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 			Retorno retorno = jdbcUsuario.deletar(id);
 	
-			conec.fecharConexao();
+			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {
 				return this.buildResponse(retorno.getMessage());				
