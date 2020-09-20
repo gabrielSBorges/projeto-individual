@@ -10,7 +10,7 @@ const template = /*html*/`
 export default {
 	template,
 	props: {
-    title: { type: String, default: '' },
-    description: { type: String, default: '' }
+    title: { type: [String, Number], default: '' },
+    description: { type: [String, Number], default: '' }
 	}
 }

@@ -22,9 +22,19 @@ import AppPageHeader from '../components/AppPageHeader.js'
 import AppSearchField from '../components/AppSearchField.js'
 import AppTable from '../components/AppTable.js'
 
+Vue.component("Default", Default)
+Vue.component("AppBlock", AppBlock)
+Vue.component("AppBtn", AppBtn)
+Vue.component("AppDataInfo", AppDataInfo)
+Vue.component("AppDropdown", AppDropdown)
+Vue.component("AppModal", AppModal)
+Vue.component("AppPageHeader", AppPageHeader)
+Vue.component("AppSearchField", AppSearchField)
+Vue.component("AppTable", AppTable)
+
 axios.defaults.baseURL = 'http://localhost:8080/cherry/rest'
 
-const vm = new Vue({
+new Vue({
 	router,
 	el: '#app',
 	vuetify: new Vuetify({
@@ -46,17 +56,6 @@ const vm = new Vue({
 			},
 		},
 	}),
-	components: {
-		Default,
-		AppBlock,
-		AppBtn,
-		AppDataInfo,
-		AppDropdown,
-		AppModal,
-		AppPageHeader,
-		AppSearchField,
-		AppTable
-	},
 	data() {
 		return {
 			telas,
