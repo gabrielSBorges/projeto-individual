@@ -51,7 +51,6 @@ public class JDBCVendaDAO {
 			ResultSet rsProduto = p.executeQuery();
 			
 			List<Produto> produtos = new ArrayList<Produto>();
-			Produto produto = new Produto();
 			
 			while (rsProduto.next()) {				
 				int produto_id = rsProduto.getInt("id");
@@ -59,6 +58,7 @@ public class JDBCVendaDAO {
 				int quantidade = rsProduto.getInt("quantidade");
 				float produto_valor = rsProduto.getFloat("valor");
 				
+				Produto produto = new Produto();
 				produto.setId(produto_id);
 				produto.setNome(nome);
 				produto.setQuantidade(quantidade);

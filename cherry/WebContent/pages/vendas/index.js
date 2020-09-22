@@ -211,5 +211,14 @@ export default {
   },
   mounted() {
     this.buscarVendas();
+
+    $bus.$on('atualizar-tabela', () => {
+			this.filtro = {
+        data: "",
+        usuario_id: "",
+      },
+
+			this.buscarVendas()
+		})
   },
 };
