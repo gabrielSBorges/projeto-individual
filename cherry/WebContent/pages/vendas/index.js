@@ -60,7 +60,8 @@ const template = /*html*/ `
 						</td>
 						
 						<td class="text-right">
-							<app-dropdown :btns="item.btns" />
+              <app-btn label="Detalhes" info outlined small :on-click="() => abrirModal('view', 'DETALHES DA VENDA', null, item.id)" />
+							<!-- <app-dropdown :btns="item.btns" /> -->
 						</td>
 					</tr>
 				</template>
@@ -183,7 +184,13 @@ export default {
     },
 
     abrirModal(metodo, titulo, componente, venda_id) {
-      this.modalAtual = componente;
+      if (metodo == 'view') {
+        this.modalAtual = ModalView;
+      }
+      else {
+        this.modalAtual = componente;
+      }
+
       this.modalTitle = titulo;
 
       if (metodo == "add") {
@@ -213,12 +220,12 @@ export default {
     this.buscarVendas();
 
     $bus.$on('atualizar-tabela', () => {
-			this.filtro = {
+      this.filtro = {
         data: "",
         usuario_id: "",
       },
 
-			this.buscarVendas()
-		})
+        this.buscarVendas()
+    })
   },
 };

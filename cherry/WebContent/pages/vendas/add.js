@@ -52,9 +52,9 @@ const template = /*html*/`
                   {{ item.quantidade }}
                 </td>
 
-                <td>
+                <!-- <td>
                   R$ {{ valorFormatado(item.quantidade * item.valor) }}
-                </td>
+                </td> -->
                 
                 <td class="text-center">
                   <app-btn alert small tooltip="Remover Produto" :disabled="cadastrando" :on-click="() => removeProduto(item.id)" icon="mdi-delete" />
@@ -105,7 +105,7 @@ export default {
         { text: 'Produto', sortable: false, value: 'nome' },
         { text: 'Valor Unitário', sortable: false, value: 'valor' },
         { text: 'Quantidade', sortable: false, value: 'quantidade' },
-        { text: 'Total', sortable: false, value: 'total' },
+        // { text: 'Total', sortable: false, value: 'total' },
         { text: '', sortable: false, value: 'btns' },
       ],
       produtosSelecionados: [],
@@ -145,7 +145,7 @@ export default {
       const body = {
         valor: this.totalVenda,
         dt_realizado: moment().format("YYYY-MM-DD HH:mm:ss"),
-        usuario_id: 1,
+        usuario_id: 2,
         produtos: this.produtosSelecionados
       }
 
