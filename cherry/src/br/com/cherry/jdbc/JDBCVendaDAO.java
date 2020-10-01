@@ -22,7 +22,7 @@ public class JDBCVendaDAO {
 	public Retorno buscarPorId(int vendaId) {
 		Retorno retorno = new Retorno();
 		
-		String buscaVenda = "SELECT * FROM vendas WHERE id = ?";
+		String buscaVenda = "SELECT v.*, u.nome AS usuario_nome FROM vendas v INNER JOIN usuarios u ON v.usuario_id = u.id WHERE v.id = ?";
 		String buscaProdutos = "SELECT p.id, p.nome, pv.quantidade, pv.valor_unit AS valor FROM produtos_vendidos pv INNER JOIN produtos p ON pv.produto_id = p.id WHERE pv.venda_id = ?";
 		
 		Venda venda = new Venda();
@@ -37,11 +37,13 @@ public class JDBCVendaDAO {
 				String dt_realizado = rsVenda.getString("dt_realizado");
 				float valor = rsVenda.getFloat("valor");
 				int usuario_id = rsVenda.getInt("usuario_id");
+				String usuario_nome = rsVenda.getString("usuario_nome");
 				
 				venda.setId(id);
 				venda.setValor(valor);
 				venda.setDataRealizado(dt_realizado);
-				venda.setUsuarioId(usuario_id);			
+				venda.setUsuarioId(usuario_id);		
+				venda.setUsuarioNome(usuario_nome);
 			}
 			
 			p = this.conexao.prepareStatement(buscaProdutos);
@@ -49,7 +51,6 @@ public class JDBCVendaDAO {
 			ResultSet rsProduto = p.executeQuery();
 			
 			List<Produto> produtos = new ArrayList<Produto>();
-			Produto produto = new Produto();
 			
 			while (rsProduto.next()) {				
 				int produto_id = rsProduto.getInt("id");
@@ -57,6 +58,7 @@ public class JDBCVendaDAO {
 				int quantidade = rsProduto.getInt("quantidade");
 				float produto_valor = rsProduto.getFloat("valor");
 				
+				Produto produto = new Produto();
 				produto.setId(produto_id);
 				produto.setNome(nome);
 				produto.setQuantidade(quantidade);
@@ -85,19 +87,17 @@ public class JDBCVendaDAO {
 		String dt_inicio = dt_re + " 00:00:00";
 		String dt_fim = dt_re + " 23:59:59";
 		
-		String buscaVendas = "SELECT * FROM vendas";
+		String buscaVendas = "SELECT v.*, u.nome AS usuario_nome FROM vendas v INNER JOIN usuarios u ON v.usuario_id = u.id";
 		
 		if (!dt_re.contentEquals("") && usu_id != 0) {	
-			buscaVendas += " WHERE dt_realizado >= ? AND dt_realizado <= ? AND usuario_id = ?";
+			buscaVendas += " WHERE v.dt_realizado >= ? AND v.dt_realizado <= ? AND v.usuario_id = ?";
 		}
 		else if (usu_id != 0) {
-			buscaVendas += " WHERE usuario_id = ?";
+			buscaVendas += " WHERE v.usuario_id = ?";
 		}
 		else if (!dt_re.contentEquals("")) {
-			buscaVendas += " WHERE dt_realizado >= ? AND dt_realizado <= ?";
+			buscaVendas += " WHERE v.dt_realizado >= ? AND v.dt_realizado <= ?";
 		}
-		
-		System.out.println(buscaVendas);
 		
 		String buscaProdutos = "SELECT p.id, p.nome, pv.quantidade, pv.valor_unit AS valor FROM produtos_vendidos pv INNER JOIN produtos p ON pv.produto_id = p.id WHERE pv.venda_id = ?";
 		
@@ -126,12 +126,14 @@ public class JDBCVendaDAO {
 				String dt_realizado = rsVenda.getString("dt_realizado");
 				float valor = rsVenda.getFloat("valor");
 				int usuario_id = rsVenda.getInt("usuario_id");
+				String usuario_nome = rsVenda.getString("usuario_nome");
 				
 				Venda venda = new Venda();
 				venda.setId(id);
 				venda.setDataRealizado(dt_realizado);
 				venda.setValor(valor);
 				venda.setUsuarioId(usuario_id);
+				venda.setUsuarioNome(usuario_nome);
 				
 				p = this.conexao.prepareStatement(buscaProdutos);
 				p.setInt(1, id);

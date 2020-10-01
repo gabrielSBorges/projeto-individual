@@ -24,7 +24,6 @@ import br.com.cherry.modelo.Venda;
 public class VendaRest extends UtilRest {
 	@GET
 	@Path("/buscarPorId")
-	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@QueryParam("id") int id) {
 		try {
@@ -51,7 +50,6 @@ public class VendaRest extends UtilRest {
 	
 	@GET
 	@Path("/listar")
-	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listar(@QueryParam("dt_realizado") String dt_realizado, @QueryParam("usuario_id") int usuario_id) {
 		try {

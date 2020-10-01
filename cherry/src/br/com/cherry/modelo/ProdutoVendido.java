@@ -16,7 +16,7 @@ public class ProdutoVendido {
 		this.id = id;
 	}
 	
-	// Valor unitário
+	// Valor unitï¿½rio
 	public float getValorUnit() {
 		return this.valor_unit;
 	}

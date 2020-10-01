@@ -4,7 +4,7 @@ let routes = []
 
 telas.map(tela => {
 	const { path, component } = tela
-	
+
 	routes.push({ path, component })
 })
 
@@ -13,8 +13,6 @@ const router = new VueRouter({
 })
 
 import Default from '../layouts/default.js'
-Vue.component("Default", Default)
-
 import AppBlock from '../components/AppBlock.js'
 import AppBtn from '../components/AppBtn.js'
 import AppDataInfo from '../components/AppDataInfo.js'
@@ -24,6 +22,7 @@ import AppPageHeader from '../components/AppPageHeader.js'
 import AppSearchField from '../components/AppSearchField.js'
 import AppTable from '../components/AppTable.js'
 
+Vue.component("Default", Default)
 Vue.component("AppBlock", AppBlock)
 Vue.component("AppBtn", AppBtn)
 Vue.component("AppDataInfo", AppDataInfo)
@@ -53,13 +52,13 @@ new Vue({
 				}
 			},
 			options: {
-					customProperties: true
+				customProperties: true
 			},
 		},
 	}),
 	data() {
 		return {
-			telas			
+			telas,
 		}
 	},
 	watch: {
@@ -71,12 +70,12 @@ new Vue({
 		loadPage(path) {
 			this.$router.push(path)
 		},
-		
+
 		changePageTitle() {
 			let currentPath = this.$route.path
-						
+
 			let currentPage = telas.filter(tela => tela.path == currentPath)[0]
-			
+
 			document.title = `Cherry - ${currentPage.title}`
 		}
 	},

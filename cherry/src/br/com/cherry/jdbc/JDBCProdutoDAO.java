@@ -152,16 +152,28 @@ public class JDBCProdutoDAO {
 	
 	public Retorno deletar(int id) {
 		Retorno retorno = new Retorno();
+		String buscaVenda = "SELECT id FROM produtos_vendidos WHERE produto_id = ?";
 		String comando = "DELETE FROM produtos WHERE id = ?";
 		PreparedStatement p;
 		
-		try {
-			p = this.conexao.prepareStatement(comando);
+		try { 
+			p = this.conexao.prepareStatement(buscaVenda);
 			p.setInt(1, id);
-			p.execute();
+			ResultSet rsVenda = p.executeQuery();
 			
-			retorno.setStatus("sucesso");
-			retorno.setMessage("Produto removido com sucesso!");
+			if (!rsVenda.next()) {
+				p = this.conexao.prepareStatement(comando);
+				p.setInt(1, id);
+				p.execute();
+				
+				retorno.setStatus("sucesso");
+				retorno.setMessage("Produto removido com sucesso!");
+			}
+			else {
+				retorno.setStatus("erro");
+				retorno.setMessage("Não foi possível remover o produto. Há vendas que foram realizadas com esse produto.! \n Erro: \n" + e.getMessage());
+			}
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			

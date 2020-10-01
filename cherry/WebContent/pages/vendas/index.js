@@ -1,4 +1,4 @@
-const template = /*html*/`
+const template = /*html*/ `
 
 	<v-row>
 		<v-col cols="12" class="pb-0">
@@ -8,13 +8,23 @@ const template = /*html*/`
 				</v-col>
 				
 				<v-col offset="5" cols="2">
-					<v-text-field label="Data" dense solo hide-details>
+					<v-text-field label="Data" v-mask="'##/##/####'" v-model="filtro.data" dense solo hide-details>
 					</v-text-field>
 				</v-col>
 
 				<v-col cols="2">
-					<v-text-field label="Usuario" dense solo hide-details>
-					</v-text-field>
+          <v-autocomplete
+            dense
+            solo
+            :search-input.sync="buscaUsuario"
+            v-model="filtro.usuario_id" 
+            :items="usuarios"
+            label="Usuário"
+            item-text="nome"
+            item-value="id"
+            :no-data-text="(loadingUsuarios) ? 'Buscando...' : 'Nenhum usuário encontrado.'"
+            hide-details
+          />
 				</v-col>
 
 				<v-col cols="1" align-self="center" class="text-right">
@@ -38,19 +48,20 @@ const template = /*html*/`
 						</td>
 
 						<td>
-							{{ item.dt_lancamento }}
+							{{ dataFormatada(item.dt_realizado) }}
 						</td>
 						
 						<td>
-							{{ item.usuario }}
+							{{ item.usuario_nome }}
 						</td>
 						
 						<td>
-							{{ item.valor }}
+							{{ valorFormatado(item.valor) }}
 						</td>
 						
 						<td class="text-right">
-							<app-dropdown :btns="item.btns" />
+              <app-btn label="Detalhes" info outlined small :on-click="() => abrirModal('view', 'DETALHES DA VENDA', null, item.id)" />
+							<!-- <app-dropdown :btns="item.btns" /> -->
 						</td>
 					</tr>
 				</template>
@@ -62,121 +73,159 @@ const template = /*html*/`
 		</app-modal>
 	</v-row>
 
-`
+`;
 
 import { $bus } from '../../js/eventBus.js'
-import AppTable from '../../components/AppTable.js'
-import AppDropdown from '../../components/AppDropdown.js'
-import AppModal from '../../components/AppModal.js'
-import AppBtn from '../../components/AppBtn.js'
 
-Vue.component("AppTable", AppTable)
-Vue.component("AppDropdown", AppDropdown)
-Vue.component("AppModal", AppModal)
-Vue.component("AppBtn", AppBtn)
+Vue.directive('mask', VueMask.VueMaskDirective);
 
 // Modais
-import ModalView from './view.js'
-import ModalAdd from './add.js'
+import ModalView from "./view.js";
+import ModalAdd from "./add.js";
 
 export default {
-	template,
-	data() {
-		return {
-			// Tabela de usuários
-			loadingVendas: false,
-			cabecalho: [
-				{ text: 'Código', sortable: false, value: 'id' },
-				{ text: 'Data de Lançamento', sortable: false, value: 'dt_lancamento' },
-				{ text: 'Usuário', sortable: false, value: 'usuario' },
-				{ text: 'Valor', sortable: false, value: 'valor' },
-				{ text: '', sortable: false, value: 'btns' },
-			],
-			vendas: [],
-			filtro: {
-				data: '',
-				usuario: ''
-			},
-			
-			// Modais
-			modalAtual: null,
-			modalTitle: '',
-			modalSubtitle: '',
-		}
-	},
-	watch: {
-		modalAtual(modal) {
-			this.$options.components.Modal = modal
-		}
-	},
-	methods: {
-		buscarVendas() {
-			this.loadingVendas = true
-			
-			let vendas = [ // FIXME - susbstituir pelo get em usuários
-				{
-					id: 4,
-					dt_lancamento: '05/10/2020 11:20',
-					usuario: 'Gabriel Borges',
-					valor: 12.5,
-				},
-				{
-					id: 2,
-					dt_lancamento: '06/10/2020 07:20',
-					usuario: 'Ricardo Eletro',
-					valor: 5.0,
-				},
-				{
-					id: 10,
-					dt_lancamento: '05/10/2020 15:26',
-					usuario: 'Mike Azevedo',
-					valor: 10.0,
-				},
-				{
-					id: 1,
-					dt_lancamento: '05/10/2020 10:20',
-					usuario: 'Orlando Bloom',
-					valor: 25.5,
-				},
-			]
-			
-			vendas.map(venda => {
-				const { id, dt_lancamento, usuario, valor } = venda
-				
-				const btns = [
-					{
-						title: 'Detalhes',
-						function: () => this.abrirModal('view', "DETALHES DA VENDA", ModalView, id)
-					},
-				]
-				
-				this.vendas.push({ id, dt_lancamento, usuario, valor, btns })
-			})
-			
-			this.loadingVendas = false
-		},
+  template,
+  data() {
+    return {
+      // Tabela de usuários
+      loadingVendas: false,
+      loadingUsuarios: false,
+      cabecalho: [
+        { text: "Código", sortable: false, value: "id" },
+        { text: "Data de Lançamento", sortable: false, value: "dt_lancamento" },
+        { text: "Usuário", sortable: false, value: "usuario" },
+        { text: "Valor", sortable: false, value: "valor" },
+        { text: "", sortable: false, value: "btns" },
+      ],
+      vendas: [],
+      usuarios: [],
+      buscaUsuario: '',
+      filtro: {
+        data: "",
+        usuario_id: "",
+      },
 
-		abrirModal(metodo, titulo, componente, venda_id) {
-			this.modalAtual = componente	
-			this.modalTitle = titulo
+      // Modais
+      modalAtual: null,
+      modalTitle: "",
+      modalSubtitle: "",
+    };
+  },
+  watch: {
+    modalAtual(modal) {
+      this.$options.components.Modal = modal;
+    },
 
-			if (metodo == 'add') {
-				this.modalSubtitle = ""
-			}
-			else {
-				this.modalSubtitle = venda_id.toString()
-				
-				this.$router.push({ path: '/vendas', query: { id: venda_id } })
-			}
+    buscaUsuario(v) {
+      const busca = v ? v.replace(/ /g, "") : v
 
-			$bus.$emit('open-modal')
-		},
+      if (busca == "") {
+        this.filtro.usuario_id = null
+      }
 
-		abrirModalAdd() {
-			this.abrirModal('add', 'LANÇAR VENDA', ModalAdd)
-		}
-	},
-	mounted() {
-		this.buscarVendas()
-	}
-}
+      this.buscarUsuarios()
+    }
+  },
+  methods: {
+    async buscarVendas() {
+      this.loadingVendas = true;
+
+      this.vendas = [];
+
+      const { data, usuario_id } = this.filtro;
+
+      const filtroData = data ? "dt_realizado=" + moment(data, "DD/MM/YYYY").format("YYYY-MM-DD") : "dt_realizado";
+      const filtroUsuario = usuario_id ? "usuario_id=" + usuario_id : "usuario_id";
+
+      await axios
+        .get(`/venda/listar?${filtroData}&${filtroUsuario}`)
+        .then((retorno) => {
+          const vendas = retorno.data;
+
+          vendas.map((venda) => {
+            const { id, valor, dt_realizado, usuario_nome } = venda;
+
+            const btns = [
+              {
+                title: "Detalhes",
+                function: () =>
+                  this.abrirModal("view", "DETALHES DA VENDA", ModalView, id),
+              },
+            ];
+
+            this.vendas.push({ id, valor, dt_realizado, usuario_nome, btns });
+          });
+        })
+        .catch((erro) => {
+          console.log(erro.response);
+        })
+        .finally(() => {
+          this.loadingVendas = false;
+        });
+    },
+
+    async buscarUsuarios() {
+      this.loadingUsuarios = true
+
+      this.usuarios = [];
+
+      const filtroUsuario = this.buscaUsuario ? `nome=${this.buscaUsuario}` : "nome"
+
+      await axios.get(`/usuario/buscar?${filtroUsuario}`)
+        .then(retorno => {
+          this.usuarios = JSON.parse(retorno.data)
+        })
+        .catch(erro => {
+          console.log('Erro ao listar usuarios')
+        })
+        .finally(() => {
+          this.loadingUsuarios = false
+        })
+    },
+
+    abrirModal(metodo, titulo, componente, venda_id) {
+      if (metodo == 'view') {
+        this.modalAtual = ModalView;
+      }
+      else {
+        this.modalAtual = componente;
+      }
+
+      this.modalTitle = titulo;
+
+      if (metodo == "add") {
+        this.modalSubtitle = "";
+      } else {
+        this.modalSubtitle = venda_id.toString();
+
+        this.$router.push({ path: "/vendas", query: { id: venda_id } });
+      }
+
+      $bus.$emit("open-modal");
+    },
+
+    abrirModalAdd() {
+      this.abrirModal("add", "LANÇAR VENDA", ModalAdd);
+    },
+
+    valorFormatado(valor) {
+      return `R$ ${(valor.toFixed(2)).replace(".", ",")}`
+    },
+
+    dataFormatada(data) {
+      return moment(data, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YY HH:mm")
+    }
+  },
+  mounted() {
+    this.buscarVendas();
+
+    $bus.$on('atualizar-tabela', () => {
+      this.filtro = {
+        data: "",
+        usuario_id: "",
+      },
+
+        this.buscarVendas()
+    })
+  },
+};

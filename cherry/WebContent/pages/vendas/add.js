@@ -2,20 +2,25 @@ const template = /*html*/`
 
   <v-row no-gutters>
     <v-col cols="12">
-      <v-form ref="form" v-model="valid">
+      <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col cols="4" class="pt-0">
-            <v-select 
+            <v-autocomplete
+              :search-input.sync="buscaProduto"
+              v-model="produtoSelecionado.produto" 
               :items="produtos"
+              label="Produto *"
               item-text="nome"
+              item-value="id"
               return-object
-              label="Produto *" 
-              v-model="produtoSelecionado.produto"
+              :no-data-text="(loadingProdutos) ? 'Buscando...' : 'Nenhum produto encontrado.'"
+              hide-details
+              :rules="[ v => !!v || 'Campo obrigatório' ]"
             />
           </v-col>
 
           <v-col cols="4" class="pt-0">
-            <v-text-field label="Quantidade *" type="number" v-model="produtoSelecionado.quantidade"></v-text-field>
+            <v-text-field label="Quantidade *" type="number" :rules="[ v => !!v || 'Campo obrigatório', v => v > 0 || 'Digite um valor acima de 0' ]" v-model="produtoSelecionado.quantidade"></v-text-field>
           </v-col>
 
           <v-col cols="4" class="text-right">
@@ -39,16 +44,20 @@ const template = /*html*/`
                   {{ item.nome }}
                 </td>
 
-                <td class="text-right">
-                  R$ {{ valorFormatado(item.valor_unit) }}
+                <td>
+                  R$ {{ valorFormatado(item.valor) }}
                 </td>
                 
-                <td class="text-right">
+                <td>
                   {{ item.quantidade }}
                 </td>
+
+                <!-- <td>
+                  R$ {{ valorFormatado(item.quantidade * item.valor) }}
+                </td> -->
                 
                 <td class="text-center">
-                  <app-btn alert small tooltip="Remover Produto" :on-click="() => removeProduto(item.id)" icon="mdi-delete" />
+                  <app-btn alert small tooltip="Remover Produto" :disabled="cadastrando" :on-click="() => removeProduto(item.id)" icon="mdi-delete" />
                 </td>
               </tr>
             </template>
@@ -74,38 +83,16 @@ const template = /*html*/`
 
 `
 
-import AppBtn from '../../components/AppBtn.js'
-import AppTable from '../../components/AppTable.js'
-
-Vue.component("AppBtn", AppBtn)
-Vue.component("AppTable", AppTable)
+import { $bus } from '../../js/eventBus.js'
+import { $gm } from '../../js/globalMethods.js'
 
 export default {
   template,
   data() {
     return {
-      produtos: [
-        {
-					id: 4,
-					nome: 'Pão Francês',
-					valor: '4.00'
-				},
-				{
-					id: 5,
-					nome: 'Rosca',
-					valor: '4.00'
-				},
-				{
-					id: 7,
-					nome: 'Bolo',
-					valor: '4.00'
-				},
-				{
-					id: 10,
-					nome: 'Sonho',
-					valor: '4.00'
-				},
-      ],
+      buscaProduto: "",
+      loadingProdutos: false,
+      produtos: [],
 
       valid: false,
 
@@ -115,33 +102,103 @@ export default {
       },
 
       cabecalho: [
-				{ text: 'Produto', sortable: false, value: 'nome' },
-				{ text: 'Valor Unitário', sortable: false, value: 'valor_unit' },
-				{ text: 'Quantidade', sortable: false, value: 'quantidade' },
-				{ text: '', sortable: false, value: 'btns' },
-			],
+        { text: 'Produto', sortable: false, value: 'nome' },
+        { text: 'Valor Unitário', sortable: false, value: 'valor' },
+        { text: 'Quantidade', sortable: false, value: 'quantidade' },
+        // { text: 'Total', sortable: false, value: 'total' },
+        { text: '', sortable: false, value: 'btns' },
+      ],
       produtosSelecionados: [],
       totalVenda: 0,
+
+      cadastrando: false,
+    }
+  },
+  watch: {
+    buscaproduto(v) {
+      this.buscarUsuarios()
     }
   },
   methods: {
-    addProduto() {
-      const { id, nome, valor } = this.produtoSelecionado.produto
-      const { quantidade } = this.produtoSelecionado
+    async buscarProdutos() {
+      this.loadingProdutos = true
 
-      this.produtosSelecionados.push({
-        id,
-        nome,
-        valor_unit: valor,
-        quantidade
-      })
+      this.produtos = [];
 
-      this.produtoSelecionado = {
-        produto: null,
-        quantidade: null,
+      const filtroProdutos = this.buscaProduto ? `nome=${this.buscaProduto}` : "nome"
+
+      await axios.get(`/produto/buscar?${filtroProdutos}`)
+        .then(retorno => {
+          this.produtos = JSON.parse(retorno.data)
+        })
+        .catch(erro => {
+          console.log('Erro ao listar produtos')
+        })
+        .finally(() => {
+          this.loadingProdutos = false
+        })
+    },
+
+    async lancarVenda() {
+      this.cadastrando = true
+
+      const body = {
+        valor: this.totalVenda,
+        dt_realizado: moment().format("YYYY-MM-DD HH:mm:ss"),
+        usuario_id: 2,
+        produtos: this.produtosSelecionados
       }
 
-      this.setVendaValor()
+      await axios.post('/venda/inserir', body)
+        .then(retorno => {
+          $bus.$emit('close-modal')
+          $bus.$emit('atualizar-tabela')
+        })
+        .catch(erro => {
+          console.log("Erro ao cadastrar")
+        })
+        .finally(() => {
+          this.cadastrando = false
+        })
+    },
+
+    addProduto() {
+      this.$refs.form.validate()
+
+      if (this.valid) {
+        const { id, nome, valor } = this.produtoSelecionado.produto
+        const { quantidade } = this.produtoSelecionado
+
+        const produtoIgual = this.produtosSelecionados.find(produto => produto.id == id)
+
+        if (!$gm.isEmpty(produtoIgual)) {
+          this.produtosSelecionados.map(produto => {
+            if (produto.id == id) {
+              produto.quantidade = parseInt(produto.quantidade) + parseInt(quantidade)
+            }
+          })
+        }
+        else {
+          this.produtosSelecionados.push({
+            id,
+            nome,
+            valor,
+            quantidade
+          })
+        }
+
+
+        this.$refs.form.reset()
+
+        this.produtoSelecionado = {
+          produto: null,
+          quantidade: null,
+        }
+
+        this.$refs.form.resetValidation()
+
+        this.setVendaValor()
+      }
     },
 
     removeProduto(produto_id) {
@@ -151,23 +208,24 @@ export default {
     },
 
     setVendaValor() {
+      this.totalVenda = 0
+
       this.produtosSelecionados.map(produto => {
-        this.totalVenda += produto.valor_unit * produto.quantidade
+        this.totalVenda += produto.valor * produto.quantidade
       })
     },
 
     valorFormatado(valor) {
       return ((Math.round(valor * 100) / 100).toFixed(2)).replace(".", ",")
     },
-
-    async lancarVenda() {
-
-    }
   },
   mounted() {
+    this.buscarProdutos()
+
     $bus.$on('reset-form', () => {
       this.produtosSelecionados = []
-			this.$refs.form.reset()	
-		})
+      this.totalVenda = 0
+      this.$refs.form.reset()
+    })
   }
 }
