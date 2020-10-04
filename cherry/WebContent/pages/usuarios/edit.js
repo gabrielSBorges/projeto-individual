@@ -21,18 +21,24 @@ const template = /*html*/`
 					</v-col>
 					
 					<v-col cols="6" class="pb-0">
-						<v-select
-							v-model="dadosUsuario.tipo"
+						<v-autocomplete
+							:search-input.sync="buscaTipo"
+							v-model="dadosUsuario.tipo_id" 
 							:items="tipos"
-							item-value="id"
+							label="Tipo"
 							item-text="nome"
-							label="tipo"
+							item-value="id"
+							:no-data-text="(loadingTipos) ? 'Buscando...' : 'Nenhum tipo encontrado.'"
 							:rules="tipoRules"
-						></v-select>
+						>
+							<template v-slot:selection="data">
+								{{ data.item.nome }}
+							</template>
+						</v-autocomplete>
 					</v-col>
 			
 					<v-col cols="12" class="pb-0 text-right" align-self="center">
-						<app-btn success block :disabled="!valid" label="Salvar" :on-click="editarUsuario" class="mb-n2" />
+						<app-btn success block :disabled="!valid" label="Salvar Alterações" :on-click="editarUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -61,25 +67,118 @@ export default {
 				v => !!v || 'Tipo é obrigatório',
 			],
 
-			tipos: [ { id: 1, nome: 'Gestor' } , { id: 2, nome: 'Caixa' } ],
-			
-			usuario_id: this.$route.query.id,
+			tipos: [],
+			buscaTipo: '',
+			loadingTipos: false,
 
+			loadingUsuario: false,
 			dadosUsuario: {
 				nome: '',
 				email: '',
-				tipo: '',
+				tipo_id: '',
 			}
 		}
 	},
+	watch: {
+		buscaTipo(v) {
+      const busca = v ? v.replace(/ /g, "") : v
+
+      if (busca == "") {
+        this.dadosUsuario.tipo_id = ''
+      }
+
+      this.buscarTipos()
+    }
+	},
+	computed: {
+		usuario_id() {
+			return this.$route.query.id
+		}
+	},
 	methods: {
-		editarUsuario() {
+		async buscarUsuario() {
+			this.loadingUsuario = true
+
+			await axios.get(`/usuario/buscarPorId?id=${this.usuario_id}`)
+			.then((retorno) => {
+				this.dadosUsuario = retorno.data;
+			})
+			.catch(() => {
+				console.log("Ocorreu um erro ao tentar buscar informações desse usuário")
+			})
+			.finally(() => {
+				this.loadingUsuario = false;
+			});
+		},
+
+		async buscarTipos() {
+			this.loadingTipos = true
+			
+			this.tipos = [];
+
+			await axios.get(`/tipo/buscar?nome=${this.filterTipo}`)
+
+      const filtroTipo = this.buscaTipo ? `nome=${this.buscaTipo}` : "nome"
+
+      await axios.get(`/tipo/buscar?${filtroTipo}`)
+			.then(retorno => {
+				this.tipos = retorno.data
+			})
+			.catch(erro => {
+				console.log('Erro ao listar tipos')
+			})
+			.finally(() => {
+				this.loadingTipos = false
+			})
+		},
+		
+		async editarUsuario() {
 			this.$refs.form.validate()
+
+			if (this.valid) {
+				const { id, nome, email, tipo_id, ativo } = this.dadosUsuario
+
+				const body = {
+					id,
+					nome,
+					email,
+					tipo_id,
+					ativo
+				}
+
+				await axios.put('/usuario/alterar', body)
+				.then(retorno => {
+					$bus.$emit("close-modal");
+					$bus.$emit("atualizar-tabela");
+				})
+				.catch(erro => {
+					console.log('Ocorreu um erro ao tentar editar o usuário')
+				})
+			}
 		}
 	},
 	mounted() {
-		$bus.$on('reset-form', () => {
-			this.$refs.form.reset()	
-		})
-	}
+		this.buscarUsuario()
+
+		$bus.$on("load-content", () => {
+      this.buscarUsuario();
+    });
+
+    $bus.$on("reset-modal", () => {
+			this.dadosUsuario = {
+				id: '',
+				nome: '',
+				email: '',
+				tipo_id: '',
+				senha: '',
+				senhaConfirm: ''
+			}
+			
+      this.$refs.form.reset()
+    });
+  },
+  beforeDestroy() {
+    $bus.$off("load-content")
+    $bus.$off("reset-modal")
+  },
 }

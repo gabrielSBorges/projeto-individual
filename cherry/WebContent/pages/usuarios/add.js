@@ -25,10 +25,11 @@ const template = /*html*/`
 							:search-input.sync="buscaTipo"
 							v-model="dadosUsuario.tipo_id" 
 							:items="tipos"
-							label="tipo"
+							label="Tipo"
 							item-text="nome"
 							item-value="id"
 							:no-data-text="(loadingTipos) ? 'Buscando...' : 'Nenhum tipo encontrado.'"
+							:rules="tipoRules"
 						/>
 					</v-col>
 					

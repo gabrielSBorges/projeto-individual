@@ -23,7 +23,7 @@ const template = /*html*/`
 					</v-col>
 			
 					<v-col cols="12" class="text-right py-0">
-						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="editarSenhaUsuario" />
+						<app-btn success block :disabled="!valid" label="Alterar Senha" :on-click="editarSenhaUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -49,23 +49,80 @@ export default {
 				v => !$gm.isEmpty(v) || 'Confirmar a senha é obrigatório',
 				v => v == this.dadosUsuario.senha || 'As senhas não coincidem.'
 			],
-			
-			usuario_id: this.$route.query.id,
 
+			loadingUsuario: false,
 			dadosUsuario: {
+				id: '',
 				senha: '',
 				senhaConfirm: ''
 			}
 		}
 	},
+	computed: {
+		usuario_id() {
+			return this.$route.query.id
+		}
+	},
 	methods: {
-		editarSenhaUsuario() {
+		async buscarUsuario() {
+			this.loadingUsuario = true
+
+			await axios.get(`/usuario/buscarPorId?id=${this.usuario_id}`)
+			.then((retorno) => {
+				this.dadosUsuario = retorno.data;
+			})
+			.catch(() => {
+				console.log("Ocorreu um erro ao tentar buscar informações desse usuário")
+			})
+			.finally(() => {
+				this.loadingUsuario = false;
+			});
+		},
+		
+		async editarSenhaUsuario() {
 			this.$refs.form.validate()
+
+			if (this.valid) {
+				const { id, senha } = this.dadosUsuario
+
+				const body = {
+					id,
+					senha
+				}
+
+				await axios.put('/usuario/alterar-senha', body)
+				.then(retorno => {
+					$bus.$emit("close-modal");
+					$bus.$emit("atualizar-tabela");
+				})
+				.catch(erro => {
+					console.log('Ocorreu um erro ao tentar editar o usuário')
+				})
+			}
 		}
 	},
 	mounted() {
-		$bus.$on('reset-form', () => {
-			this.$refs.form.reset()	
-		})
-	}
+		this.$refs.form.reset()
+		this.$refs.form.resetValidation()
+
+		this.buscarUsuario()
+
+		$bus.$on("load-content", () => {
+      this.buscarUsuario();
+    });
+
+    $bus.$on("reset-modal", () => {
+			this.dadosUsuario = {
+				id: '',
+				senha: '',
+				senhaConfirm: ''
+			}
+			
+      this.$refs.form.reset()
+    });
+  },
+  beforeDestroy() {
+    $bus.$off("load-content")
+    $bus.$off("reset-modal")
+  },
 }

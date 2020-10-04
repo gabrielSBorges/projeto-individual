@@ -76,10 +76,10 @@ public class JDBCUsuarioDAO {
 	
 	public Retorno buscarPorNome(String nomeUsuario) {
 		Retorno retorno = new Retorno();
-		String comando = "SELECT u.*, t.nome as tipo FROM usuarios u INNER JOIN tipos t ON u.tipo_id = t.id ";
+		String comando = "SELECT u.*, t.nome as tipo FROM usuarios u INNER JOIN tipos t ON u.tipo_id = t.id WHERE u.tipo_id <> 1 ";
 		
 		if (!nomeUsuario.contentEquals("")) {
-			comando += "WHERE u.nome LIKE '%" + nomeUsuario + "%' ";
+			comando += "AND u.nome LIKE '%" + nomeUsuario + "%' ";
 		}
 		
 		comando += "ORDER BY u.nome ASC";
