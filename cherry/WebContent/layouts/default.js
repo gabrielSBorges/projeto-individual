@@ -42,7 +42,9 @@ const template = /*html*/`
 			<app-page-header />
 			
 			<v-container>
-				<slot />
+				<div class="mx-12">
+					<slot />
+				</div>
 			</v-container>
 		</v-main>
 	</div>

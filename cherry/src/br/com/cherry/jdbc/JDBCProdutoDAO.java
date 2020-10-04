@@ -171,7 +171,7 @@ public class JDBCProdutoDAO {
 			}
 			else {
 				retorno.setStatus("erro");
-				retorno.setMessage("Não foi possível remover o produto. Há vendas que foram realizadas com esse produto.! \n Erro: \n" + e.getMessage());
+				retorno.setMessage("Não foi possível remover o produto. Há vendas que foram realizadas com esse produto.!");
 			}
 			
 		} catch(Exception e) {

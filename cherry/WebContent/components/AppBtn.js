@@ -1,28 +1,30 @@
 const template = /*html*/`
+	
+	<div>
+		<v-tooltip bottom :disabled="!tooltip">
+			<template v-slot:activator="{ on }">
+				<v-btn
+					:disabled="disabled"
+					:small="small"
+					:block="block"
+					:outlined="outlined"
+					:color="btnColor"
+					:class="btnText"
+					@click="onClick"
+				>
+					<template v-if="label !== ''">
+						{{ label }}
+					</template>
 
-	<v-tooltip bottom :disabled="!tooltip">
-		<template v-slot:activator="{ on }">
-			<v-btn
-				:disabled="disabled"
-				:small="small"
-				:block="block"
-				:outlined="outlined"
-				:color="btnColor"
-				:class="btnText"
-				@click="onClick"
-			>
-				<template v-if="label !== ''">
-					{{ label }}
-				</template>
+					<template v-else-if="icon !== ''">
+						<v-icon>{{ icon }}</v-icon>
+					</template>
+				</v-btn>
+			</template>
 
-				<template v-else-if="icon !== ''">
-					<v-icon>{{ icon }}</v-icon>
-				</template>
-			</v-btn>
-		</template>
-
-		<span>{{ tooltip }}</span>
-	</v-tooltip>
+			<span>{{ tooltip }}</span>
+		</v-tooltip>
+	</div>
 
 `
 
@@ -39,6 +41,7 @@ export default {
 		block: { type: Boolean, default: false },
 		normal: { type: Boolean, default: false },
 		success: { type: Boolean, default: false },
+		warning: { type: Boolean, default: false },
 		info: { type: Boolean, default: false },
 		alert: { type: Boolean, default: false },
 	},
@@ -56,18 +59,21 @@ export default {
 			else if (this.alert) {
 				return 'error'
 			}
+			else if (this.warning) {
+				return 'warning'
+			}
 			else {
 				return 'default'
 			}
 		},
 		
 		btnText() {
-			if (this.normal || this.info || this.alert || this.success) {
+			if (this.normal || this.info || this.alert || this.success || this.warning) {
 				return 'white--text'
 			}
 			else {
 				return 'grey--text text--darken-2'
 			}
 		}
-	}
+	},
 }

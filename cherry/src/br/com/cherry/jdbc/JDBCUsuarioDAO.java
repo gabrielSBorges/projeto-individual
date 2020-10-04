@@ -10,14 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
-
 import br.com.cherry.modelo.Usuario;
 import br.com.cherry.modelo.Retorno;
 
 public class JDBCUsuarioDAO {
 	private Connection conexao;
-	private JsonObject usuario;
 	
 	public JDBCUsuarioDAO(Connection conexao) {
 		this.conexao = conexao;
@@ -36,14 +33,12 @@ public class JDBCUsuarioDAO {
         	sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
         }
         
-        System.out.println(sb.toString());
-        
         return sb.toString();
 	}
 
 	public Retorno buscarPorId(int usuId) {
 		Retorno retorno = new Retorno();
-		String comando = "SELECT * FROM usuarios WHERE id = ?";
+		String comando = "SELECT u.*, t.nome as tipo FROM usuarios u INNER JOIN tipos t ON u.tipo_id = t.id WHERE u.id = ?";
 		Usuario usuario = new Usuario();
 		
 		try {
@@ -56,11 +51,15 @@ public class JDBCUsuarioDAO {
 				String nome = rs.getString("nome");
 				String email = rs.getString("email");
 				int ativo = rs.getInt("ativo");
+				int tipo_id = rs.getInt("tipo_id");
+				String tipo = rs.getNString("tipo");
 				
 				usuario.setId(id);
 				usuario.setNome(nome);
 				usuario.setEmail(email);
 				usuario.setAtivo(ativo);
+				usuario.setTipoId(tipo_id);
+				usuario.setTipo(tipo);
 			}
 			
 			retorno.setStatus("sucesso");
@@ -77,16 +76,15 @@ public class JDBCUsuarioDAO {
 	
 	public Retorno buscarPorNome(String nomeUsuario) {
 		Retorno retorno = new Retorno();
-		String comando = "SELECT * FROM usuarios ";
+		String comando = "SELECT u.*, t.nome as tipo FROM usuarios u INNER JOIN tipos t ON u.tipo_id = t.id WHERE u.tipo_id <> 1 ";
 		
 		if (!nomeUsuario.contentEquals("")) {
-			comando += "WHERE nome LIKE '%" + nomeUsuario + "%' ";
+			comando += "AND u.nome LIKE '%" + nomeUsuario + "%' ";
 		}
 		
-		comando += "ORDER BY nome ASC";
+		comando += "ORDER BY u.nome ASC";
 		
-		List<JsonObject> listaUsuarios = new ArrayList<JsonObject>();
-		usuario = null;
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		
 		try {
 			Statement stmt = conexao.createStatement();
@@ -97,19 +95,23 @@ public class JDBCUsuarioDAO {
 				String nome = rs.getString("nome");
 				String email = rs.getString("email");
 				int ativo = rs.getInt("ativo");
+				int tipo_id = rs.getInt("tipo_id");
+				String tipo = rs.getNString("tipo");
 				
 				
-				usuario = new JsonObject();
-				usuario.addProperty("id", id);
-				usuario.addProperty("nome", nome);
-				usuario.addProperty("email", email);
-				usuario.addProperty("ativo", ativo);
+				Usuario usuario = new Usuario();
+				usuario.setId(id);
+				usuario.setNome(nome);
+				usuario.setEmail(email);
+				usuario.setAtivo(ativo);
+				usuario.setTipoId(tipo_id);
+				usuario.setTipo(tipo);
 				
 				listaUsuarios.add(usuario);
 			}
 			
 			retorno.setStatus("sucesso");
-			retorno.setListJson(listaUsuarios);
+			retorno.setListUsuarios(listaUsuarios);
 		} catch(Exception e) {
 			e.printStackTrace();
 			

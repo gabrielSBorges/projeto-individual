@@ -10,8 +10,8 @@ public class Usuario implements Serializable {
 	private String email;
 	private String senha;
 	private String tipo;
-	private int ativo;
 	private int tipo_id;
+	private int ativo;
 	
 	
 	// ID

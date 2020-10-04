@@ -2,7 +2,7 @@ const template = /*html*/`
 	
 	<div class="mt-1 mb-10">
 		<v-container>
-			<div style="user-select: none" class="text-h5" color="primary">{{ pageTitle }} &nbsp; ></div>
+			<div style="user-select: none" class="text-h5 mx-12" color="primary">{{ pageTitle }} &nbsp; ></div>
 		</v-container>
 		
 		<v-divider />

@@ -66,8 +66,7 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == "sucesso") {
-				String json = new Gson().toJson(retorno.getListJson());
-				return this.buildResponse(json);
+				return this.buildResponse(retorno.getListUsuarios());
 			}
 			else {
 				return this.buildErrorResponse(retorno.getMessage());

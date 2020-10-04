@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.JsonObject;
 
-import br.com.cherry.modelo.Produto;
-import br.com.cherry.modelo.Usuario;
-import br.com.cherry.modelo.Venda;
-
 public class Retorno {	
 	// Geral
 	private String status;
@@ -88,6 +84,26 @@ public class Retorno {
 	
 	public void setListVendas(List<Venda> listVendas) {
 		this.listVendas = listVendas;
+	}
+	
+	// Tipos
+	private Tipo tipo;
+	private List<Tipo> listTipos = new ArrayList<Tipo>();
+	
+	public Tipo getTipo() {
+		return this.tipo;
+	}
+	
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+	
+	public List<Tipo> getListTipos() {
+		return this.listTipos;
+	}
+	
+	public void setListTipos(List<Tipo> listTipos) {
+		this.listTipos = listTipos;
 	}
 	
 	// JsonObject

@@ -5,7 +5,7 @@ const template = /*html*/`
 			<v-form ref="formConfirm" v-model="valid">
 				<v-row>
 					<v-col cols="12" class="py-0">					
-						<div class="text-h6">Quer mesmo desativar {{ dadosUsuario.nome }}?</div>
+						<div class="text-h6">Quer mesmo ativar {{ dadosUsuario.nome }}?</div>
 					</v-col>
 
 					<v-col cols="12" class="py-0">					
@@ -17,7 +17,7 @@ const template = /*html*/`
 					</v-col>
 
 					<v-col cols="12" class="text-right pb-0">					
-						<app-btn alert block :disabled="!valid" label="Desativar" :on-click="desativarUsuario" />
+						<app-btn success block :disabled="!valid" label="Ativar" :on-click="ativarUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -59,7 +59,7 @@ export default {
 			});
 		},
 
-		async desativarUsuario() {
+		async ativarUsuario() {
 			this.$refs.formConfirm.validate()
 
 			if (this.valid) {
@@ -70,7 +70,7 @@ export default {
 					nome,
 					email,
 					tipo_id,
-					ativo: 0
+					ativo: 1
 				}
 
 				await axios.put('/usuario/alterar', body)
@@ -79,7 +79,7 @@ export default {
 					$bus.$emit("atualizar-tabela");
 				})
 				.catch(erro => {
-					console.log('Ocorreu um erro ao tentar desativar o usuário')
+					console.log('Ocorreu um erro ao tentar ativar o usuário')
 				})
 			}
 		},

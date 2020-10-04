@@ -68,9 +68,6 @@ export default {
 				{ text: '', sortable: false, value: 'btns' },
 			],
 			produtos: [],
-			filtro: {
-				like: ''
-			},
 			
 			// Modais
 			modalAtual: null,
@@ -111,7 +108,7 @@ export default {
 				})
 			})
 			.catch(erro => {
-				console.log(erro.response)
+				console.log("Ocorreu um erro ao buscar os produtos.")
 			})
 			.finally(() => {
 				this.loadingProdutos = false
