@@ -117,8 +117,6 @@ export default {
 				senha: '',
 				senhaConfirm: ''
 			}
-			
-      this.$refs.form.reset()
     });
   },
   beforeDestroy() {
