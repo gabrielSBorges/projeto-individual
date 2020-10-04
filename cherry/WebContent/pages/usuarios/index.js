@@ -34,9 +34,13 @@ const template = /*html*/`
 						<td>
 							{{ item.tipo }}
 						</td>
+
+						<td>
+							{{ item.status }}
+						</td>
 						
-						<td class="text-right">
-							<app-btn v-for="(btn, b) in item.btns" :key="b" v-bind="btn" class="d-inline ml-2" />
+						<td class="text-center">
+							<app-dropdown block :btns="item.btns" />
 						</td>
 					</tr>
 				</template>
@@ -71,7 +75,8 @@ export default {
 				{ text: 'Nome', sortable: false, value: 'nome' },
 				{ text: 'E-mail', sortable: false, value: 'email' },
 				{ text: 'Tipo', sortable: false, value: 'tipo' },
-				{ text: '', sortable: false, value: 'btns', width: "40%" },
+				{ text: 'Status', sortable: false, value: 'status' },
+				{ text: 'Ações', sortable: false, value: 'btns' },
 			],
 			usuarios: [],
 			
@@ -97,27 +102,26 @@ export default {
 				const usuarios = retorno.data
 
 				usuarios.map(usuario => {
-					const { id, nome, email, tipo } = usuario
+					const { id, nome, email, tipo, ativo } = usuario
 					
+					const status = ativo == 1 ? "Ativo" : "Desativado"
+
 					const btns = [
 						{
-							label: 'Editar',
-							warning: true,
-							onClick: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)
+							title: 'Editar',
+							function: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)
 						},
 						{
-							label: 'Alterar Senha',
-							warning: true,
-							onClick: () => this.abrirModal('edit_password', "EDITAR SENHA DO USUÁRIO", ModalEditPassword, id, nome)
+							title: 'Alterar Senha',
+							function: () => this.abrirModal('edit_password', "EDITAR SENHA DO USUÁRIO", ModalEditPassword, id, nome)
 						},
 						{
-							label: 'Desativar',
-							alert: true,
-							onClick: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
+							title: 'Desativar',
+							function: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
 						}
 					]
 					
-					this.usuarios.push({ nome, email, tipo, btns })
+					this.usuarios.push({ nome, email, tipo, status, btns })
 				})
 			})
 			.catch(erro => {

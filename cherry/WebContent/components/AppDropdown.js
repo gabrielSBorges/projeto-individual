@@ -2,7 +2,7 @@ const template = /*html*/`
 
 	<v-menu offset-y>
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn small v-bind="attrs" v-on="on">
+			<v-btn small :block="block" v-bind="attrs" v-on="on">
 				<v-icon>mdi-dots-horizontal</v-icon>
 			</v-btn>
 		</template>
@@ -19,6 +19,7 @@ const template = /*html*/`
 export default {
 	template,
 	props: {
-		btns: { type: Array, default: () => [] }
+		btns: { type: Array, default: () => [] },
+		block: { type: Boolean, default: false }
 	}
 }
