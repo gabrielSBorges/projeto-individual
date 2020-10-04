@@ -40,7 +40,7 @@ const template = /*html*/`
 						</td>
 						
 						<td class="text-center">
-							<app-dropdown block :btns="item.btns" />
+							<app-dropdown block label="Ações" :btns="item.btns" />
 						</td>
 					</tr>
 				</template>
@@ -77,7 +77,7 @@ export default {
 				{ text: 'E-mail', sortable: false, value: 'email' },
 				{ text: 'Tipo', sortable: false, value: 'tipo' },
 				{ text: 'Status', sortable: false, value: 'status' },
-				{ text: 'Ações', sortable: false, value: 'btns' },
+				{ text: '', sortable: false, value: 'btns' },
 			],
 			usuarios: [],
 			
