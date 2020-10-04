@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.JsonObject;
 
-import br.com.cherry.modelo.Produto;
-import br.com.cherry.modelo.Usuario;
-import br.com.cherry.modelo.Venda;
-
 public class Retorno {	
 	// Geral
 	private String status;

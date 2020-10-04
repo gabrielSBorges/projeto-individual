@@ -47,6 +47,7 @@ new Vue({
 
 					success: '#81C784',
 					info: '#64B5F6',
+					warning: '#FFB300',
 					error: '#E57373',
 					default: '#E0E0E0',
 				}

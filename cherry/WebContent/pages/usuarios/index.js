@@ -8,7 +8,7 @@ const template = /*html*/`
 				</v-col>
 				
 				<v-col cosl="3" offset="3">
-					<app-search-field v-model="filterUsuario" placeholder="Digite para buscar um usuário..." />
+					<app-search-field v-model="filterUsuario" :on-click="buscarUsuarios" placeholder="Buscar um usuário..." />
 				</v-col>
 			</v-row>
 		</v-col>
@@ -36,7 +36,7 @@ const template = /*html*/`
 						</td>
 						
 						<td class="text-right">
-							<app-dropdown :btns="item.btns" />
+							<app-btn v-for="(btn, b) in item.btns" :key="b" v-bind="btn" class="d-inline ml-2" />
 						</td>
 					</tr>
 				</template>
@@ -71,12 +71,9 @@ export default {
 				{ text: 'Nome', sortable: false, value: 'nome' },
 				{ text: 'E-mail', sortable: false, value: 'email' },
 				{ text: 'Tipo', sortable: false, value: 'tipo' },
-				{ text: '', sortable: false, value: 'btns' },
+				{ text: '', sortable: false, value: 'btns', width: "40%" },
 			],
 			usuarios: [],
-			filtro: {
-				like: ''
-			},
 			
 			// Modais
 			modalAtual: null,
@@ -90,62 +87,45 @@ export default {
 		}
 	},
 	methods: {
-		buscarUsuarios() {
+		async buscarUsuarios() {
 			this.loadingUsuarios = true
 			
-			let usuarios = [ // FIXME - susbstituir pelo get em usuários
-				{
-					id: 4,
-					nome: 'Gabriel Borges',
-					email: 'gabriel@gmail.com',
-					tipo: 'Gestor',
-					tipo_id: 2
-				},
-				{
-					id: 5,
-					nome: 'Reiner Brawn',
-					email: 'reiner@gmail.com',
-					tipo: 'Caixa',
-					tipo_id: 3
-				},
-				{
-					id: 7,
-					nome: 'Eren Yeager',
-					email: 'pnc@gmail.com',
-					tipo: 'Caixa',
-					tipo_id: 3
-				},
-				{
-					id: 10,
-					nome: 'Jailson Mendes',
-					email: 'delicia@gmail.com',
-					tipo: 'Caixa',
-					tipo_id: 3
-				},
-			]
-			
-			usuarios.map(usuario => {
-				const { id, nome, email, tipo, tipo_id } = usuario
-				
-				const btns = [
-					{
-						title: 'Editar',
-						function: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)
-					},
-					{
-						title: 'Alterar Senha',
-						function: () => this.abrirModal('edit_password', "EDITAR SENHA DO USUÁRIO", ModalEditPassword, id, nome)
-					},
-					{
-						title: 'Desativar',
-						function: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
-					}
-				]
-				
-				this.usuarios.push({ nome, email, tipo, btns })
+			this.usuarios = []
+
+			await axios.get(`/usuario/buscar?nome=${this.filterUsuario}`)
+			.then(retorno => {
+				const usuarios = retorno.data
+
+				usuarios.map(usuario => {
+					const { id, nome, email, tipo } = usuario
+					
+					const btns = [
+						{
+							label: 'Editar',
+							warning: true,
+							onClick: () => this.abrirModal('edit', "EDITAR USUÁRIO", ModalEdit, id, nome)
+						},
+						{
+							label: 'Alterar Senha',
+							warning: true,
+							onClick: () => this.abrirModal('edit_password', "EDITAR SENHA DO USUÁRIO", ModalEditPassword, id, nome)
+						},
+						{
+							label: 'Desativar',
+							alert: true,
+							onClick: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
+						}
+					]
+					
+					this.usuarios.push({ nome, email, tipo, btns })
+				})
 			})
-			
-			this.loadingUsuarios = false
+			.catch(erro => {
+				console.log('Ocorreu um erro ao buscar os usuários.')
+			})
+			.finally(() => {
+				this.loadingUsuarios = false
+			})
 		},
 
 		abrirModal(metodo, titulo, componente, usuario_id, usuario_nome) {
