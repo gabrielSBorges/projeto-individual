@@ -21,14 +21,15 @@ const template = /*html*/`
 					</v-col>
 					
 					<v-col cols="6">
-						<v-select
-							v-model="dadosUsuario.tipo"
+						<v-autocomplete
+							:search-input.sync="buscaTipo"
+							v-model="dadosUsuario.tipo_id" 
 							:items="tipos"
-							item-value="id"
-							item-text="nome"
 							label="tipo"
-							:rules="tipoRules"
-						></v-select>
+							item-text="nome"
+							item-value="id"
+							:no-data-text="(loadingTipos) ? 'Buscando...' : 'Nenhum tipo encontrado.'"
+						/>
 					</v-col>
 					
 					<v-col cols="6">
@@ -50,7 +51,7 @@ const template = /*html*/`
 					</v-col>
 	
 					<v-col cols="12" class="pb-0 text-right" align-self="center">
-						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarUsuario" class="mb-n2" />
+						<app-btn success block :disabled="!valid" label="Cadastrar" :on-click="cadastrarUsuario" />
 					</v-col>
 				</v-row>
 			</v-form>
@@ -86,25 +87,90 @@ export default {
 				v => v == this.dadosUsuario.senha || 'As senhas não coincidem.'
 			],
 
-			tipos: [ { id: 1, nome: 'Gestor' } , { id: 2, nome: 'Caixa' } ],
+			tipos: [],
+			buscaTipo: '',
+			loadingTipos: false,
 			
 			dadosUsuario: {
 				nome: '',
 				email: '',
-				tipo: '',
+				tipo_id: '',
 				senha: '',
 				senhaConfirm: ''
-			}
+			},
 		}
 	},
+	watch: {
+		buscaTipo(v) {
+      const busca = v ? v.replace(/ /g, "") : v
+
+      if (busca == "") {
+        this.dadosUsuario.tipo_id = ''
+      }
+
+      this.buscarTipos()
+    }
+	},
 	methods: {
-		cadastrarUsuario() {
+		async cadastrarUsuario() {
 			this.$refs.form.validate()
+
+			if (this.valid) {
+				const { nome, email, senha, tipo_id } = this.dadosUsuario
+				
+				const body = {
+					nome,
+					email,
+					senha,
+					tipo_id,
+					ativo: 1
+				}
+
+				await axios.post('/usuario/inserir', body)
+				.then(() => {
+					$bus.$emit('close-modal')
+					$bus.$emit('atualizar-tabela')
+				})
+				.catch(erro => {
+					//TODO - Toast
+					console.log(erro.response.data)
+					console.log("Erro ao cadastrar usuário")
+				})
+			}
+		},
+
+		async buscarTipos() {
+			this.loadingTipos = true
+			
+			this.tipos = [];
+
+			await axios.get(`/tipo/buscar?nome=${this.filterTipo}`)
+
+      const filtroTipo = this.buscaTipo ? `nome=${this.buscaTipo}` : "nome"
+
+      await axios.get(`/tipo/buscar?${filtroTipo}`)
+			.then(retorno => {
+				this.tipos = retorno.data
+			})
+			.catch(erro => {
+				console.log('Erro ao listar tipos')
+			})
+			.finally(() => {
+				this.loadingTipos = false
+			})
 		}
 	},
 	mounted() {
-		$bus.$on('reset-form', () => {
-			this.$refs.form.reset()	
+		$bus.$on('reset-modal', () => {
+			this.$refs.form.reset()
+			
+			this.dadosUsuario = {
+				nome: '',
+				email: '',
+				tipo_id: '',
+				senha: '',
+				senhaConfirm: ''
+			}
 		})
 	}
 }

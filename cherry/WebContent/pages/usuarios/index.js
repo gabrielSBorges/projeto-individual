@@ -61,6 +61,7 @@ import ModalAdd from './add.js'
 import ModalEdit from './edit.js'
 import ModalEditPassword from './edit_password.js'
 import ModalDisable from './disable.js'
+import ModalEnable from './enable.js'
 
 export default {
 	template,
@@ -114,12 +115,21 @@ export default {
 						{
 							title: 'Alterar Senha',
 							function: () => this.abrirModal('edit_password', "EDITAR SENHA DO USUÁRIO", ModalEditPassword, id, nome)
-						},
-						{
-							title: 'Desativar',
-							function: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
 						}
 					]
+
+					if (ativo == 1) {
+						btns.push({
+							title: 'Desativar',
+							function: () => this.abrirModal('disable', "DESATIVAR USUÁRIO", ModalDisable, id, nome)
+						})
+					}
+					else {
+						btns.push({
+							title: 'Ativar',
+							function: () => this.abrirModal('enable', "ATIVAR USUÁRIO", ModalEnable, id, nome)
+						})
+					}
 					
 					this.usuarios.push({ nome, email, tipo, status, btns })
 				})
@@ -154,5 +164,14 @@ export default {
 	},
 	mounted() {
 		this.buscarUsuarios()
+
+		$bus.$on('atualizar-tabela', () => {
+      this.filterUsuario = ""
+
+			this.buscarUsuarios()
+    })
+	},
+	beforeDestroy() {
+		$bus.$off('atualizar-tabela')
 	}
 }

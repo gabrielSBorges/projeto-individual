@@ -86,6 +86,26 @@ public class Retorno {
 		this.listVendas = listVendas;
 	}
 	
+	// Tipos
+	private Tipo tipo;
+	private List<Tipo> listTipos = new ArrayList<Tipo>();
+	
+	public Tipo getTipo() {
+		return this.tipo;
+	}
+	
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+	
+	public List<Tipo> getListTipos() {
+		return this.listTipos;
+	}
+	
+	public void setListTipos(List<Tipo> listTipos) {
+		this.listTipos = listTipos;
+	}
+	
 	// JsonObject
 	private List<JsonObject> listJson = new ArrayList<JsonObject>();
 	
