@@ -26,7 +26,6 @@ import br.com.cherry.modelo.Retorno;
 public class ProdutoRest extends UtilRest {
 	@GET
 	@Path("/buscarPorId")
-	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@QueryParam("id") int id) {
 		try {

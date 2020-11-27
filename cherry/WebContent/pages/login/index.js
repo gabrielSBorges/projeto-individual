@@ -42,7 +42,7 @@ const template = /*html*/`
 						<app-btn success label="Entrar" block :disabled="!valid" :on-click="validate" />	
 					</v-col>
 					
-					<v-col cols="12" class="py-2">
+					<v-col cols="12" class="pb-2 pt-5 text-center">
 						<a href="#" class="text-decoration-none grey--text text--lighten-1 caption">Esqueci a senha</a>
 					</v-col>
 				</v-row>

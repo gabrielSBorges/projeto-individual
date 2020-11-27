@@ -26,7 +26,6 @@ import br.com.cherry.modelo.Retorno;
 public class UsuarioRest extends UtilRest {
 	@GET
 	@Path("/buscarPorId")
-	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@QueryParam("id") int id) {
 		try {
@@ -81,6 +80,7 @@ public class UsuarioRest extends UtilRest {
 	@POST
 	@Path("/inserir")
 	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response inserir(String usuarioParam) {
 		try {
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
