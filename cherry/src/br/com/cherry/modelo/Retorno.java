@@ -116,4 +116,15 @@ public class Retorno {
 	public void setListJson(List<JsonObject> listJson) {
 		this.listJson = listJson;
 	}
+	
+	// Auth
+	private Auth auth;
+	
+	public void setAuth(Auth auth) {
+		this.auth = auth;
+	}
+	
+	public Auth getAuth() {
+		return this.auth;
+	}
 }
