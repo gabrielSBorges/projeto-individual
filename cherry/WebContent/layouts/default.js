@@ -75,6 +75,7 @@ export default {
 	},
 	methods: {
 		logout() {
+			auth.logout()
 			this.$router.push('/login')
 		},
 

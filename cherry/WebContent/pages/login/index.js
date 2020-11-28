@@ -21,7 +21,7 @@ const template = /*html*/`
 						/>
 					</v-col>
 					
-					<v-col cols="12">
+					<v-col cols="12" class="mb-4">
 						<v-text-field
 							label="Senha"
 							type="password"
@@ -31,20 +31,20 @@ const template = /*html*/`
 						/>
 					</v-col>
 					
-					<v-col cols="12" class="py-2">
+					<!-- <v-col cols="12" class="py-2">
 						<v-checkbox
 							v-model="dadosUsuario.manter_conectado"
 							label="Mantenha-me conectado."
 						></v-checkbox>
-					</v-col>
+					</v-col> -->
 					
-					<v-col cols="12">
+					<v-col cols="12" class="mb-3">
 						<app-btn success label="Entrar" block :disabled="!valid" :on-click="validate" />	
 					</v-col>
 					
-					<v-col cols="12" class="pb-2 pt-5 text-center">
+					<!-- <v-col cols="12" class="pb-2 pt-5 text-center">
 						<a href="#" class="text-decoration-none grey--text text--lighten-1 caption">Esqueci a senha</a>
-					</v-col>
+					</v-col> -->
 				</v-row>
 			</v-form>
 		</v-container>
@@ -58,7 +58,7 @@ export default {
 	template,
 	data() {
 		return {
-			valid: true,
+			valid: false,
 			emailRules: [
 				v => !$gm.isEmpty(v) || 'Digite o seu e-mail.',
 				v => $gm.validEmail(v) || 'Digite um e-mail válido.',
@@ -70,15 +70,41 @@ export default {
 			dadosUsuario: {
 				email: '',
 				senha: '',
-				manter_conectado: false,
+				// manter_conectado: false,
 			}
 		}
 	},
 	methods: {
-		validate() {
+		async validate() {
 			this.$refs.form.validate()
 			
-			this.$router.push('/')
+			this.dadosUsuario.senha = btoa(this.dadosUsuario.senha)
+
+			if (this.valid) {
+				await axios.post("/auth/login", this.dadosUsuario)
+					.then(async retorno => {
+						// Salvar token global
+						auth.setToken(retorno.data.token)
+
+						// Setar os dados do usuário na "sessão"
+						await this.getMe()
+
+						this.$router.push('/')
+					})
+					.catch(erro => {
+						console.log('Deu pau no login')
+					})
+			}
+		},
+
+		async getMe() {
+			await axios.get("/auth/me")
+				.then(retorno => {
+					auth.setUser(retorno.data)
+				})
+				.catch(erro => {
+					console.log('Deu pau no getMe')
+				})
 		}
 	}
 }
