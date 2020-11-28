@@ -3,13 +3,38 @@ import telas from './telas.js'
 let routes = []
 
 telas.map(tela => {
-	const { path, component } = tela
+	const { name, path, component, redirect, meta } = tela
 
-	routes.push({ path, component })
+	let pathObj = {
+		name,
+		path,
+		component,
+		meta: meta || {}
+	}
+
+	if (redirect) {
+		pathObj.redirect = redirect 
+	}
+
+	routes.push(pathObj)
 })
 
 const router = new VueRouter({
 	routes
+})
+
+router.beforeEach((to, from, next) => {
+	const requiresAuth = to.meta.requiresAuth
+
+	if (requiresAuth && !auth.isLoggedIn()) {
+		next({ name: 'login' })
+	}
+	else if (!requiresAuth && auth.isLoggedIn()) {
+		next({ name: 'home' })
+	}
+	else {
+		next()
+	}
 })
 
 import Default from '../layouts/default.js'
