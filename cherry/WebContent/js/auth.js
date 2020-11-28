@@ -11,8 +11,11 @@ var auth = {
   setToken(token) {
     axios.defaults.headers.common['Authorization'] = token
   },
-  logout() {
-    delete localStorage.user
-    axios.defaults.headers.common['Authorization'] = ''
+  async logout() {
+    await axios.delete('/auth/logout')
+      .then(() => {
+        delete localStorage.user
+        axios.defaults.headers.common['Authorization'] = ''
+      })
   }
 }
