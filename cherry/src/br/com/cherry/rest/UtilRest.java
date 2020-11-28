@@ -12,12 +12,12 @@ public class UtilRest {
 			return Response.ok(valorResposta).build();
 		} catch(Exception e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
+			return this.buildErrorResponse(e.getMessage(), 500);
 		}
 	}
 	
-	public Response buildErrorResponse(String str) {
-		ResponseBuilder rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+	public Response buildErrorResponse(String str, int code) {
+		ResponseBuilder rb = Response.status(code);
 		
 		rb = rb.entity(str);
 		rb = rb.type("text/plain");
