@@ -34,16 +34,16 @@ public class AuthRest extends UtilRest {
 			
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {				
+			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getUsuario());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());				
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 	
@@ -63,16 +63,16 @@ public class AuthRest extends UtilRest {
 						
 			my_sql.fecharConexao();
 	
-			if (retorno.getStatus() == "sucesso") {				
+			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getAuth());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());
-			}
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar efetuar o login! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 	
@@ -89,16 +89,11 @@ public class AuthRest extends UtilRest {
 			
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {
-				return this.buildResponse(retorno.getMessage());				
-			}
-			else {
-				return this.buildErrorResponse(retorno.getMessage());				
-			}
+			return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());		
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar deslogar! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package br.com.cherry.rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -27,26 +28,26 @@ public class UsuarioRest extends UtilRest {
 	@GET
 	@Path("/buscarPorId")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarPorId(@QueryParam("id") int id) {
+	public Response buscarPorId(@QueryParam("id") int id, @HeaderParam("Authorization") String token) {
 		try {
 			MySql my_sql = new MySql();
 			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-			Retorno retorno = jdbcUsuario.buscarPorId(id);
+			Retorno retorno = jdbcUsuario.buscarPorId(id, token);
 			
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {				
+			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getUsuario());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());				
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar o usuario! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar o usuario! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 	
@@ -54,26 +55,26 @@ public class UsuarioRest extends UtilRest {
 	@Path("/buscar")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscaPorNome(@QueryParam("nome") String nome) {
+	public Response buscaPorNome(@QueryParam("nome") String nome, @HeaderParam("Authorization") String token) {
 		try {
 			MySql my_sql = new MySql();
 			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-			Retorno retorno = jdbcUsuario.buscarPorNome(nome);
+			Retorno retorno = jdbcUsuario.buscarPorNome(nome, token);
 			
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {
+			if (retorno.getStatus() == 200) {
 				return this.buildResponse(retorno.getListUsuarios());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar listar os usuarios! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar listar os usuarios! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 	
@@ -81,7 +82,7 @@ public class UsuarioRest extends UtilRest {
 	@Path("/inserir")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response inserir(String usuarioParam) {
+	public Response inserir(String usuarioParam, @HeaderParam("Authorization") String token) {
 		try {
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
 			
@@ -89,27 +90,27 @@ public class UsuarioRest extends UtilRest {
 			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-			Retorno retorno = jdbcUsuario.inserir(usuario);
+			Retorno retorno = jdbcUsuario.inserir(usuario, token);
 			
 			my_sql.fecharConexao();
 	
-			if (retorno.getStatus() == "sucesso") {				
+			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getMessage());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar cadastrar o usuario! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar cadastrar o usuario! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 	
 	@PUT
 	@Path("/alterar")
 	@Consumes("application/*")
-	public Response alterar(String usuarioParam) {
+	public Response alterar(String usuarioParam, @HeaderParam("Authorization") String token) {
 		try {	
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
 			
@@ -117,27 +118,27 @@ public class UsuarioRest extends UtilRest {
 			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-			Retorno retorno = jdbcUsuario.alterar(usuario);
+			Retorno retorno = jdbcUsuario.alterar(usuario, token);
 			
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {				
+			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getMessage());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());				
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar o usuario! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar o usuario! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 	
 	@PUT
 	@Path("/alterar-senha")
 	@Consumes("application/*")
-	public Response alterarSenha(String usuarioParam) {
+	public Response alterarSenha(String usuarioParam, @HeaderParam("Authorization") String token) {
 		try {	
 			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
 			
@@ -145,46 +146,46 @@ public class UsuarioRest extends UtilRest {
 			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-			Retorno retorno = jdbcUsuario.alterarSenha(usuario);
+			Retorno retorno = jdbcUsuario.alterarSenha(usuario, token);
 			
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {				
+			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getMessage());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());				
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar a senha do usuario! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar a senha do usuario! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 
 	@DELETE
 	@Path("/excluir/{id}")
 	@Consumes("application/*")
-	public Response excluir(@PathParam("id") int id) {
+	public Response excluir(@PathParam("id") int id, @HeaderParam("Authorization") String token) {
 		try {
 			MySql my_sql = new MySql();
 			Connection conexao = my_sql.abrirConexao();
 			
 			JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-			Retorno retorno = jdbcUsuario.deletar(id);
+			Retorno retorno = jdbcUsuario.deletar(id, token);
 	
 			my_sql.fecharConexao();
 			
-			if (retorno.getStatus() == "sucesso") {
+			if (retorno.getStatus() == 200) {
 				return this.buildResponse(retorno.getMessage());				
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage());				
+				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar remover o usuario! \n Erro: \n" + e.getMessage());
+			return this.buildErrorResponse("Ocorreu um erro ao tentar remover o usuario! \n Erro: \n" + e.getMessage(), 500);
 		}
 	}
 }
