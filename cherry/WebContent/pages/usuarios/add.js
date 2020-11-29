@@ -122,7 +122,7 @@ export default {
 				const body = {
 					nome,
 					email,
-					senha,
+					senha: btoa(senha),
 					tipo_id,
 					ativo: 1
 				}
