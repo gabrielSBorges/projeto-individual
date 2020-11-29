@@ -17,13 +17,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import br.com.cherry.modelo.Usuario;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTCode {
-	private static String SECRET_KEY = "oeRaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_9hKolVX8xNrQDcNRfVEdTZNOuOyqEGhXEbdJI-ZQ19k_o9MI0y3eZN2lp9jow55FfXMiINEdt1XR85VipRLSOkT6kSpzs2x-jbLDiz9iFVzkd81YKxMgPA7VfZeQUm4n-mOmnWMaVX30zGFU4L3oPBctYKkl4dYfqYWqRNfrgPJVi5DGFjywgxx0ASEiJHtV72paI3fDR2XwlSkyhhmY-ICjCRmsJN4fX1pdoL8a18-aQrvyu4j0Os6dVPYIoPvvY0SAZtWYKHfM15g7A3HD4cVREf9cUsprCRK93w";
+	Base64Code base64 = new Base64Code();
+	private static String SECRET_KEY = "oeRaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5";
 	
 	public String encode(Usuario usuario) {
 		Instant now = Instant.now();
@@ -61,13 +63,30 @@ public class JWTCode {
 			return false;
 		}
 		
-		String buscaToken = "SELECT * FROM tokens WHERE code = ?";
-		
 		Base64Code base64 = new Base64Code();
 		String token = base64.decode(tokenBase64);
 		
 		MD5Code md5Code = new MD5Code();
 		String hashToken = md5Code.encode(token);
+		
+		try {
+			// Este processo retorna erro caso a signature key do token for inválida
+			Claims body = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+	        
+	        Date expiresAt = body.getExpiration();
+	        Date now = new Date();
+	        
+	        if (expiresAt.before(now)) {
+	        	return false;
+	        }		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			
+			return false;
+		}
+        
+		String buscaToken = "SELECT * FROM tokens WHERE code = ?";
 		
 		PreparedStatement p = conexao.prepareStatement(buscaToken);
 		p.setString(1, hashToken);
