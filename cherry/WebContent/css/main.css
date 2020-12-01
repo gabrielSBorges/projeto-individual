@@ -11,4 +11,15 @@ html {
 }
 
 /* Divisores verticais nas tabelas */
-table td + td { border-left:1px solid #dddddd; }
+table td + td { 
+  border-left:1px solid #dddddd; 
+}
+
+.app-btn-usuario {
+  cursor: pointer;
+  width: 100%;
+}
+
+.app-btn-text {
+  font-weight: bold;
+}

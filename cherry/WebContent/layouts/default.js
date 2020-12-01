@@ -15,9 +15,21 @@ const template = /*html*/`
 			
 			<v-spacer></v-spacer>
 			
-			<v-btn icon @click="logout()" class="white--text">
-				<v-icon>mdi-logout</v-icon>
-			</v-btn>
+			<v-menu offset-y>
+				<template v-slot:activator="{ on, attrs }">
+					<div class="white--text app-btn-text" v-bind="attrs" v-on="on">
+						{{ usuario }}
+					</div>
+				</template>
+
+				<v-list class="pa-0">
+					<v-list-item v-for="(item, index) in btnsUsuario" :key="index" @click="item.function" class="app-btn-usuario">
+						<v-list-item-title>{{ item.title }}</v-list-item-title>
+
+						<v-icon class="ml-4">{{ item.icon }}</v-icon>
+					</v-list-item>
+				</v-list>
+			</v-menu>
 		</v-app-bar>
 		
 		<v-navigation-drawer v-model="drawer" clipped app clipped :style="navigationDrawerStyle" temporary just disable-resize-watcher>			
@@ -59,6 +71,18 @@ export default {
 		return {
 			drawer: false,
 			telas,
+			btnsUsuario: [
+				{
+					icon: 'mdi-cog',
+					title: 'Meu Perfil',
+					function: () => false
+				},
+				{
+					icon: 'mdi-logout',
+					title: 'Sair',
+					function: this.logout
+				}
+			]
 		}
 	},
 	computed: {
@@ -72,6 +96,10 @@ export default {
 				'border-radius': '5px'
 			}
 		},
+
+		usuario() {
+			return auth.getUser().nome
+		}
 	},
 	methods: {
 		async logout() {
