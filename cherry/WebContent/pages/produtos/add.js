@@ -66,7 +66,7 @@ export default {
 				const body = {
 					nome,
 					valor: parseFloat(valor),
-					usuario_id: 1
+					usuario_id: auth.getUser().id
 				}
 
 				await axios.post('/produto/inserir', body)

@@ -145,7 +145,7 @@ export default {
       const body = {
         valor: this.totalVenda,
         dt_realizado: moment().format("YYYY-MM-DD HH:mm:ss"),
-        usuario_id: 2,
+        usuario_id: auth.getUser().id,
         produtos: this.produtosSelecionados
       }
 
