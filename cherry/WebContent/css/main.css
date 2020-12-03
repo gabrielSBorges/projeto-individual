@@ -17,9 +17,10 @@ table td + td {
 
 .app-btn-usuario {
   cursor: pointer;
-  width: 100%;
+  user-select: none;
 }
 
 .app-btn-text {
   font-weight: bold;
+  user-select: none;
 }
