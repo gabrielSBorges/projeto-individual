@@ -27,8 +27,34 @@ public class JDBCAuthDAO {
 			String token = base64.decode(tokenBase64);
 			
 			if (jwtCode.valid(tokenBase64, this.conexao)) {
-				retorno.setStatus(200);
-				retorno.setUsuario(jwtCode.decode(token));
+				Usuario usuario = jwtCode.decode(token);
+				
+				String comando = "SELECT u.id, u.email, u.nome, u.ativo, t.nome as tipo, u.tipo_id FROM usuarios u INNER JOIN tipos t ON u.tipo_id = t.id WHERE u.id = ?";
+				
+				PreparedStatement p = this.conexao.prepareStatement(comando);
+				p.setInt(1, usuario.getId());
+				
+				ResultSet rs = p.executeQuery();
+				if (rs.next()) {
+					String email = rs.getString("email");
+					String nome = rs.getString("nome");
+					String tipo = rs.getString("tipo");
+					int tipo_id = rs.getInt("tipo_id");
+					int ativo = rs.getInt("ativo");
+					
+					usuario.setEmail(email);
+					usuario.setNome(nome);
+					usuario.setTipo(tipo);
+					usuario.setTipoId(tipo_id);
+					usuario.setAtivo(ativo);
+					
+					retorno.setStatus(200);
+					retorno.setUsuario(usuario);
+				}
+				else {
+					retorno.setStatus(400);
+					retorno.setMessage("Usuário não encontrado!");
+				}
 			}
 			else {
 				retorno.setStatus(401);

@@ -147,4 +147,10 @@ INSERT INTO tipos (nome) VALUES("Caixa");
 
 INSERT INTO usuarios (nome, email, senha, ativo, tipo_id) VALUES("Gabriel Borges", "gabriel@gmail.com", "e10adc3949ba59abbe56e057f20f883e", 1, 1);
 
-SELECT * from tokens;
+SELECT * FROM tokens;
+
+SELECT * FROM usuarios;
+
+SELECT * FROM produtos;
+
+SELECT * FROM vendas;

@@ -75,7 +75,7 @@ export default {
 				{
 					icon: 'mdi-cog',
 					title: 'Meu Perfil',
-					function: () => false
+					function: this.openProfile
 				},
 				{
 					icon: 'mdi-logout',
@@ -98,13 +98,17 @@ export default {
 		},
 
 		usuario() {
-			return auth.getUser().nome
+			return auth.user.nome
 		}
 	},
 	methods: {
 		async logout() {
 			await auth.logout()
 			this.$router.push('/login')
+		},
+
+		openProfile() {
+			this.$router.push('/meus_perfil')
 		},
 
 		loadPage(path) {

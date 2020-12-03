@@ -1,6 +1,7 @@
 import Login from '../pages/login/index.js'
 import Home from '../pages/home/index.js'
 import Usuarios from '../pages/usuarios/index.js'
+import MeusDados from '../pages/usuarios/meus_dados.js'
 import Produtos from '../pages/produtos/index.js'
 import Vendas from '../pages/vendas/index.js'
 import Relatorios from '../pages/relatorios/index.js'
@@ -17,6 +18,17 @@ export default [
 		name: 'login',
 		path: '/login',
 		component: Login,
+		inMenu: false,
+		inHome: false
+	},
+	{
+		title: 'Meus Dados',
+		name: 'meus_dados',
+		path: '/meus_perfil',
+		component: MeusDados,
+		meta: {
+			requiresAuth: true,
+		},
 		inMenu: false,
 		inHome: false
 	},
