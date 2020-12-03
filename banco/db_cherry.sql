@@ -135,8 +135,6 @@ CREATE TABLE IF NOT EXISTS `db_cherry`.`produtos_vendidos` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -146,11 +144,3 @@ INSERT INTO tipos (nome) VALUES("Gestor");
 INSERT INTO tipos (nome) VALUES("Caixa");
 
 INSERT INTO usuarios (nome, email, senha, ativo, tipo_id) VALUES("Gabriel Borges", "gabriel@gmail.com", "e10adc3949ba59abbe56e057f20f883e", 1, 1);
-
-SELECT * FROM tokens;
-
-SELECT * FROM usuarios;
-
-SELECT * FROM produtos;
-
-SELECT * FROM vendas;
