@@ -87,7 +87,7 @@ export default {
 
 				const body = {
 					id,
-					senha
+					senha: btoa(senha)
 				}
 
 				await axios.put('/usuario/alterar-senha', body)
