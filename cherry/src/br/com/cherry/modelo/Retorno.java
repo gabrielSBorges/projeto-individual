@@ -127,4 +127,26 @@ public class Retorno {
 	public Auth getAuth() {
 		return this.auth;
 	}
+	
+	// Relatórios
+	// Produtos Mais Vendidos
+	private List<ProdutoMaisVendido> listProdutosMaisVendidos = new ArrayList<ProdutoMaisVendido>();
+	
+	public List<ProdutoMaisVendido> getListProdutosMaisVendidos() {
+		return this.listProdutosMaisVendidos;
+	}
+	
+	public void setListProdutosMaisVendidos(List<ProdutoMaisVendido> listProdutosMaisVendidos) {
+		this.listProdutosMaisVendidos = listProdutosMaisVendidos;
+	}
+	
+	private List<LucroDiario> listLucrosDiarios = new ArrayList<LucroDiario>();
+	
+	public List<LucroDiario> getListLucrosDiarios() {
+		return this.listLucrosDiarios;
+	}
+	
+	public void setListLucrosDiarios(List<LucroDiario> listLucrosDiarios) {
+		this.listLucrosDiarios = listLucrosDiarios;
+	}
 }

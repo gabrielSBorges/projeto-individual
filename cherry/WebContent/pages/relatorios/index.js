@@ -105,7 +105,7 @@ export default {
 
 			this.gerandoRelatorio = true
 
-			await axios.get(`/relatorio/${relatorio}?periodo=${periodo}`)
+			await axios.get(`/relatorio/${relatorio.replace("_", "-")}?periodo=${periodo}`)
 				.then(retorno => {
 					this.headers = [relatorio].headers
 					this.items = retorno.data
