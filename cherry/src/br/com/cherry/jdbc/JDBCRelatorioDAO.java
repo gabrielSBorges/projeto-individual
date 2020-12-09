@@ -12,7 +12,7 @@ import br.com.cherry.auth.MD5Code;
 import br.com.cherry.modelo.ProdutoMaisVendido;
 import br.com.cherry.modelo.Retorno;
 
-public class JDBCRelatorioDAO {
+public class JDBCRelatorioDAO extends JDBCUtils {
 	private Connection conexao;
 	JWTCode jwtCode = new JWTCode();
 	MD5Code md5Code = new MD5Code();
@@ -56,14 +56,17 @@ public class JDBCRelatorioDAO {
 				List<ProdutoMaisVendido> produtosMaisVendidos = new ArrayList<ProdutoMaisVendido>();
 				
 				for (ProdutoMaisVendido produto : produtos) {
-					for (ProdutoMaisVendido produtoVendido : produtosMaisVendidos) {
-						if (produto.getId() == produtoVendido.getId()) {
-							produtoVendido.setQuantidade(produto.getQuantidade() + produtoVendido.getQuantidade());
-							produtoVendido.setValorTotal(produto.getValorTotal() + produtoVendido.getValorTotal());
-						}
-						else {
-							produtosMaisVendidos.add(produto);
-						}
+					if (this.inArrayProdutos(produtosMaisVendidos, produto.getId())) {
+						int index = this.returnIndexOf(produtosMaisVendidos, produto.getId());
+						
+						int current_qtd = produtosMaisVendidos.get(index).getQuantidade();
+						float current_total = produtosMaisVendidos.get(index).getValorTotal();
+						
+						produtosMaisVendidos.get(index).setQuantidade(produto.getQuantidade() + current_qtd);
+						produtosMaisVendidos.get(index).setValorTotal(produto.getValorTotal() + current_total);
+					}
+					else {
+						produtosMaisVendidos.add(produto);
 					}
 				}
 				
