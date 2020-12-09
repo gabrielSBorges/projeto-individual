@@ -144,3 +144,7 @@ INSERT INTO tipos (nome) VALUES("Gestor");
 INSERT INTO tipos (nome) VALUES("Caixa");
 
 INSERT INTO usuarios (nome, email, senha, ativo, tipo_id) VALUES("Gabriel Borges", "gabriel@gmail.com", "e10adc3949ba59abbe56e057f20f883e", 1, 1);
+
+select * from produtos_vendidos;
+
+SELECT p.id, p.nome, pv.quantidade, pv.valor_unit FROM vendas v INNER JOIN produtos_vendidos pv ON pv.venda_id = v.id INNER JOIN produtos p ON pv.produto_id = p.id WHERE v.dt_realizado >= "2020-12-01 00:00:00" AND v.dt_realizado <= "2020-12-07 23:59:59";

@@ -1,11 +1,11 @@
 package br.com.cherry.modelo;
 
-public class ProdutoVendido {
+public class ProdutoMaisVendido {
 	private int id;
+	private String nome;
 	private int quantidade;
 	private float valor_unit;
-	private int venda_id;
-	private int produto_id;
+	private float valor_total;
 	
 	// ID
 	public int getId() {
@@ -14,6 +14,15 @@ public class ProdutoVendido {
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	// Nome
+	public String getNome() {
+		return this.nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 	// Valor unitario
@@ -25,6 +34,15 @@ public class ProdutoVendido {
 		this.valor_unit = valor_unit;
 	}
 	
+	// Valor unitario
+	public float getValorTotal() {
+		return this.valor_total;
+	}
+	
+	public void setValorTotal(float valor_total) {
+		this.valor_total = valor_total;
+	}
+	
 	// Quantidade
 	public int getQuantidade() {
 		return this.quantidade;
@@ -32,23 +50,5 @@ public class ProdutoVendido {
 	
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-	}
-	
-	// Venda ID
-	public int getVendaId() {
-		return this.venda_id;
-	}
-	
-	public void setVendaId(int venda_id) {
-		this.venda_id = venda_id;
-	}
-	
-	// Produto ID
-	public int getProdutoId() {
-		return this.produto_id;
-	}
-	
-	public void setProdutoId(int produto_id) {
-		this.produto_id = produto_id;
 	}
 }

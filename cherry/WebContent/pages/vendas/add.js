@@ -105,7 +105,6 @@ export default {
         { text: 'Produto', sortable: false, value: 'nome' },
         { text: 'Valor Unitário', sortable: false, value: 'valor' },
         { text: 'Quantidade', sortable: false, value: 'quantidade' },
-        // { text: 'Total', sortable: false, value: 'total' },
         { text: '', sortable: false, value: 'btns' },
       ],
       produtosSelecionados: [],
@@ -115,7 +114,7 @@ export default {
     }
   },
   watch: {
-    buscaproduto(v) {
+    buscaproduto() {
       this.buscarUsuarios()
     }
   },

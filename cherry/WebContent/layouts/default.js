@@ -42,9 +42,9 @@ const template = /*html*/`
 						<template v-slot:activator="{ on, attrs }">
 							<span class="white--text app-btn-text" v-bind="attrs" v-on="on">
 								{{ usuario }}
+								
+								<v-icon color="white" class="ml-1">mdi-cog</v-icon>
 							</span>
-
-							<v-icon class="ml-4">mdi-cog</v-icon>
 						</template>
 
 						<v-list class="pa-0">
@@ -83,7 +83,7 @@ export default {
 			telas,
 			btnsUsuario: [
 				{
-					icon: 'mdi-cog',
+					icon: 'mdi-account',
 					title: 'Meu Perfil',
 					function: this.openProfile
 				},

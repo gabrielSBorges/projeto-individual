@@ -173,7 +173,7 @@ export default {
 
       await axios.get(`/usuario/buscar?${filtroUsuario}`)
         .then(retorno => {
-          this.usuarios = JSON.parse(retorno.data)
+          this.usuarios = retorno.data
         })
         .catch(erro => {
           console.log('Erro ao listar usuarios')
