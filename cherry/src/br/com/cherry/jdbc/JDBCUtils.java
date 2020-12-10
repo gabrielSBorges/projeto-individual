@@ -16,10 +16,8 @@ public class JDBCUtils {
 	}
 	
 	public int returnIndexOf(List<ProdutoMaisVendido> produtosMaisVendidos, int id) {
-		ProdutoMaisVendido[] produtos = new ProdutoMaisVendido[produtosMaisVendidos.size()];
-		
-		for (int i = 0; i < produtos.length; i++) {
-			if (produtos[i].getId() == id) {
+		for (int i = 0; i < produtosMaisVendidos.size(); i++) {
+			if (produtosMaisVendidos.get(i).getId() == id) {
 				return i;
 			}
 		}

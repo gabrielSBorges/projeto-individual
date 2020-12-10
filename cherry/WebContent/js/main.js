@@ -37,6 +37,38 @@ router.beforeEach((to, from, next) => {
 	}
 })
 
+Vue.use(Toasted)
+
+Vue.toasted.register('error',
+	(payload) => {
+		return payload
+	},
+	{
+		type: 'error',
+		duration: 3000
+	}
+)
+
+Vue.toasted.register('success',
+	(payload) => {
+		return payload
+	},
+	{
+		type: 'success',
+		duration: 3000
+	}
+)
+
+Vue.toasted.register('info',
+	(payload) => {
+		return payload
+	},
+	{
+		type: 'info',
+		duration: 3000
+	}
+)
+
 import Default from '../layouts/default.js'
 import AppBlock from '../components/AppBlock.js'
 import AppBtn from '../components/AppBtn.js'

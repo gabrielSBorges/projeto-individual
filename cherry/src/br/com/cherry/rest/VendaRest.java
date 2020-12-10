@@ -18,11 +18,14 @@ import com.google.gson.Gson;
 
 import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCVendaDAO;
+import br.com.cherry.modelo.Message;
 import br.com.cherry.modelo.Retorno;
 import br.com.cherry.modelo.Venda;
 
 @Path("venda")
 public class VendaRest extends UtilRest {
+	Message message = new Message();
+	
 	@GET
 	@Path("/buscarPorId")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -37,15 +40,17 @@ public class VendaRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getVenda());
+				return this.buildResponse(retorno.getVenda(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar a venda! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar buscar a venda!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -63,15 +68,17 @@ public class VendaRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {
-				return this.buildResponse(retorno.getListVendas());
+				return this.buildResponse(retorno.getListVendas(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar listar as vendas! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar listar as vendas!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -91,15 +98,17 @@ public class VendaRest extends UtilRest {
 			my_sql.fecharConexao();
 	
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getMessage());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar cadastrar a venda! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar cadastrar a venda!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -117,15 +126,17 @@ public class VendaRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {
-				return this.buildResponse(retorno.getMessage());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar excluir a venda! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar excluir a venda!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 }

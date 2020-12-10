@@ -13,10 +13,13 @@ import javax.ws.rs.core.Response;
 
 import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCTipoDAO;
+import br.com.cherry.modelo.Message;
 import br.com.cherry.modelo.Retorno;
 
 @Path("tipo")
 public class TipoRest extends UtilRest {
+	Message message = new Message();
+	
 	@GET
 	@Path("/buscar")
 	@Consumes("application/*")
@@ -32,15 +35,17 @@ public class TipoRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {
-				return this.buildResponse(retorno.getListTipos());
+				return this.buildResponse(retorno.getListTipos(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar listar os tipos! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar listar os tipos!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 }

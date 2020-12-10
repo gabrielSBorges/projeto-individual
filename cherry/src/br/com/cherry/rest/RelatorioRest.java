@@ -12,10 +12,13 @@ import javax.ws.rs.core.Response;
 
 import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCRelatorioDAO;
+import br.com.cherry.modelo.Message;
 import br.com.cherry.modelo.Retorno;
 
 @Path("relatorio")
 public class RelatorioRest extends UtilRest {
+	Message message = new Message();
+	
 	@GET
 	@Path("/produtos-vendidos")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -30,15 +33,17 @@ public class RelatorioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getListProdutosMaisVendidos());
+				return this.buildResponse(retorno.getListProdutosMaisVendidos(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar o usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao gerar o relatório!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -56,15 +61,17 @@ public class RelatorioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getListLucrosDiarios());
+				return this.buildResponse(retorno.getListLucrosDiarios(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar o usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao gerar o relatório!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 }

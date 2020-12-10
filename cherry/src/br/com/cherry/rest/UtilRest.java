@@ -5,21 +5,32 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.google.gson.Gson;
 
+import br.com.cherry.modelo.Message;
+
 public class UtilRest {
-	public Response buildResponse(Object result) {
+	public Response buildResponse(Object result, int status) {
 		try {
-			String valorResposta = new Gson().toJson(result);
-			return Response.ok(valorResposta).build();
+			String objeto = new Gson().toJson(result);
+			
+			ResponseBuilder response = Response.status(status); 
+			
+			response.entity(objeto);
+			
+			return response.build();
 		} catch(Exception e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage(), 500);
+			
+			Message message = new Message();
+			message.setMessage(e.getMessage());
+			
+			return this.buildErrorResponse(message, 500);
 		}
 	}
 	
-	public Response buildErrorResponse(String str, int code) {
+	public Response buildErrorResponse(Message str, int code) {
 		ResponseBuilder rb = Response.status(code);
 		
-		rb = rb.entity(str);
+		rb = rb.entity(str.getMessage());
 		rb = rb.type("text/plain");
 		
 		return rb.build();

@@ -89,10 +89,12 @@ export default {
 						// Setar os dados do usuário na "sessão"
 						await this.getMe()
 
+						this.$toasted.global.success('Login realizado com sucesso!')
+						
 						this.$router.push('/')
 					})
 					.catch(erro => {
-						console.log('Deu pau no login')
+						this.$toasted.global.error('Deu pau no login!')
 					})
 			}
 		},

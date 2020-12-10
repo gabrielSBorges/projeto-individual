@@ -19,12 +19,15 @@ import java.sql.Connection;
 
 import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCProdutoDAO;
+import br.com.cherry.modelo.Message;
 import br.com.cherry.modelo.Produto;
 import br.com.cherry.modelo.Retorno;
 
 
 @Path("produto")
 public class ProdutoRest extends UtilRest {
+	Message message = new Message();
+	
 	@GET
 	@Path("/buscarPorId")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -39,15 +42,17 @@ public class ProdutoRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getProduto());
+				return this.buildResponse(retorno.getProduto(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar o produto! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar buscar o produto!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -67,15 +72,17 @@ public class ProdutoRest extends UtilRest {
 			
 			if (retorno.getStatus() == 200) {
 				String json = new Gson().toJson(retorno.getListJson());
-				return this.buildResponse(json);
+				return this.buildResponse(json, retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar listar os produtos! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar listar os produtos!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -95,15 +102,17 @@ public class ProdutoRest extends UtilRest {
 			my_sql.fecharConexao();
 	
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getMessage());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar cadastrar o produto! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar cadastrar o produto!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -123,15 +132,17 @@ public class ProdutoRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getMessage());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar o produto! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar alterar o produto!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 
@@ -149,15 +160,17 @@ public class ProdutoRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {
-				return this.buildResponse(retorno.getMessage());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar remover o produto! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar remover o produto!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 }

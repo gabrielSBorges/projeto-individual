@@ -20,11 +20,14 @@ import java.sql.Connection;
 import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCUsuarioDAO;
 import br.com.cherry.modelo.Usuario;
+import br.com.cherry.modelo.Message;
 import br.com.cherry.modelo.Retorno;
 
 
 @Path("usuario")
 public class UsuarioRest extends UtilRest {
+	Message message = new Message();
+	
 	@GET
 	@Path("/buscarPorId")
 	@Consumes("application/*")
@@ -40,15 +43,17 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getUsuario());
+				return this.buildResponse(retorno.getUsuario(), 200);
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar o usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar buscar o usuario!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -67,15 +72,17 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {
-				return this.buildResponse(retorno.getListUsuarios());
+				return this.buildResponse(retorno.getListUsuarios(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar listar os usuarios! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar listar os usuarios!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -96,15 +103,17 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 	
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getMessage());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar cadastrar o usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar cadastrar o usuario!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -124,15 +133,17 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getMessage());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar o usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar alterar os dados do usuario!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -152,15 +163,17 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getMessage());
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar alterar a senha do usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar alterar a senha do usuario!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 
@@ -178,15 +191,17 @@ public class UsuarioRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {
-				return this.buildResponse(retorno.getMessage());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar remover o usuario! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar remover o usuario!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 }

@@ -16,11 +16,14 @@ import com.google.gson.Gson;
 
 import br.com.cherry.db.MySql;
 import br.com.cherry.jdbc.JDBCAuthDAO;
+import br.com.cherry.modelo.Message;
 import br.com.cherry.modelo.Retorno;
 import br.com.cherry.modelo.Usuario;
 
 @Path("auth")
 public class AuthRest extends UtilRest {
+	Message message = new Message();
+	
 	@GET
 	@Path("/me")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -35,15 +38,17 @@ public class AuthRest extends UtilRest {
 			my_sql.fecharConexao();
 			
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getUsuario());
+				return this.buildResponse(retorno.getUsuario(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar buscar os dados!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -64,15 +69,17 @@ public class AuthRest extends UtilRest {
 			my_sql.fecharConexao();
 	
 			if (retorno.getStatus() == 200) {				
-				return this.buildResponse(retorno.getAuth());
+				return this.buildResponse(retorno.getAuth(), retorno.getStatus());
 			}
 			else {
-				return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar buscar os dados!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 	
@@ -89,11 +96,13 @@ public class AuthRest extends UtilRest {
 			
 			my_sql.fecharConexao();
 			
-			return this.buildErrorResponse(retorno.getMessage(), retorno.getStatus());		
+			return this.buildResponse(retorno.getMessage(), retorno.getStatus());		
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			return this.buildErrorResponse("Ocorreu um erro ao tentar buscar os dados! \n Erro: \n" + e.getMessage(), 500);
+			message.setMessage("Ocorreu um erro ao tentar buscar os dados!");
+			
+			return this.buildResponse(message, 500);
 		}
 	}
 }
