@@ -27,7 +27,7 @@ public class JWTCode {
 	Base64Code base64 = new Base64Code();
 	private static String SECRET_KEY = "oeRaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5";
 	
-	public String encode(Usuario usuario) {
+	public String encode(Usuario usuario, int tempo) {
 		Instant now = Instant.now();
 		
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -39,7 +39,7 @@ public class JWTCode {
 			.setSubject(usuario.getNome())
 			.setHeaderParam("usuario", usuario)
 			.setIssuedAt(Date.from(now))
-			.setExpiration(Date.from(now.plus(24, ChronoUnit.HOURS)))
+			.setExpiration(Date.from(now.plus(tempo, ChronoUnit.HOURS)))
 			.signWith(signatureAlgorithm, signingKey);
 	    
 	    return builder.compact();

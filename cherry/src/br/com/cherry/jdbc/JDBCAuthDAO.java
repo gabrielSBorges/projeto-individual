@@ -105,7 +105,7 @@ public class JDBCAuthDAO {
 					usuario.setTipoId(tipo_id);
 					usuario.setAtivo(ativo);
 					
-					String token = jwtCode.encode(usuario);
+					String token = jwtCode.encode(usuario, 24);
 					
 					Auth auth = new Auth();
 					auth.setToken(base64.encode(token));
@@ -136,6 +136,74 @@ public class JDBCAuthDAO {
 			
 			retorno.setStatus(500);
 			retorno.setMessage("Falha interna! Não foi possível concluir o login.");
+		}
+		
+		return retorno;
+	}
+	
+	public Retorno recuperarSenha(Usuario usuarioForm) {
+		Retorno retorno = new Retorno();
+		
+		String comando = "SELECT nome FROM usuarios WHERE email = ?";
+		String deleteToken = "DELETE FROM tokens WHERE usuario_id = ?";
+		String saveToken = "INSERT INTO tokens (code, usuario_id) VALUES (?, ?)";
+		
+		try {			
+			PreparedStatement p = this.conexao.prepareStatement(comando);
+			p.setString(1, usuarioForm.getEmail());
+			
+			ResultSet rs = p.executeQuery();
+			if (rs.next()) {
+				int id = rs.getInt("id");
+				int tipo_id = rs.getInt("tipo_id");
+				int ativo = rs.getInt("ativo");
+				
+				if (tipo_id == 1 || ativo == 1) {
+					Usuario usuario = new Usuario();
+					usuario.setId(id);
+					usuario.setTipoId(tipo_id);
+					usuario.setAtivo(ativo);
+					
+					String token = jwtCode.encode(usuario, 1);
+					
+					Auth auth = new Auth();
+					auth.setToken(base64.encode(token));
+					
+					p = this.conexao.prepareStatement(deleteToken);
+					p.setInt(1, usuario.getId());
+					p.execute();
+					
+					p = this.conexao.prepareStatement(saveToken);
+					p.setString(1, token);
+					p.setInt(2, usuario.getId());
+					
+					ResultSet rsToken = p.getGeneratedKeys();
+					
+					if (rsToken.next()) {
+						int token_id = rsToken.getInt(1);
+						
+						String url = "http://localhost:8080/cherry/#/recuperar_senha/" + base64.encode(Integer.toString(token_id));
+						
+						System.out.println(url);
+					}
+					
+					retorno.setStatus(200);
+					retorno.setAuth(auth);					
+				}
+				else {
+					retorno.setStatus(400);
+					retorno.setMessage("Usuário desativado!");
+				}
+			}
+			else {
+				retorno.setStatus(400);
+				retorno.setMessage("Usuário não encontrado! E-mail incorreto.");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+			retorno.setStatus(500);
+			retorno.setMessage("Falha interna! Não foi possível realizar o envio do e-mail.");
 		}
 		
 		return retorno;
