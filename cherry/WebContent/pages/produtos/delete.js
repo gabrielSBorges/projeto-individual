@@ -11,14 +11,6 @@ const template = /*html*/ `
 					</v-col>
 				</v-row>
 				
-				<v-row v-else-if="error">
-					<v-col cols="12">
-						<v-alert type="error" class="ma-0">
-							{{ error }}
-						</v-alert>
-					</v-col>
-				</v-row>
-				
 				<v-row v-else>
 					<v-col cols="12" class="py-0">					
 						<div class="text-h6">Quer mesmo excluir {{ produto.nome }}?</div>
@@ -53,7 +45,6 @@ export default {
       confirm: false,
       loadingProduto: false,
       produto: {},
-      error: "",
       excluindo: false,
     };
   },
@@ -71,9 +62,9 @@ export default {
         .then((retorno) => {
           this.produto = retorno.data;
         })
-        .catch(() => {
-          this.error =
-            "Ocorreu um erro ao tentar buscar informações desse produto";
+        .catch(erro => {
+          this.$toasted.global.error(erro.response.data.message)
+          $bus.$emit("close-modal")
         })
         .finally(() => {
           this.loadingProduto = false;
@@ -85,13 +76,13 @@ export default {
 
       await axios
         .delete(`/produto/excluir/${this.produto_id}`)
-        .then(() => {
+        .then(retorno => {
+          this.$toasted.global.success(retorno.data.message)
           $bus.$emit("close-modal");
           $bus.$emit("atualizar-tabela");
         })
-        .catch(() => {
-          // TODO - Mensagem de erro
-          console.log("Erro ao deletar");
+        .catch(erro => {
+          this.$toasted.global.error(erro.response.data.message)
         })
         .finally(() => {
           this.excluindo = false;
@@ -107,7 +98,6 @@ export default {
 
     $bus.$on("reset-modal", () => {
       this.dadosProduto = {};
-      this.error = "";
       this.$refs.form.reset();
     });
   },

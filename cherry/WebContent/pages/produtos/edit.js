@@ -11,14 +11,6 @@ const template = /*html*/ `
 					</v-col>
 				</v-row>
 				
-				<v-row v-else-if="error">
-					<v-col cols="12">
-						<v-alert type="error" class="ma-0">
-							{{ error }}
-						</v-alert>
-					</v-col>
-				</v-row>
-				
 				<v-row v-else>
 					<v-col cols="6" class="pt-0">
 						<v-text-field
@@ -65,8 +57,7 @@ export default {
       dadosProduto: {},
 
       loadingProduto: false,
-      editando: false,
-      error: "",
+      editando: false
     };
   },
   computed: {
@@ -83,9 +74,9 @@ export default {
         .then((retorno) => {
           this.dadosProduto = retorno.data;
         })
-        .catch(() => {
-          this.error =
-            "Ocorreu um erro ao tentar buscar informações desse produto";
+        .catch(erro => {
+          this.$toasted.global.error(erro.response.data.message)
+          $bus.$emit("close-modal")
         })
         .finally(() => {
           this.loadingProduto = false;
@@ -102,13 +93,13 @@ export default {
 
         await axios
           .put("/produto/alterar", this.dadosProduto)
-          .then(() => {
+          .then(retorno => {
+            this.$toasted.global.success(retorno.data.message)
             $bus.$emit("close-modal");
             $bus.$emit("atualizar-tabela");
           })
-          .catch(() => {
-            this.error =
-              "Ocorreu um erro ao tentar editar as informações desse produto";
+          .catch(erro => {
+            this.$toasted.global.error(erro.response.data.message)
           })
           .finally(() => {
             this.editando = false;
@@ -125,7 +116,6 @@ export default {
 
     $bus.$on("reset-modal", () => {
       this.dadosProduto = {};
-      this.error = "";
       this.$refs.form.reset();
     });
   },

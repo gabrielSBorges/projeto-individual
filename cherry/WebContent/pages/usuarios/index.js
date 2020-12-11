@@ -135,7 +135,7 @@ export default {
 				})
 			})
 			.catch(erro => {
-				console.log('Ocorreu um erro ao buscar os usuários.')
+				this.$toasted.global.error(erro.response.data.message)
 			})
 			.finally(() => {
 				this.loadingUsuarios = false

@@ -45,7 +45,7 @@ Vue.toasted.register('error',
 	},
 	{
 		type: 'error',
-		duration: 3000
+		duration: 4000
 	}
 )
 

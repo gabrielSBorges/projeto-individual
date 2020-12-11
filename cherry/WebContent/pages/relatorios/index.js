@@ -166,8 +166,7 @@ export default {
 					})
 				})
 				.catch(erro => {
-					console.log(erro);
-					console.log('Ocorreu um erro ao tentar gerar o relatório!')
+					this.$toasted.global.error(erro.response.data.message)
 				})
 				.finally(() => this.gerandoRelatorio = false)
 		},

@@ -65,9 +65,6 @@ export default {
     return {
       loadingVenda: false,
       venda: {},
-
-      error: "",
-
       cabecalho: [
         { text: 'Produto', sortable: false, value: 'nome' },
         { text: 'Valor Unitário', sortable: false, value: 'valor_unit' },
@@ -93,8 +90,9 @@ export default {
         .then((retorno) => {
           this.venda = retorno.data
         })
-        .catch(() => {
-          this.error = "Ocorreu um erro ao tentar buscar informações dessa venda";
+        .catch(erro => {
+          this.$toasted.global.error(erro.response.data.message)
+          $bus.$emit("close-modal")
         })
         .finally(() => {
           this.loadingProduto = false;
@@ -118,7 +116,6 @@ export default {
 
     $bus.$on("reset-modal", () => {
       this.venda = {};
-      this.error = "";
     });
   },
   beforeDestroy() {

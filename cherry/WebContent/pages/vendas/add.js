@@ -52,10 +52,6 @@ const template = /*html*/`
                   {{ item.quantidade }}
                 </td>
 
-                <!-- <td>
-                  R$ {{ valorFormatado(item.quantidade * item.valor) }}
-                </td> -->
-                
                 <td class="text-center">
                   <app-btn alert small tooltip="Remover Produto" :disabled="cadastrando" :on-click="() => removeProduto(item.id)" icon="mdi-delete" />
                 </td>
@@ -131,7 +127,8 @@ export default {
           this.produtos = JSON.parse(retorno.data)
         })
         .catch(erro => {
-          console.log('Erro ao listar produtos')
+          this.$toasted.global.error(erro.response.data.message)
+          $bus.$emit("close-modal")
         })
         .finally(() => {
           this.loadingProdutos = false
@@ -150,11 +147,12 @@ export default {
 
       await axios.post('/venda/inserir', body)
         .then(retorno => {
+          this.$toasted.global.success(retorno.data.message)
           $bus.$emit('close-modal')
           $bus.$emit('atualizar-tabela')
         })
         .catch(erro => {
-          console.log("Erro ao cadastrar")
+          this.$toasted.global.error(erro.response.data.message)
         })
         .finally(() => {
           this.cadastrando = false

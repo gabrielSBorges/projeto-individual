@@ -53,7 +53,7 @@ public class JDBCAuthDAO {
 				}
 				else {
 					retorno.setStatus(400);
-					retorno.setMessage("Usuário não encontrado! E-mail ou senha incorretos.");
+					retorno.setMessage("Usuário não encontrado!");
 				}
 			}
 			else {
@@ -129,7 +129,7 @@ public class JDBCAuthDAO {
 			}
 			else {
 				retorno.setStatus(400);
-				retorno.setMessage("Usuário não encontrado!");
+				retorno.setMessage("Usuário não encontrado! E-mail ou senha incorretos.");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
