@@ -31,20 +31,13 @@ const template = /*html*/`
 						/>
 					</v-col>
 					
-					<!-- <v-col cols="12" class="py-2">
-						<v-checkbox
-							v-model="dadosUsuario.manter_conectado"
-							label="Mantenha-me conectado."
-						></v-checkbox>
-					</v-col> -->
-					
 					<v-col cols="12" class="mb-3">
 						<app-btn success label="Entrar" block :disabled="!valid" :on-click="validate" />	
 					</v-col>
 					
-					<!-- <v-col cols="12" class="pb-2 pt-5 text-center">
+					<v-col cols="12" class="pb-2 pt-5 text-center">
 						<a href="#" class="text-decoration-none grey--text text--lighten-1 caption">Esqueci a senha</a>
-					</v-col> -->
+					</v-col>
 				</v-row>
 			</v-form>
 		</v-container>
@@ -70,7 +63,6 @@ export default {
 			dadosUsuario: {
 				email: '',
 				senha: '',
-				// manter_conectado: false,
 			}
 		}
 	},
@@ -89,10 +81,12 @@ export default {
 						// Setar os dados do usuário na "sessão"
 						await this.getMe()
 
+						this.$toasted.global.success('Login realizado com sucesso!')
+						
 						this.$router.push('/')
 					})
 					.catch(erro => {
-						console.log('Deu pau no login')
+						this.$toasted.global.error(erro.response.data.message)
 					})
 			}
 		},
@@ -103,7 +97,7 @@ export default {
 					auth.setUser(retorno.data)
 				})
 				.catch(erro => {
-					console.log('Deu pau no getMe')
+					this.$toasted.global.error(erro.response.data.message)
 				})
 		}
 	}

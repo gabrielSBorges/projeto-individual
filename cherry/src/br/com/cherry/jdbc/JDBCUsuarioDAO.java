@@ -63,7 +63,7 @@ public class JDBCUsuarioDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar buscar o usuario! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível buscar os dados do usuário.");
 		}
 		
 		return retorno;
@@ -117,7 +117,7 @@ public class JDBCUsuarioDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar listar os usuarios! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível listar os usuários.");
 		}
 		
 		return retorno;
@@ -146,7 +146,7 @@ public class JDBCUsuarioDAO {
 				p.execute();
 				
 				retorno.setStatus(200);
-				retorno.setMessage("Usuario cadastrado com sucesso!");				
+				retorno.setMessage("Usuário cadastrado com sucesso!");				
 			}
 			else {
 				retorno.setStatus(401);
@@ -154,7 +154,7 @@ public class JDBCUsuarioDAO {
 			}
 		} catch(SQLException e) {
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar cadastrar o usuario! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível cadastrar o usuário.");
 		}
 		
 		return retorno;
@@ -176,7 +176,7 @@ public class JDBCUsuarioDAO {
 				p.executeUpdate();
 				
 				retorno.setStatus(200);
-				retorno.setMessage("Usuario alterado com sucesso!");				
+				retorno.setMessage("Usuário alterado com sucesso!");				
 			}
 			else {
 				retorno.setStatus(401);
@@ -186,7 +186,7 @@ public class JDBCUsuarioDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar alterar esse usuario! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível alterar os dados do usuário!");
 		}
 		
 		return retorno;
@@ -217,7 +217,7 @@ public class JDBCUsuarioDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar alterar a senha desse usuario! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível alterar a senha do usuário.");
 		}
 		
 		return retorno;
@@ -235,7 +235,7 @@ public class JDBCUsuarioDAO {
 				p.execute();
 				
 				retorno.setStatus(200);
-				retorno.setMessage("Usuario removido com sucesso!");
+				retorno.setMessage("Usuário removido com sucesso!");
 			}
 			else {
 				retorno.setStatus(401);
@@ -245,7 +245,7 @@ public class JDBCUsuarioDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar remover o usuario! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível deletar o usuário.");
 		}
 		
 		return retorno;

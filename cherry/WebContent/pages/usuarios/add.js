@@ -128,14 +128,13 @@ export default {
 				}
 
 				await axios.post('/usuario/inserir', body)
-				.then(() => {
+				.then(retorno => {
+					this.$toasted.global.success(retorno.data.message)
 					$bus.$emit('close-modal')
 					$bus.$emit('atualizar-tabela')
 				})
 				.catch(erro => {
-					//TODO - Toast
-					console.log(erro.response.data)
-					console.log("Erro ao cadastrar usuário")
+					this.$toasted.global.error(erro.response.data.message)
 				})
 			}
 		},
@@ -154,7 +153,8 @@ export default {
 				this.tipos = retorno.data
 			})
 			.catch(erro => {
-				console.log('Erro ao listar tipos')
+				this.$toasted.global.error(erro.response.data.message)
+				$bus.$emit("close-modal")
 			})
 			.finally(() => {
 				this.loadingTipos = false

@@ -108,7 +108,7 @@ export default {
 				})
 			})
 			.catch(erro => {
-				console.log("Ocorreu um erro ao buscar os produtos.")
+				this.$toasted.global.error(erro.response.data.message)
 			})
 			.finally(() => {
 				this.loadingProdutos = false

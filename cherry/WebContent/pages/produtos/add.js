@@ -70,13 +70,13 @@ export default {
 				}
 
 				await axios.post('/produto/inserir', body)
-				.then(() => {
+				.then(retorno => {
+					this.$toasted.global.success(retorno.data.message)
 					$bus.$emit('close-modal')
 					$bus.$emit('atualizar-tabela')
 				})
-				.catch(() => {
-					//TODO - Toast
-					console.log("Erro ao cadastrar")
+				.catch(erro => {
+					this.$toasted.global.error(erro.response.data.message)
 				})
 				.finally(() => {
 					this.cadastrando = false

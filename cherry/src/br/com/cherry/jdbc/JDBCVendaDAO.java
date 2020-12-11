@@ -83,7 +83,7 @@ public class JDBCVendaDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar buscar a venda! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível buscar os dados da venda.");
 		}
 		
 		return retorno;
@@ -181,7 +181,7 @@ public class JDBCVendaDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar listar as vendas! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível listar as vendas.");
 		}
 		
 		return retorno;
@@ -234,7 +234,7 @@ public class JDBCVendaDAO {
 			}
 		} catch(SQLException e) {
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar cadastrar a venda! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível cadastrar a venda.");
 		}
 		
 		return retorno;
@@ -262,7 +262,7 @@ public class JDBCVendaDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar excluir a venda! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível excluir a venda.");
 		}
 		
 		return retorno;

@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 public class Retorno {	
 	// Geral
 	private int status;
-	private String message;
+	private Message message = new Message();
 	
 	public int getStatus() {
 		return this.status;
@@ -17,12 +17,12 @@ public class Retorno {
 		this.status = status;
 	}
 	
-	public String getMessage() {
+	public Message getMessage() {
 		return this.message;
 	}
 	
 	public void setMessage(String message) {
-		this.message = message;
+		this.message.setMessage(message);
 	}
 	
 	// Usuarios

@@ -7,8 +7,9 @@ const template = /*html*/`
 				<v-row>
 					<v-col cols="6" class="py-0">
 						<v-select
+							v-model="filtro.relatorio"
 							label="Relatório *"
-							:items="relatorios" 
+							:items="tiposRelatorios" 
 							item-value="tipo" 
 							item-text="nome"
 							:rules="[v => !!v || 'Selecione um tipo de relatório.']"
@@ -53,18 +54,44 @@ const template = /*html*/`
 
 		<!-- Tabela -->
 		<v-col cols="12" v-if="items.length > 0">
-			<v-card>
-				<v-data-table :headers="headers" :items="items" hide-default-footer>
-	
-				</v-data-table>
-			</v-card>
+			<app-table 
+				:headers="headers" 
+				:content="items"
+			>
+				<template v-slot:content>
+					<tr v-for="(item, i) in items" :key="i">
+						<td>
+							{{ item.nome }}
+						</td>
+
+						<td class="text-right">
+							R$ {{ valorFormatado(item.valor_unit) }}
+						</td>
+						
+						<td class="text-right">
+							{{ item.quantidade }}
+						</td>
+
+						<td class="text-right">
+						R$ {{ valorFormatado(item.valor_total) }}
+						</td>
+					</tr>
+				</template>
+
+				<template v-slot:footer>
+					<v-footer style="width: 100%">
+						<v-row class="text-right">
+							<v-col class="py-1">
+								<span class="h6">Lucro: R$ {{ valorFormatado(lucro) }}</span>
+							</v-col>  
+						</v-row>
+					</v-footer>
+				</template>
+			</app-table>
 		</v-col>
 	</v-row>
 
 `
-
-import produtos_vendidos from '../../mixins/relatorios/produtos_vendidos.js'
-import lucro_diario from '../../mixins/relatorios/lucro_diario.js'
 
 export default {
 	template,
@@ -75,24 +102,47 @@ export default {
 
 			gerandoRelatorio: false,
 
-			relatorios: [
+			tiposRelatorios: [
 				{ nome: "Lucro Diário", tipo: 'lucro_diario' },
 				{ nome: "Produtos Mais Vendidos", tipo: 'produtos_vendidos' }
 			],
+
+			relatorios: {
+				produtos_vendidos: {
+					headers: [
+						{ text: 'Produto', value: 'nome', sortable: false },
+						{ text: 'Valor', value: 'valor_unit', sortable: false },
+						{ text: 'Quantidade', value: 'quantidade', sortable: false },
+						{ text: 'Total', value: 'valor_total', sortable: false }
+					]
+				},
+				lucro_diario: {
+					headers: [
+						{ text: 'Data', value: 'data', sortable: false },
+						{ text: 'Quantidade de Vendas', value: 'quantidade', sortable: false },
+						{ text: 'Total', value: 'valor_total', sortable: false },
+					]
+				}
+			},
 
 			filtro: {
 				relatorio: '',
 				periodo: [
 					moment().format("YYYY-MM-DD")
 				],
-				usuarios: [],
 			},
 
-			items: []
+			headers: [],
+			items: [],
+			lucro: 0
 		}
 	},
 	computed: {
 		periodoSelecionado() {
+			this.filtro.periodo.sort((a, b) => {
+				return new Date(a) - new Date(b);
+			});
+			
 			const dt_inicio = moment(this.filtro.periodo[0], "YYYY-MM-DD").format("DD/MM/YYYY")
 			const dt_fim = moment(this.filtro.periodo[1], "YYYY-MM-DD").format("DD/MM/YYYY")
 
@@ -104,16 +154,25 @@ export default {
 			const { relatorio, periodo } = this.filtro
 
 			this.gerandoRelatorio = true
+			this.lucro = 0
 
-			await axios.get(`/relatorio/${relatorio.replace("_", "-")}?periodo=${periodo}`)
+			await axios.get(`/relatorio/${relatorio.replace("_", "-")}?dt_inicio=${periodo[0]}&dt_fim=${periodo[periodo.length - 1]}`)
 				.then(retorno => {
-					this.headers = [relatorio].headers
-					this.items = retorno.data
+					this.headers = this.relatorios[relatorio].headers
+					this.items = retorno.data.sort((a, b) => (a.quantidade > b.quantidade) ? -1 : 1)
+
+					this.items.forEach(item => {
+						this.lucro += item.valor_total
+					})
 				})
 				.catch(erro => {
-					console.log('Ocorreu um erro ao tentar gerar o relatório!')
+					this.$toasted.global.error(erro.response.data.message)
 				})
 				.finally(() => this.gerandoRelatorio = false)
-		}
+		},
+
+		valorFormatado(valor) {
+      return ((Math.round(valor * 100) / 100).toFixed(2)).replace(".", ",")
+    },
 	}
 }

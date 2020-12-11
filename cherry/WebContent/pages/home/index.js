@@ -8,13 +8,13 @@ const template = /*html*/`
 
 `
 
-import telas from '../../js/telas.js'
+import pages from '../../js/telas.js'
 
 export default {
 	template,
 	data() {
 		return {
-			telas
+			telas: pages.getPages
 		}
 	},
 	computed: {

@@ -120,8 +120,8 @@ export default {
 			.then((retorno) => {
 				this.dadosUsuario = retorno.data;
 			})
-			.catch(() => {
-				console.log("Ocorreu um erro ao tentar buscar informações desse usuário")
+			.catch(erro => {
+				this.$toasted.global.error(erro.response.data.message)
 			})
 			.finally(() => this.loadingUsuario = false)
 		},
@@ -144,12 +144,12 @@ export default {
 
 				await axios.put('/usuario/alterar', body)
 				.then(async retorno => {
-          console.log('Seus dados foram atualizados com sucesso!')
+          this.$toasted.global.success(retorno.data.message)
           
           await this.updateSession();
 				})
 				.catch(erro => {
-					console.log('Ocorreu um erro ao tentar editar o usuário!')
+					this.$toasted.global.error(erro.response.data.message)
         })
         .finally(() => this.editing = false)
 			}
@@ -170,11 +170,11 @@ export default {
 
 				await axios.put('/usuario/alterar-senha', body)
 				.then(retorno => {
-          console.log('Sua senha foi alterada com sucesso!')
+          this.$toasted.global.success(retorno.data.message)
           this.$refs.formEditPassword.reset()
 				})
 				.catch(erro => {
-					console.log('Ocorreu um erro ao tentar editar o usuário')
+					this.$toasted.global.error(erro.response.data.message)
         })
         .finally(() => this.editing = false)
 			}
@@ -186,7 +186,7 @@ export default {
 					auth.setUser(retorno.data)
 				})
 				.catch(erro => {
-					console.log('Deu pau no getMe')
+					this.$toasted.global.error(erro.response.data.message)
 				})
     }
 	},

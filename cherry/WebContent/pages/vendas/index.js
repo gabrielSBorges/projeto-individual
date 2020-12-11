@@ -157,7 +157,7 @@ export default {
           });
         })
         .catch((erro) => {
-          console.log(erro.response);
+          this.$toasted.global.error(erro.response.data.message)
         })
         .finally(() => {
           this.loadingVendas = false;
@@ -176,7 +176,7 @@ export default {
           this.usuarios = retorno.data
         })
         .catch(erro => {
-          console.log('Erro ao listar usuarios')
+          this.$toasted.global.error(erro.response.data.message)
         })
         .finally(() => {
           this.loadingUsuarios = false

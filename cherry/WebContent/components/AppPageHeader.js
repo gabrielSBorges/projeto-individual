@@ -18,9 +18,7 @@ export default {
 		pageTitle() {
 			const currentPath = this.$route.path
 			
-			let pageTitle = telas.find(tela => tela.path == currentPath).title
-			
-			return pageTitle
+			return auth.isLoggedIn() ? telas.find(tela => tela.path == currentPath).title : ''
 		}
 	}
 }

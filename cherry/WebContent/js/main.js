@@ -1,8 +1,8 @@
-import telas from './telas.js'
+import pages from "./telas.js"
 
 let routes = []
 
-telas.map(tela => {
+pages.getPages.map(tela => {
 	const { name, path, component, redirect, meta } = tela
 
 	let pathObj = {
@@ -36,6 +36,38 @@ router.beforeEach((to, from, next) => {
 		next()
 	}
 })
+
+Vue.use(Toasted)
+
+Vue.toasted.register('error',
+	(payload) => {
+		return payload
+	},
+	{
+		type: 'error',
+		duration: 4000
+	}
+)
+
+Vue.toasted.register('success',
+	(payload) => {
+		return payload
+	},
+	{
+		type: 'success',
+		duration: 3000
+	}
+)
+
+Vue.toasted.register('info',
+	(payload) => {
+		return payload
+	},
+	{
+		type: 'info',
+		duration: 3000
+	}
+)
 
 import Default from '../layouts/default.js'
 import AppBlock from '../components/AppBlock.js'
@@ -84,7 +116,7 @@ new Vue({
 	}),
 	data() {
 		return {
-			telas,
+			telas: pages.getPages,
 		}
 	},
 	watch: {
@@ -100,7 +132,7 @@ new Vue({
 		changePageTitle() {
 			let currentPath = this.$route.path
 
-			let currentPage = telas.filter(tela => tela.path == currentPath)[0]
+			let currentPage = this.telas.filter(tela => tela.path == currentPath)[0]
 
 			document.title = `Cherry - ${currentPage.title}`
 		}

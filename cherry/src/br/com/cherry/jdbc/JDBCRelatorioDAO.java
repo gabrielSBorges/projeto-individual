@@ -27,6 +27,9 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 		
 		try {
 			if (jwtCode.valid(tokenBase64, this.conexao)) {
+				dt_inicio += " 00:00:00";
+				dt_fim += " 23:59:59";
+				
 				String selectProdutosVendidos = "SELECT p.id, p.nome, pv.quantidade, p.valor as valor_unit FROM vendas v INNER JOIN produtos_vendidos pv ON pv.venda_id = v.id INNER JOIN produtos p ON pv.produto_id = p.id WHERE v.dt_realizado >= ? AND v.dt_realizado <= ?;";
 			
 				PreparedStatement p = this.conexao.prepareStatement(selectProdutosVendidos);
@@ -82,7 +85,7 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao criar o relatório! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível gerar o relatório.");
 		}
 		
 		return retorno;
@@ -93,6 +96,8 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 		
 		try {
 			if (jwtCode.valid(tokenBase64, this.conexao)) {
+				dt_inicio += " 00:00:00";
+				dt_fim += " 23:59:59";
 			
 			}
 			else {
@@ -104,7 +109,7 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao criar o relatório! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível gerar o relatório.");
 		}
 		
 		return retorno;
