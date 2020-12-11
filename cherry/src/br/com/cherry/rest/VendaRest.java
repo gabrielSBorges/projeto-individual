@@ -48,7 +48,7 @@ public class VendaRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar buscar a venda!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -76,7 +76,7 @@ public class VendaRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar listar as vendas!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -106,7 +106,7 @@ public class VendaRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar cadastrar a venda!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -134,7 +134,7 @@ public class VendaRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar excluir a venda!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}

@@ -85,7 +85,7 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao criar o relatório! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível gerar o relatório.");
 		}
 		
 		return retorno;
@@ -109,7 +109,7 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao criar o relatório! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível gerar o relatório.");
 		}
 		
 		return retorno;

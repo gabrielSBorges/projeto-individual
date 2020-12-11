@@ -53,7 +53,7 @@ public class JDBCAuthDAO {
 				}
 				else {
 					retorno.setStatus(400);
-					retorno.setMessage("Usuário não encontrado!");
+					retorno.setMessage("Usuário não encontrado! E-mail ou senha incorretos.");
 				}
 			}
 			else {
@@ -65,7 +65,7 @@ public class JDBCAuthDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao definir os dados da sessão! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível buscar os dados da sessão.");
 		}
 		
 		return retorno;
@@ -135,7 +135,7 @@ public class JDBCAuthDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro na autenticação! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível concluir o login.");
 		}
 		
 		return retorno;
@@ -160,7 +160,7 @@ public class JDBCAuthDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar realizar o logout! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível realizar o logout adequadamente.");
 		}
 		
 		return retorno;

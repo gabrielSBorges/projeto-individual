@@ -57,7 +57,7 @@ public class JDBCProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar buscar o produto! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível buscar os dados do produto.");
 		}
 		
 		return retorno;
@@ -107,7 +107,7 @@ public class JDBCProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar listar os produtos! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível listar os produtos.");
 		}
 		
 		return retorno;
@@ -138,7 +138,7 @@ public class JDBCProdutoDAO {
 			}
 		} catch(SQLException e) {
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar cadastrar o produto! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível cadastrar o produto.");
 		}
 		
 		return retorno;
@@ -168,7 +168,7 @@ public class JDBCProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar alterar esse produto! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível alterar os dados do produto.");
 		}
 		
 		return retorno;
@@ -196,7 +196,7 @@ public class JDBCProdutoDAO {
 				}
 				else {
 					retorno.setStatus(400);
-					retorno.setMessage("Não foi possível remover o produto. Há vendas que foram realizadas com esse produto.!");
+					retorno.setMessage("Não foi possível deletar o produto! Há vendas que foram realizadas com ele.");
 				}
 			}
 			else {
@@ -207,7 +207,7 @@ public class JDBCProdutoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar remover o produto! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível remover o produto.");
 		}
 		
 		return retorno;

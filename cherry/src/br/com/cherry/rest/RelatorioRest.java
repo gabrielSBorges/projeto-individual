@@ -41,7 +41,7 @@ public class RelatorioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao gerar o relatório!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -69,7 +69,7 @@ public class RelatorioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao gerar o relatório!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}

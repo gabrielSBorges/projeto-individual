@@ -73,14 +73,14 @@ const template = /*html*/`
 
 `
 
-import telas from '../js/telas.js'
+import pages from '../js/telas.js'
 
 export default {
 	template,
 	data() {
 		return {
 			drawer: false,
-			telas,
+			telas: pages.getPages,
 			btnsUsuario: [
 				{
 					icon: 'mdi-account',

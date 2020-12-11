@@ -59,7 +59,7 @@ public class JDBCTipoDAO {
 			e.printStackTrace();
 			
 			retorno.setStatus(500);
-			retorno.setMessage("Ocorreu um erro ao tentar listar os usuarios! \n Erro: \n" + e.getMessage());
+			retorno.setMessage("Falha interna! Não foi possível listar os tipos de usuário.");
 		}
 		
 		return retorno;

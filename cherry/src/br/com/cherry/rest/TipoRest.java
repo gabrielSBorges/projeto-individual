@@ -43,7 +43,7 @@ public class TipoRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar listar os tipos!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}

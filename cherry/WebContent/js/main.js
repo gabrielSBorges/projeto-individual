@@ -1,8 +1,8 @@
-import telas from './telas.js'
+import pages from "./telas.js"
 
 let routes = []
 
-telas.map(tela => {
+pages.getPages.map(tela => {
 	const { name, path, component, redirect, meta } = tela
 
 	let pathObj = {
@@ -116,7 +116,7 @@ new Vue({
 	}),
 	data() {
 		return {
-			telas,
+			telas: pages.getPages,
 		}
 	},
 	watch: {
@@ -132,7 +132,7 @@ new Vue({
 		changePageTitle() {
 			let currentPath = this.$route.path
 
-			let currentPage = telas.filter(tela => tela.path == currentPath)[0]
+			let currentPage = this.telas.filter(tela => tela.path == currentPath)[0]
 
 			document.title = `Cherry - ${currentPage.title}`
 		}

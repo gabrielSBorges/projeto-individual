@@ -51,7 +51,7 @@ public class UsuarioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar buscar o usuario!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -80,7 +80,7 @@ public class UsuarioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar listar os usuarios!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -111,7 +111,7 @@ public class UsuarioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar cadastrar o usuario!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -141,7 +141,7 @@ public class UsuarioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar alterar os dados do usuario!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -171,7 +171,7 @@ public class UsuarioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar alterar a senha do usuario!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -199,7 +199,7 @@ public class UsuarioRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar remover o usuario!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}

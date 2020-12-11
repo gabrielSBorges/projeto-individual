@@ -50,7 +50,7 @@ public class ProdutoRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar buscar o produto!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -80,7 +80,7 @@ public class ProdutoRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar listar os produtos!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -110,7 +110,7 @@ public class ProdutoRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar cadastrar o produto!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -140,7 +140,7 @@ public class ProdutoRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar alterar o produto!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}
@@ -168,7 +168,7 @@ public class ProdutoRest extends UtilRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			message.setMessage("Ocorreu um erro ao tentar remover o produto!");
+			message.setMessage(this.errorMsg);
 			
 			return this.buildResponse(message, 500);
 		}

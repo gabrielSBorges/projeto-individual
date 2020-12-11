@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import br.com.cherry.modelo.Message;
 
 public class UtilRest {
+	public String errorMsg = "Falha interna! Ocorreu um erro na conexão com o banco de dados.";
+	
 	public Response buildResponse(Object result, int status) {
 		try {
 			String objeto = new Gson().toJson(result);
