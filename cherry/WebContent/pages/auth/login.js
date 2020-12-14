@@ -35,8 +35,10 @@ const template = /*html*/`
 						<app-btn success label="Entrar" block :disabled="!valid" :on-click="validate" />	
 					</v-col>
 					
-					<v-col cols="12" class="pb-2 pt-5 text-center">
-						<a href="#" class="text-decoration-none grey--text text--lighten-1 caption">Esqueci a senha</a>
+					<v-col cols="12" class="pb-2 pt-3 text-center">
+						<router-link to="/recuperar_senha" class="text-decoration-none grey--text text--lighten-1 caption">
+							Esqueci a Senha
+						</router-link>
 					</v-col>
 				</v-row>
 			</v-form>

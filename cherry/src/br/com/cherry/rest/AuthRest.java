@@ -9,6 +9,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -70,6 +71,68 @@ public class AuthRest extends UtilRest {
 	
 			if (retorno.getStatus() == 200) {				
 				return this.buildResponse(retorno.getAuth(), retorno.getStatus());
+			}
+			else {
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			message.setMessage(this.errorMsg);
+			
+			return this.buildResponse(message, 500);
+		}
+	}
+	
+	@POST
+	@Path("/recuperar-senha")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response recuperarSenha(String usuarioParam) {
+		try {
+			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
+			
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
+			
+			JDBCAuthDAO jdbcAuth = new JDBCAuthDAO(conexao);
+			Retorno retorno = jdbcAuth.recuperarSenha(usuario);
+						
+			my_sql.fecharConexao();
+	
+			if (retorno.getStatus() == 200) {				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
+			}
+			else {
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			message.setMessage(this.errorMsg);
+			
+			return this.buildResponse(message, 500);
+		}
+	}
+	
+	@POST
+	@Path("/resetar-senha")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response resetarSenha(String usuarioParam, @QueryParam("code") String token_id) {
+		try {
+			Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
+			
+			MySql my_sql = new MySql();
+			Connection conexao = my_sql.abrirConexao();
+			
+			JDBCAuthDAO jdbcAuth = new JDBCAuthDAO(conexao);
+			Retorno retorno = jdbcAuth.resetarSenha(usuario, token_id);
+						
+			my_sql.fecharConexao();
+	
+			if (retorno.getStatus() == 200) {				
+				return this.buildResponse(retorno.getMessage(), retorno.getStatus());
 			}
 			else {
 				return this.buildResponse(retorno.getMessage(), retorno.getStatus());				

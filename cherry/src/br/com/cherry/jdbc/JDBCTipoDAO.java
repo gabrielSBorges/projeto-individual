@@ -31,7 +31,7 @@ public class JDBCTipoDAO {
 		List<Tipo> listaTipos = new ArrayList<Tipo>();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				Statement stmt = conexao.createStatement();
 				ResultSet rs = stmt.executeQuery(comando);
 				

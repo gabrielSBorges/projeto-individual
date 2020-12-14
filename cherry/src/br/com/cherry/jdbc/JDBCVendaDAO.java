@@ -30,7 +30,7 @@ public class JDBCVendaDAO {
 		Venda venda = new Venda();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				PreparedStatement p = this.conexao.prepareStatement(buscaVenda);
 				p.setInt(1, vendaId);
 				ResultSet rsVenda = p.executeQuery();
@@ -112,7 +112,7 @@ public class JDBCVendaDAO {
 		List<Venda> listaVendas = new ArrayList<Venda>();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				PreparedStatement p = this.conexao.prepareStatement(buscaVendas);
 				
 				if (!dt_re.contentEquals("") && usu_id != 0) {	
@@ -196,7 +196,7 @@ public class JDBCVendaDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(insertVenda, Statement.RETURN_GENERATED_KEYS);
 				
 				// Venda
@@ -246,7 +246,7 @@ public class JDBCVendaDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(comando);
 				p.setInt(1, id);
 				p.execute();

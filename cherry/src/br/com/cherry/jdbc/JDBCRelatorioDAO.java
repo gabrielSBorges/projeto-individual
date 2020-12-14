@@ -26,7 +26,7 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 		Retorno retorno = new Retorno();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				dt_inicio += " 00:00:00";
 				dt_fim += " 23:59:59";
 				
@@ -95,7 +95,7 @@ public class JDBCRelatorioDAO extends JDBCUtils {
 		Retorno retorno = new Retorno();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				dt_inicio += " 00:00:00";
 				dt_fim += " 23:59:59";
 			

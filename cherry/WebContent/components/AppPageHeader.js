@@ -10,15 +10,20 @@ const template = /*html*/`
 
 `
 
-import telas from '../js/telas.js'
+import pages from '../js/telas.js'
 
 export default {
 	template,
+	data() {
+		return {
+			telas: pages.getPages
+		}
+	},
 	computed: {
 		pageTitle() {
 			const currentPath = this.$route.path
 			
-			return auth.isLoggedIn() ? telas.find(tela => tela.path == currentPath).title : ''
+			return auth.isLoggedIn() ? this.telas.find(tela => tela.path == currentPath).title : ''
 		}
 	}
 }
