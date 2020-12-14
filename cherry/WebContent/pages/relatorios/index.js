@@ -52,26 +52,30 @@ const template = /*html*/`
 			<app-btn info label="Gerar" :disabled="!valid" :on-click="gerarRelatorio" />
 		</v-col>
 
+		<v-col cols="12" class="my-3 text-right" v-if="items.length > 0">
+			<app-export-table :title="relatorioSelecionado" :table="table" />
+		</v-col>
+
 		<!-- Tabela -->
 		<v-col cols="12" v-if="items.length > 0">
 			<app-table 
-				:headers="headers" 
-				:content="items"
+				:headers="table.headers" 
+				:content="table.items"
 			>
 				<template v-slot:content>
-					<tr v-for="(item, i) in items" :key="i">
+					<tr v-for="(item, i) in table.items" :key="i">
 						<td>
 							{{ item.nome }}
+						</td>
+
+						<td class="text-right">
+							{{ item.quantidade }}
 						</td>
 
 						<td class="text-right">
 							R$ {{ valorFormatado(item.valor_unit) }}
 						</td>
 						
-						<td class="text-right">
-							{{ item.quantidade }}
-						</td>
-
 						<td class="text-right">
 						R$ {{ valorFormatado(item.valor_total) }}
 						</td>
@@ -111,8 +115,8 @@ export default {
 				produtos_vendidos: {
 					headers: [
 						{ text: 'Produto', value: 'nome', sortable: false },
-						{ text: 'Valor', value: 'valor_unit', sortable: false },
 						{ text: 'Quantidade', value: 'quantidade', sortable: false },
+						{ text: 'Valor', value: 'valor_unit', sortable: false },
 						{ text: 'Total', value: 'valor_total', sortable: false }
 					]
 				},
@@ -147,6 +151,22 @@ export default {
 			const dt_fim = moment(this.filtro.periodo[1], "YYYY-MM-DD").format("DD/MM/YYYY")
 
 			return this.filtro.periodo[1] ? `${dt_inicio} ~ ${dt_fim}` : dt_inicio
+		},
+
+		table() {
+			return {
+				headers: this.headers,
+				items: this.items
+			}
+		},
+
+		relatorioSelecionado() {
+			if (this.filtro.relatorio == "lucro_diario") {
+				return "Lucro Diário"
+			}
+			else {
+				return "Produtos Mais Vendidos"
+			}
 		}
 	},
 	methods: {
@@ -160,6 +180,10 @@ export default {
 				.then(retorno => {
 					this.headers = this.relatorios[relatorio].headers
 					this.items = retorno.data.sort((a, b) => (a.quantidade > b.quantidade) ? -1 : 1)
+
+					if (this.items.length == 0) {
+						this.$toasted.global.success("Nenhuma venda realizada no período selecionado!")
+					}
 
 					this.items.forEach(item => {
 						this.lucro += item.valor_total

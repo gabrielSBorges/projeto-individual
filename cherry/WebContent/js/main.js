@@ -72,6 +72,7 @@ Vue.toasted.register('info',
 import Default from '../layouts/default.js'
 import AppBlock from '../components/AppBlock.js'
 import AppBtn from '../components/AppBtn.js'
+import AppExportTable from '../components/AppExportTable.js'
 import AppDataInfo from '../components/AppDataInfo.js'
 import AppDropdown from '../components/AppDropdown.js'
 import AppModal from '../components/AppModal.js'
@@ -82,6 +83,7 @@ import AppTable from '../components/AppTable.js'
 Vue.component("Default", Default)
 Vue.component("AppBlock", AppBlock)
 Vue.component("AppBtn", AppBtn)
+Vue.component("AppExportTable", AppExportTable)
 Vue.component("AppDataInfo", AppDataInfo)
 Vue.component("AppDropdown", AppDropdown)
 Vue.component("AppModal", AppModal)
