@@ -3,7 +3,7 @@ package br.com.cherry.modelo;
 public class LucroDiario {
 	private String data;
 	private int qtd_vendas;
-	private float lucro;
+	private float total;
 	
 	public void setData(String data) {
 		this.data = data;
@@ -21,11 +21,11 @@ public class LucroDiario {
 		return this.qtd_vendas;
 	}
 	
-	public void setLucro(float lucro) {
-		this.lucro = lucro;
+	public void setTotal(float total) {
+		this.total = total;
 	}
 	
-	public float getLucro() {
-		return this.lucro;
+	public float getTotal() {
+		return this.total;
 	}
 } 

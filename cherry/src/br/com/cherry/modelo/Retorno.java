@@ -129,6 +129,7 @@ public class Retorno {
 	}
 	
 	// Relatórios
+	
 	// Produtos Mais Vendidos
 	private List<ProdutoMaisVendido> listProdutosMaisVendidos = new ArrayList<ProdutoMaisVendido>();
 	
@@ -140,6 +141,7 @@ public class Retorno {
 		this.listProdutosMaisVendidos = listProdutosMaisVendidos;
 	}
 	
+	// Lucro Diario
 	private List<LucroDiario> listLucrosDiarios = new ArrayList<LucroDiario>();
 	
 	public List<LucroDiario> getListLucrosDiarios() {
