@@ -37,7 +37,7 @@ const template = /*html*/`
 								></v-text-field>
 							</template>
 	
-							<v-date-picker v-model="filtro.periodo" no-title range scrollable>
+							<v-date-picker v-model="filtro.periodo" no-title range scrollable :max="currentDate">
 								<v-spacer></v-spacer>
 								<v-btn text color="primary" @click="menu = false">Cancel</v-btn>
 								<v-btn text color="primary" @click="$refs.menu.save(filtro.periodo)">OK</v-btn>
@@ -62,21 +62,37 @@ const template = /*html*/`
 				:headers="table.headers" 
 				:content="table.items"
 			>
-				<template v-slot:content>
+				<template v-slot:content v-if="relatorioGerado == 'lucro_diario'">
+					<tr v-for="(item, i) in table.items" :key="i">
+						<td>
+							{{ dataFormatada(item.data) }}
+						</td>
+
+						<td>
+							{{ item.qtd_vendas }}
+						</td>
+
+						<td>
+							R$ {{ valorFormatado(item.total) }}
+						</td>
+					</tr>
+				</template>	
+
+				<template v-slot:content v-else>
 					<tr v-for="(item, i) in table.items" :key="i">
 						<td>
 							{{ item.nome }}
 						</td>
 
-						<td class="text-right">
+						<td>
 							{{ item.quantidade }}
 						</td>
 
-						<td class="text-right">
+						<td>
 							R$ {{ valorFormatado(item.valor_unit) }}
 						</td>
 						
-						<td class="text-right">
+						<td>
 						R$ {{ valorFormatado(item.valor_total) }}
 						</td>
 					</tr>
@@ -86,7 +102,7 @@ const template = /*html*/`
 					<v-footer style="width: 100%">
 						<v-row class="text-right">
 							<v-col class="py-1">
-								<span class="h6">Lucro: R$ {{ valorFormatado(lucro) }}</span>
+								<span class="h6">Lucro Total: R$ {{ valorFormatado(lucro) }}</span>
 							</v-col>  
 						</v-row>
 					</v-footer>
@@ -106,6 +122,8 @@ export default {
 
 			gerandoRelatorio: false,
 
+			relatorioGerado: '',
+
 			tiposRelatorios: [
 				{ nome: "Lucro Diário", tipo: 'lucro_diario' },
 				{ nome: "Produtos Mais Vendidos", tipo: 'produtos_vendidos' }
@@ -123,8 +141,8 @@ export default {
 				lucro_diario: {
 					headers: [
 						{ text: 'Data', value: 'data', sortable: false },
-						{ text: 'Quantidade de Vendas', value: 'quantidade', sortable: false },
-						{ text: 'Total', value: 'valor_total', sortable: false },
+						{ text: 'Quantidade de Vendas', value: 'qtd_vendas', sortable: false },
+						{ text: 'Lucro no Dia', value: 'total', sortable: false },
 					]
 				}
 			},
@@ -167,6 +185,10 @@ export default {
 			else {
 				return "Produtos Mais Vendidos"
 			}
+		},
+
+		currentDate() {
+			return moment().format('YYYY-MM-DD')
 		}
 	},
 	methods: {
@@ -186,7 +208,14 @@ export default {
 					}
 
 					this.items.forEach(item => {
-						this.lucro += item.valor_total
+						if (relatorio == "lucro_diario") {
+							this.relatorioGerado = "lucro_diario"
+							this.lucro += item.total
+						}
+						else {
+							this.relatorioGerado = "produtos_vendidos"
+							this.lucro += item.valor_total
+						}
 					})
 				})
 				.catch(erro => {
@@ -197,6 +226,10 @@ export default {
 
 		valorFormatado(valor) {
       return ((Math.round(valor * 100) / 100).toFixed(2)).replace(".", ",")
-    },
+		},
+		
+		dataFormatada(data) {
+			return moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
+		}
 	}
 }

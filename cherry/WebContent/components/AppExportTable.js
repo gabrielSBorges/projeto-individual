@@ -41,8 +41,11 @@ export default {
         
         for (const i in item) {
           if (i !== "id") {
-            if (i == "valor_unit" || i == "valor_total") {
+            if (i == "valor_unit" || i == "valor_total" || i == "total") {
               row.push(`R$ ${this.valorFormatado(item[i])}`)
+            }
+            else if (i == "data") {
+              row.push(this.dataFormatada(item[i]))
             }
             else {
               row.push(item[i])
@@ -61,5 +64,9 @@ export default {
     valorFormatado(valor) {
       return ((Math.round(valor * 100) / 100).toFixed(2)).replace(".", ",")
     },
+
+    dataFormatada(data) {
+			return moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
+		}
   }
 }
