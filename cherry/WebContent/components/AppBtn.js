@@ -11,6 +11,7 @@ const template = /*html*/`
 					:color="btnColor"
 					:class="btnText"
 					@click="onClick"
+					v-on="on"
 				>
 					<template v-if="label !== ''">
 						{{ label }}
