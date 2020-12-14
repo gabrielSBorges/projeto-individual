@@ -29,7 +29,7 @@ public class JDBCProdutoDAO {
 		Produto produto = new Produto();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				PreparedStatement p = this.conexao.prepareStatement(comando);
 				p.setInt(1, prodId);
 				ResultSet rs = p.executeQuery();
@@ -77,7 +77,7 @@ public class JDBCProdutoDAO {
 		produto = null;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				Statement stmt = conexao.createStatement();
 				ResultSet rs = stmt.executeQuery(comando);
 				
@@ -120,7 +120,7 @@ public class JDBCProdutoDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(insertProduto);
 				
 				p.setString(1, produto.getNome());
@@ -150,7 +150,7 @@ public class JDBCProdutoDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(comando);
 				p.setString(1, produto.getNome());
 				p.setFloat(2, produto.getValor());
@@ -181,7 +181,7 @@ public class JDBCProdutoDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(buscaVenda);
 				p.setInt(1, id);
 				ResultSet rsVenda = p.executeQuery();

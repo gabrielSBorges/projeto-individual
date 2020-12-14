@@ -1,4 +1,6 @@
-import Login from '../pages/login/index.js'
+import Login from '../pages/auth/login.js'
+import RecuperarSenha from '../pages/auth/recuperar_senha.js'
+import ResetarSenha from '../pages/auth/resetar_senha.js'
 import Home from '../pages/home/index.js'
 import Usuarios from '../pages/usuarios/index.js'
 import MeusDados from '../pages/usuarios/meus_dados.js'
@@ -21,6 +23,22 @@ export default new Vue({
 					name: 'login',
 					path: '/login',
 					component: Login,
+					inMenu: false,
+					inHome: false
+				},
+				{
+					title: 'Recuperar Senha',
+					name: 'recuperar_senha',
+					path: '/recuperar_senha',
+					component: RecuperarSenha,
+					inMenu: false,
+					inHome: false
+				},
+				{
+					title: 'Resetar Senha',
+					name: 'resetar_senha',
+					path: '/resetar_senha',
+					component: ResetarSenha,
 					inMenu: false,
 					inHome: false
 				},
@@ -76,6 +94,8 @@ export default new Vue({
 			]
 			
 			if (auth.isLoggedIn()) {
+				pages.push()
+
 				if (auth.user.tipo_id == 1 || auth.user.tipo_id == 2) {
 					pages.push(
 						{

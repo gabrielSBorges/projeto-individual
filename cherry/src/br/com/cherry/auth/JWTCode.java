@@ -58,7 +58,7 @@ public class JWTCode {
 		return usuario;
 	}
 	
-	public Boolean valid(String tokenBase64, Connection conexao) throws SQLException {
+	public Boolean valid(String tokenBase64, Connection conexao, Boolean findHash) throws SQLException {
 		if (tokenBase64 == null) {
 			return false;
 		}
@@ -89,7 +89,13 @@ public class JWTCode {
 		String buscaToken = "SELECT * FROM tokens WHERE code = ?";
 		
 		PreparedStatement p = conexao.prepareStatement(buscaToken);
-		p.setString(1, hashToken);
+		
+		if (findHash) {
+			p.setString(1, hashToken);			
+		}
+		else {
+			p.setString(1, token);
+		}
 		
 		ResultSet rs = p.executeQuery();
 		

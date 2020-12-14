@@ -27,7 +27,7 @@
 	
 	<body>
 		<v-app id="app" class="grey">
-			<default v-if="$route.path !== '/login'">
+			<default v-if="$route.path !== '/login' && $route.path !== '/recuperar_senha' && $route.path !== '/resetar_senha'">
 				<router-view></router-view>
 			</default>
 		

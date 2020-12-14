@@ -31,7 +31,7 @@ public class JDBCUsuarioDAO {
 		Usuario usuario = new Usuario();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				PreparedStatement p = this.conexao.prepareStatement(comando);
 				p.setInt(1, usuId);
 				ResultSet rs = p.executeQuery();
@@ -82,7 +82,7 @@ public class JDBCUsuarioDAO {
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				Statement stmt = conexao.createStatement();
 				ResultSet rs = stmt.executeQuery(comando);
 				
@@ -130,7 +130,7 @@ public class JDBCUsuarioDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(insertUsuario);
 				
 				//Criptografia da senha
@@ -166,7 +166,7 @@ public class JDBCUsuarioDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(comando);
 				p.setString(1, usuario.getNome());
 				p.setString(2, usuario.getEmail());
@@ -198,7 +198,7 @@ public class JDBCUsuarioDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				String senhaCriptografada = md5Code.encode(base64.decode(usuario.getSenha()));
 				
 				p = this.conexao.prepareStatement(comando);
@@ -229,7 +229,7 @@ public class JDBCUsuarioDAO {
 		PreparedStatement p;
 		
 		try {
-			if (jwtCode.valid(tokenBase64, this.conexao)) {
+			if (jwtCode.valid(tokenBase64, this.conexao, true)) {
 				p = this.conexao.prepareStatement(comando);
 				p.setInt(1, id);
 				p.execute();
