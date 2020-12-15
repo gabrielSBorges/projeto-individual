@@ -74,13 +74,6 @@ export default {
 
       doc.autoTable(columns, rows, {
         startY: doc.pageCount > 1? doc.autoTableEndPosY() + 20 : 4,
-        // headStyles: {
-        //   valign: 'left'
-        // },
-        // bodyStyles: {
-        //   font:'times',
-        //   valign: 'left',
-        // },
         didDrawPage: data => {
           if(data.pageCount === 1) {
             doc.setFontSize(10);

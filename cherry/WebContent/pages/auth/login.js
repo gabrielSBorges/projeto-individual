@@ -83,7 +83,9 @@ export default {
 						// Setar os dados do usuário na "sessão"
 						await this.getMe()
 
-						this.$toasted.global.success('Login realizado com sucesso!')
+						this.$toasted.global.success(retorno.data.message)
+
+						auth.loggedIn = true
 						
 						this.$router.push('/')
 					})

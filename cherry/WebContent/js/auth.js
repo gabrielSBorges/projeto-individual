@@ -1,7 +1,8 @@
 const auth = new Vue({
   data() {
     return {
-      user: this.isLoggedIn() ? JSON.parse(atob(sessionStorage.getItem('user'))) : {}
+      user: this.isLoggedIn() ? JSON.parse(atob(sessionStorage.getItem('user'))) : {},
+      loggedIn: false
     }
   },
   methods: {
@@ -25,6 +26,7 @@ const auth = new Vue({
     },
 
     async logout() {
+      this.loggedIn = false
       await axios.delete('/auth/logout')
         .then(() => {
           sessionStorage.removeItem('token')
