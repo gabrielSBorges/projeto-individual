@@ -2,7 +2,7 @@ const auth = new Vue({
   data() {
     return {
       user: this.isLoggedIn() ? JSON.parse(atob(sessionStorage.getItem('user'))) : {},
-      loggedIn: false
+      loggedIn: this.isLoggedIn() ? true : false
     }
   },
   methods: {

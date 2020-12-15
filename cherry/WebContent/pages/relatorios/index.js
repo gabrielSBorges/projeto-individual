@@ -101,8 +101,10 @@ const template = /*html*/`
 				<template v-slot:footer>
 					<v-footer style="width: 100%">
 						<v-row class="text-right">
+							<v-col offset="4" cols="5" v-if="relatorioGerado == 'lucro_diario'">
+								<span class="h6">Total de Vendas: {{ totalVendas }}</span>
+							</v-col>
 							<v-col class="py-1">
-								<span class="h6 mr-3" v-if="relatorioGerado == 'lucro_diario'">Total de Vendas: {{ totalVendas }}</span>
 								<span class="h6">Lucro Total: R$ {{ valorFormatado(lucro) }}</span>
 							</v-col>  
 						</v-row>
@@ -126,7 +128,7 @@ export default {
 			relatorioGerado: '',
 
 			tiposRelatorios: [
-				{ nome: "Lucro Diário", tipo: 'lucro_diario' },
+				{ nome: "Faturamento", tipo: 'lucro_diario' },
 				{ nome: "Produtos Mais Vendidos", tipo: 'produtos_vendidos' }
 			],
 
@@ -143,7 +145,7 @@ export default {
 					headers: [
 						{ text: 'Data', value: 'data', sortable: false },
 						{ text: 'Quantidade de Vendas', value: 'qtd_vendas', sortable: false },
-						{ text: 'Lucro no Dia', value: 'total', sortable: false },
+						{ text: 'Total', value: 'total', sortable: false },
 					]
 				}
 			},
