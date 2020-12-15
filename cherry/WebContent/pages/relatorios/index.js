@@ -59,11 +59,11 @@ const template = /*html*/`
 		<!-- Tabela -->
 		<v-col cols="12" v-if="items.length > 0">
 			<app-table 
-				:headers="table.headers" 
-				:content="table.items"
+				:headers="headers" 
+				:content="items"
 			>
 				<template v-slot:content v-if="relatorioGerado == 'lucro_diario'">
-					<tr v-for="(item, i) in table.items" :key="i">
+					<tr v-for="(item, i) in items" :key="i">
 						<td>
 							{{ dataFormatada(item.data) }}
 						</td>
@@ -79,7 +79,7 @@ const template = /*html*/`
 				</template>	
 
 				<template v-slot:content v-else>
-					<tr v-for="(item, i) in table.items" :key="i">
+					<tr v-for="(item, i) in items" :key="i">
 						<td>
 							{{ item.nome }}
 						</td>
@@ -102,6 +102,7 @@ const template = /*html*/`
 					<v-footer style="width: 100%">
 						<v-row class="text-right">
 							<v-col class="py-1">
+								<span class="h6 mr-3" v-if="relatorioGerado == 'lucro_diario'">Total de Vendas: {{ totalVendas }}</span>
 								<span class="h6">Lucro Total: R$ {{ valorFormatado(lucro) }}</span>
 							</v-col>  
 						</v-row>
@@ -156,7 +157,8 @@ export default {
 
 			headers: [],
 			items: [],
-			lucro: 0
+			lucro: 0,
+			totalVendas: 0
 		}
 	},
 	computed: {
@@ -172,9 +174,14 @@ export default {
 		},
 
 		table() {
+			const { lucro, totalVendas } = this
+
+			const footer = this.relatorioGerado == 'lucro_diario' ? { lucro, totalVendas } : { lucro }
+
 			return {
 				headers: this.headers,
-				items: this.items
+				items: this.items,
+				footer
 			}
 		},
 
@@ -197,6 +204,7 @@ export default {
 
 			this.gerandoRelatorio = true
 			this.lucro = 0
+			this.totalVendas = 0
 
 			await axios.get(`/relatorio/${relatorio.replace("_", "-")}?dt_inicio=${periodo[0]}&dt_fim=${periodo[periodo.length - 1]}`)
 				.then(retorno => {
@@ -211,6 +219,7 @@ export default {
 						if (relatorio == "lucro_diario") {
 							this.relatorioGerado = "lucro_diario"
 							this.lucro += item.total
+							this.totalVendas += item.qtd_vendas
 						}
 						else {
 							this.relatorioGerado = "produtos_vendidos"

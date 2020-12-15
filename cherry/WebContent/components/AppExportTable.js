@@ -56,9 +56,47 @@ export default {
         return row
       })
 
-      const doc = new jspdf.jsPDF()
-      doc.autoTable(columns, rows);
-      doc.save(`${fileName}.pdf`);
+      if (this.table.footer.totalVendas > 0) {
+        rows.push(["", `Total Vendas: ${this.table.footer.totalVendas}`, `Lucro Total: R$ ${this.valorFormatado(this.table.footer.lucro)}`])
+      }
+      else {
+        rows.push(["", "", "", `Lucro Total: R$ ${this.valorFormatado(this.table.footer.lucro)}`])
+      }
+
+      const doc = new jspdf.jsPDF({
+        orientation: 'portrait',
+        unit: 'cm',
+        format: 'A4'
+      })
+
+      let img = new Image()
+      img.src = './images/logo.png'
+
+      doc.autoTable(columns, rows, {
+        startY: doc.pageCount > 1? doc.autoTableEndPosY() + 20 : 4,
+        // headStyles: {
+        //   valign: 'left'
+        // },
+        // bodyStyles: {
+        //   font:'times',
+        //   valign: 'left',
+        // },
+        didDrawPage: data => {
+          if(data.pageCount === 1) {
+            doc.setFontSize(10);
+            doc.addImage(img, 'PNG', data.settings.margin.left, 1.1, 4.5, 2);
+            doc.setFontSize(14)
+            doc.text(this.title, data.settings.margin.left + 5, 2.2)
+            doc.setFontSize(10);
+            doc.text(`Emissão: ${moment().format('DD/MM/YYYY HH:mm')} | Usuário: ${auth.user.nome}`, data.settings.margin.left + 5, 2.7);
+            doc.line(data.settings.margin.left, 3, 19.6, 3)
+            doc.setFontSize(10);
+            doc.text(`${this.table.items.length} LINHAS`, data.settings.margin.left, 3.4);
+          }
+        }
+      })
+
+      doc.save(`${fileName}.pdf`)
     },
 
     valorFormatado(valor) {
