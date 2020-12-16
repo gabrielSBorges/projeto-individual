@@ -1,0 +1,408 @@
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    
+    <title>Dicionário de Dados: db_cherry</title>
+    
+    <style>
+      td, th {
+        font-size: 16px;
+        text-align:center; 
+        vertical-align:middle;
+      }
+
+      table {
+        width: 1100px;
+        border-collapse: collapse;
+      }
+
+      caption, th, td {
+        padding: .2em .8em;
+        border: 1px solid #fff;
+      }
+
+      caption {
+        background: #dbb768;
+        font-weight: bold;
+        font-size: 1.3em;
+      }
+
+      th {
+        font-weight: bold;
+        background: #f3ce7d;
+      }
+
+      td {
+        background: #ffea97;
+      }
+
+      .td-name {
+        width: 100px;
+      }
+
+      .td-type {
+        width: 120px;
+      }
+
+      .td-comment {
+        width: 400px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- Usuários -->
+    <table>
+      <caption>Tabela: usuarios</caption>
+      
+      <tr>
+        <td colspan="7">Atibutos</td>
+      </tr>
+
+      <tr>
+        <th class="td-name">Name</th>
+        <th class="td-type">Type</th>
+        <th>Not Null</th>
+        <th>PK</th>
+        <th>FK</th>
+        <th>Default</th>
+        <th class="td-comment">Comment</th>
+      </tr>
+
+      <tr>
+        <td class="td-name">id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Identificação do usuário.</td>
+      </tr>
+      
+      <tr>
+        <td class="td-name">nome</td>
+        <td class="td-type">VARCHAR(45)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Nome do usuário.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">email</td>
+        <td class="td-type">VARCHAR(45)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Endereço de e-mail do usuário.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">senha</td>
+        <td class="td-type">VARCHAR(25)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Senha criptografada do usuário.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">tipo_id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td></td>
+        <td class="td-comment">ID do registro respectivo ao tipo de conta do usuário.</td>
+      </tr>
+    </table>
+  
+    </br>
+    
+    <!-- Produtos -->
+    <table>
+      <caption>Tabela: produtos</caption>
+
+      <tr>
+        <td colspan="7">Atibutos</td>
+      </tr>
+
+      <tr>
+        <th class="td-name">Name</th>
+        <th class="td-type">Type</th>
+        <th>Not Null</th>
+        <th>PK</th>
+        <th>FK</th>
+        <th>Default</th>
+        <th class="td-comment">Comment</th>
+      </tr>
+
+      <tr>
+        <td class="td-name">id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Identificação do produto.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">nome</td>
+        <td class="td-type">VARCHAR(20)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Nome do produto.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">valor</td>
+        <td class="td-type">DECIMAL(7,2)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Valor monetário do produto em reais.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">usuario_id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td></td>
+        <td class="td-comment">Identificação do usuário que cadastrou o produto.</td>
+      </tr>
+    </table>
+  
+    </br>
+    
+    <!-- Produtos Vendidos -->
+    <table>
+      <caption>Tabela: produtos_vendidos</caption>
+
+      <tr>
+        <td colspan="7">Atibutos</td>
+      </tr>
+
+      <tr>
+        <th class="td-name">Name</th>
+        <th class="td-type">Type</th>
+        <th>Not Null</th>
+        <th>PK</th>
+        <th>FK</th>
+        <th>Default</th>
+        <th class="td-comment">Comment</th>
+      </tr>
+
+      <tr>
+        <td class="td-name">id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Identificação do registro.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">quantidade</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Quantidade do produto que foi vendida.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">valor_unit</td>
+        <td class="td-type">DECIMAL(7,2)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Valor unitário do produto na hora da venda.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">venda_id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td></td>
+        <td class="td-comment">Identificação da venda.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">produto_id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td></td>
+        <td class="td-comment">Identificação do produto.</td>
+      </tr>
+    </table>
+  
+    </br>
+
+    <!-- Vendas -->
+    <table>
+      <caption>Tabela: vendas</caption>
+
+      <tr>
+        <td colspan="7">Atibutos</td>
+      </tr>
+
+      <tr>
+        <th class="td-name">Name</th>
+        <th class="td-type">Type</th>
+        <th>Not Null</th>
+        <th>PK</th>
+        <th>FK</th>
+        <th>Default</th>
+        <th class="td-comment">Comment</th>
+      </tr>
+
+      <tr>
+        <td class="td-name">id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Identificação da venda.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">valor</td>
+        <td class="td-type">DECIMAL(7,2)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Valor total da venda.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">dt_realizado</td>
+        <td class="td-type">DATETIME</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Data em que a venda foi efetuada.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">usuario_id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td></td>
+        <td class="td-comment">Identificação do usuário que efetuou a venda.</td>
+      </tr>
+    </table>
+  
+    </br>
+  
+    <!-- Tipos -->
+    <table>
+      <caption>Tabela: tipos</caption>
+
+      <tr>
+        <td colspan="7">Atibutos</td>
+      </tr>
+
+      <tr>
+        <th class="td-name">Name</th>
+        <th class="td-type">Type</th>
+        <th>Not Null</th>
+        <th>PK</th>
+        <th>FK</th>
+        <th>Default</th>
+        <th class="td-comment">Comment</th>
+      </tr>
+
+      <tr>
+        <td class="td-name">id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Identificação do tipo de conta.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">nome</td>
+        <td class="td-type">VARCHAR(45)</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Nome do tipo da conta do usuário referente ao cargo do mesmo.</td>
+      </tr>
+    </table>
+    
+    </br>
+
+    <!-- Tokens -->
+    <table>
+      <caption>Tabela: tokens</caption>
+
+      <tr>
+        <td colspan="7">Atibutos</td>
+      </tr>
+
+      <tr>
+        <th class="td-name">Name</th>
+        <th class="td-type">Type</th>
+        <th>Not Null</th>
+        <th>PK</th>
+        <th>FK</th>
+        <th>Default</th>
+        <th class="td-comment">Comment</th>
+      </tr>
+
+      <tr>
+        <td class="td-name">id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Identificação do token.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">code</td>
+        <td class="td-type">TEXT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+        <td></td>
+        <td class="td-comment">Token de acesso.</td>
+      </tr>
+
+      <tr>
+        <td class="td-name">usuario_id</td>
+        <td class="td-type">INT</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td></td>
+        <td class="td-comment">ID do usuário que efetuou o login.</td>
+      </tr>
+    </table>
+  </body>
+</html>
