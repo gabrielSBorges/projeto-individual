@@ -94,8 +94,6 @@ export default new Vue({
 			]
 			
 			if (auth.loggedIn) {
-				pages.push()
-
 				if (auth.user.tipo_id == 1 || auth.user.tipo_id == 2) {
 					pages.push(
 						{
